@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("dashboard redirects and opens the visual form without submitting", async ({
+test("dashboard redirects and opens the import form with validation", async ({
   page,
 }, testInfo) => {
   const pageErrors: string[] = [];
@@ -20,17 +20,18 @@ test("dashboard redirects and opens the visual form without submitting", async (
     .first()
     .click();
   await expect(page).toHaveURL(/\/reportes\/nuevo$/);
-  await expect(page.getByLabel("Cliente", { exact: true })).toBeDisabled();
+  await expect(page.getByLabel("Cliente", { exact: true })).toBeEnabled();
   await page.getByLabel("Mes", { exact: true }).selectOption("9");
   await page.getByLabel("Año", { exact: true }).fill("2026");
   await expect(
     page.getByRole("button", { name: "Importar y analizar" }),
-  ).toBeDisabled();
+  ).toBeEnabled();
   await page.screenshot({
     path: testInfo.outputPath("new-report.png"),
     fullPage: true,
   });
   await page.getByLabel("Año", { exact: true }).press("Enter");
+  await expect(page.getByText("Ingresa el nombre del cliente.")).toBeVisible();
   await expect(page).toHaveURL(/\/reportes\/nuevo$/);
   expect(pageErrors).toEqual([]);
 });

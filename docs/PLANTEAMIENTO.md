@@ -1,5 +1,15 @@
 # 📐 Planteamiento — Equipo 10
 
+## Fase 2: importación XLSX
+
+- **Flujo implementado:** cliente y período → archivo XLSX → validación y detección de hoja en servidor → tickets normalizados → resúmenes y tabla de revisión.
+- **Regla de tiempo:** conservar Time to Respond en horas decimales y multiplicar por 60 para minutos; Time to Resolve permanece en horas.
+- **Calidad de datos:** errores bloquean importación; advertencias conservan registros identificables y señalan números inválidos, valores desconocidos y duplicados. Filas sin Ticket ID se listan como inválidas.
+- **Alcance:** importar, validar, transformar y visualizar temporalmente. Sin persistencia, SLA, gráficas, historial anual real, Word/PDF, IA ni envío.
+- **Referencia pendiente:** `Reporte INV-Junio (Interno).xlsx` fue descrito, pero no adjuntado. Las verificaciones usan fixtures sintéticos y no acreditan el contenido del archivo real.
+
+Detalle técnico y comprobación manual en `docs/IMPORTACION-XLSX.md`.
+
 ## Alcance acordado: CSC Report Automation, fase 1
 
 - **Nombre técnico:** `csc-report-automation`.

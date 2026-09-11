@@ -1,6 +1,6 @@
 # CSC Report Automation
 
-Base web para automatizar reportes mensuales del Cyber Shield Center. **Fase 1: arquitectura e interfaz**, sin procesamiento ni generación de reportes.
+Aplicación web para automatizar reportes mensuales del Cyber Shield Center. Incluye la arquitectura base y la **fase 2: importar, validar, transformar y visualizar tickets XLSX**, sin persistencia de tickets ni generación de documentos. Consulta [la guía de importación](docs/IMPORTACION-XLSX.md) para probar el flujo y revisar los archivos de esta fase.
 
 ## Requisitos e inicio
 
@@ -31,6 +31,7 @@ Abrir **http://localhost:3000**; redirige a **/dashboard**.
 | `npm run typecheck` | Generar tipos de rutas y comprobar TypeScript |
 | `npm run format` | Formatear código propio y componentes UI |
 | `npm run test:e2e` | Verificar navegación de escritorio y móvil sobre una compilación existente |
+| `npm run test:unit` | Probar detección de hojas, columnas, normalización, conversión y advertencias |
 | `npm run db:validate` | Validar esquema Prisma |
 | `npm run db:generate` | Generar Prisma Client tras instalar o modificar el esquema |
 | `npm run db:deploy` | Aplicar migraciones existentes, incluida la inicial |
@@ -42,12 +43,12 @@ Abrir **http://localhost:3000**; redirige a **/dashboard**.
 | Ruta | Estado |
 | --- | --- |
 | `/dashboard` | Cuatro indicadores iniciales y acceso a nuevo reporte |
-| `/reportes/nuevo` | Formulario visual; botón deshabilitado, sin lectura ni envío de XLSX |
+| `/reportes/nuevo` | Formulario funcional, importación temporal, resúmenes y tabla paginada |
 | `/reportes` | Tabla vacía con siete columnas |
 | `/historial` | Espacio reservado al historial anual |
 | `/configuracion` | Secciones visuales para clientes, SLA y plantillas |
 
-Los ceros y estados vacíos son marcadores iniciales de UI, no consultas a la base. El menú tiene estado activo, navegación de escritorio y panel móvil con cierre por Escape y manejo de foco. No hay endpoints ni operaciones CRUD.
+Los ceros del dashboard y los estados vacíos de historial siguen siendo marcadores iniciales de UI, no consultas a la base. El menú tiene estado activo, navegación de escritorio y panel móvil con cierre por Escape y manejo de foco. `POST /api/reportes/importar` recibe FormData y procesa el archivo en memoria; no hay operaciones CRUD ni cambios de Prisma en esta fase.
 
 Para las pruebas de navegador, ejecutar una vez `npx playwright install chromium`, luego `npm run build` y `npm run test:e2e`. Las pruebas levantan y cierran su propio servidor en el puerto 3100, que debe estar libre. No insertan registros en SQLite.
 
@@ -59,23 +60,26 @@ prisma/
   migrations/
 tests/
   navigation.spec.ts
+  import.spec.ts
+  fixtures/excel.ts
+  unit/excel.spec.ts
 src/
   app/
     dashboard/
     reportes/nuevo/
     historial/
     configuracion/
-    api/                  # reservado; sin endpoints
+    api/reportes/importar/ # Route Handler Node.js
   components/
     layout/               # shell, sidebar y encabezados
     dashboard/            # tarjetas
-    reports/              # tabla y acceso a nuevo reporte
-    forms/                # formulario visual
+    reports/              # resultados, advertencias, resúmenes y tablas
+    forms/                # formulario funcional de importación
     ui/                   # componentes shadcn/ui
     charts/               # reservado
     sla/                  # reservado
   services/
-    excel/                # responsabilidad futura, sin implementación
+    excel/                # lectura, detección de hoja, normalización y mapeo
     sla/
     charts/
     word/
@@ -90,7 +94,7 @@ src/
     reports/              # reservado para artefactos
 ```
 
-Las páginas componen la UI; solo el shell, la navegación y el formulario requieren interactividad de cliente. React Hook Form gestiona los campos y Zod define su estructura, sin reglas de negocio ni validación del contenido del archivo. La selección del archivo permanece en el control nativo del navegador.
+Las páginas componen la UI. React Hook Form gestiona los campos y Zod valida el cliente, período y metadatos del archivo tanto en la UI como en el servidor. SheetJS lee el workbook exclusivamente en Node.js; React muestra el JSON de resultado, sin procesar Excel en el navegador. La importación no filtra por cliente o período: conserva todas las filas de la hoja elegida, y esos campos identifican el contexto seleccionado.
 
 `src/lib/prisma.ts` expone `getPrisma()` únicamente en servidor y reutiliza la conexión. La UI no importa modelos Prisma. Los futuros servicios recibirán tipos de dominio; el acceso a persistencia permanecerá fuera de componentes visuales.
 
@@ -107,7 +111,7 @@ Los tipos de dominio y componentes no necesitan cambiar por el proveedor. No se 
 
 ## Pendiente
 
-Lectura XLSX, normalización de tickets y tiempos, persistencia desde UI, historial real, cálculos SLA, gráficas, información complementaria, Word, PDF, autenticación, IA y entrega automática. TMAD no se utiliza. No se han agregado motores ni dependencias para Excel, gráficas o documentos.
+Persistencia desde UI, historial real, cálculos SLA, gráficas, información complementaria, Word, PDF, autenticación, IA y entrega automática. TMAD no se utiliza. No se han agregado motores ni dependencias para gráficas o documentos.
 
 Las constantes SLA contienen CRITICA (10 min/4 h/95%), ALTA (10 min/8 h/95%), MEDIA (15 min/24 h/90%) y BAJA (15 min/48 h/90%).
 
