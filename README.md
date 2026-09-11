@@ -64,7 +64,7 @@ Abre http://localhost:3000 — si ves la página de bienvenida, estás listo.
 | Impacto en el día a día | 20% | Estimación argumentada de horas ahorradas por semana/proyecto. |
 | Calidad y continuidad | 15% | `README-EQUIPO.md` + la rama corre desde cero siguiendo sus propias instrucciones. |
 
-Cada criterio lo puntúan los jueces con rúbrica de 1–5, y hay voto popular (nadie vota por su propio equipo). **Puntaje del proyecto = 50% jueces + 50% voto popular.**
+Cada criterio lo puntúan los jueces con rúbrica de 1–5. **Puntaje del proyecto = promedio de los jueces**, ponderado por los pesos de la tabla.
 
 ### Copa de Retos (bonus, máximo +10)
 
