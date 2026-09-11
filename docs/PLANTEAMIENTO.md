@@ -34,9 +34,9 @@ _¿Qué reporte o proceso duele hoy? Sean específicos._
   **Que el documento no es reproducible y ya arrastra errores silenciosos.** Tres cosas que verificamos en los archivos reales:
 
   1. **Las gráficas del Word están enlazadas a una ruta local absoluta de una sola máquina:**
-     `file:///C:\Users\Juan\Downloads\REPORTE BANRURAL AGOSTO\Libro2.xlsx`
+     `file:///C:\Users\<analista>\Downloads\REPORTE <CLIENTE> AGOSTO\Libro2.xlsx`
      Nadie más del equipo puede actualizar esas gráficas. Si esa carpeta se mueve o se borra, el informe deja de ser editable.
-  2. **Las pestañas por herramienta no cuadran con `DATOS`.** Contienen **47 de los 63 tickets**: solo los de estado `Closed`. Faltan los 16 con estado `With User` (8), `Resuelto` (6) y `On Hold` (2) — entre ellos los tickets `11993` (BeyondTrust) y `12413` (Thinkst Canary), que sí existen en `DATOS` y sí cuentan en las gráficas. **La misma cifra sale distinta según qué hoja mire el cliente.**
+  2. **Las pestañas por herramienta no cuadran con `DATOS`.** Contienen **47 de los 63 tickets**: solo los de estado `Closed`. Faltan los 16 con estado `With User` (8), `Resuelto` (6) y `On Hold` (2) — entre ellos los tickets `40010` (BeyondTrust) y `40040` (Thinkst Canary), que sí existen en `DATOS` y sí cuentan en las gráficas. **La misma cifra sale distinta según qué hoja mire el cliente.** *(IDs del dataset sanitizado de `data/`.)*
   3. **El agrupamiento por herramienta es inconsistente.** La tabla dinámica de "tickets por herramienta" colapsa `BeyondTrust>Remote Support` + `BeyondTrust>Password Safe` en `BeyondTrust`, pero deja `Cloudflare>WAF` sin colapsar. La regla vive en la cabeza de quien armó el archivo, no escrita en ningún lado.
 
   Es decir: el proceso no solo es lento, es **frágil y auditable en contra**. Y transcribir a mano 15 números hacia un documento que se le entrega a un banco es exactamente donde un error cuesta credibilidad.
@@ -106,7 +106,11 @@ _Con ~3 horas de desarrollo, sean brutalmente realistas:_
   - Cálculo de **% de cumplimiento de SLA** contra los umbrales contractuales reales (hoy se muestran TPA/TMR calculados y los umbrales 10 min / 48 h como en el informe de Agosto).
 
 - **Datos de entrada para la demo:**
-  `assets/GRAFICAS.xlsx` (cierre real de Agosto 2026, 63 tickets) para desarrollar y verificar contra el resultado conocido, y una **copia sanitizada** en `data/` como dato de demo pública — cliente `Banco Demo, S.A.`, agentes y usuarios anonimizados, dominios `.example`, IPs a rango RFC 1918. Los conteos y las gráficas quedan idénticos, así que la demo se ve igual sin exponer nada del cliente.
+  **`data/halo-demo-agosto.xlsx`** — dataset sintético de 63 tickets con la estructura exacta del export de Halo (pestaña `DATOS`, 17 columnas). Cliente `Banco Demo, S.A.`, agentes `Agente 01`–`12`, dominios `.example`, IPs en rangos de documentación.
+
+  Las distribuciones y los decimales de tiempo se preservaron intactos, así que **el dashboard tiene que reproducir exactamente las cifras del informe real** (63 / 43-15-5 / 53 cerrados / 10 pendientes / TPA 0.10 / TMR 29.29). Eso lo vuelve nuestro criterio de correctitud, no solo un dato bonito.
+
+  Se genera con `python scripts/sanitizar-datos.py` a partir del export real, que vive en `assets/` y **no se versiona** (está en `.gitignore`). Detalle completo del mapeo en [`data/README.md`](../data/README.md).
 
 ## 6. Reparto rápido
 

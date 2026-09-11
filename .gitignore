@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# equipo-08: archivos fuente del cliente (datos reales, NO se versionan).
+# Sirven para desarrollar y verificar cifras en local. El dataset sanitizado
+# que si se versiona vive en data/ y se regenera con:
+#   python scripts/sanitizar-datos.py
+/assets

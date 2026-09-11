@@ -83,7 +83,7 @@ Estructura que funciona:
    | 0:20 | Arrastrar el `.xlsx` a REPORTERO CSC. | "Este es el archivo que ya se descarga de Halo. No lo tocamos, no lo preparamos. Va como sale." |
    | 0:30 | **Aparece el dashboard.** Señalar las 4 gráficas. | "Ahí están las cuatro gráficas del informe: historial mensual, tipos de ticket, herramienta por estado, y estado. Ninguna tabla dinámica se refrescó." |
    | 1:00 | Click en las vistas por herramienta: Cloudflare / BeyondTrust / Thinkst Canary. | "Y estas pestañas se generaron solas leyendo la columna Category. **Cloudflare 55, BeyondTrust 5, Thinkst Canary 3. Suman 63.**" |
-   | 1:30 | 🎯 **El momento.** Mostrar el contador o el panel de tickets que faltan en el archivo manual. | "En el archivo de Agosto que se entregó, estas pestañas tienen 47. Aquí están los 16 que faltaban. Este —el 11993— es un ticket de BeyondTrust que nunca llegó a su pestaña." |
+   | 1:30 | 🎯 **El momento.** Mostrar el contador o el panel de tickets que faltan en el archivo manual. | "En el archivo de Agosto que se entregó, estas pestañas tienen 47. Aquí están los 16 que faltaban. Este —el 40010— es un ticket de BeyondTrust que nunca llegó a su pestaña." |
    | 2:10 | Click en **Generar informe**. Mostrar el informe en pantalla, hacer scroll. | "Y este es el informe. Misma estructura, mismo orden, mismas secciones que el de Agosto — pero los números no los escribió nadie." |
    | 2:40 | Descargar y **abrirlo en Word**. | "Se abre en Word. De aquí el analista escribe el análisis y las recomendaciones, que es lo único que debería estar escribiendo." |
 
