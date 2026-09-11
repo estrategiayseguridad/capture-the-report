@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  reports   Report[]
+}
+
+enum ReportStatus {
+  DRAFT
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+model Report {
+  id           String       @id @default(cuid())
+  clientId     String
+  month        Int
+  year         Int
+  totalTickets Int          @default(0)
+  status       ReportStatus @default(DRAFT)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  client       Client       @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  @@index([clientId, year, month])
+}
