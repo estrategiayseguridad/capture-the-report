@@ -14,13 +14,14 @@
     "db:studio": "prisma studio",
     "typecheck": "next typegen && tsc --noEmit",
     "test:e2e": "playwright test",
-    "format": "prettier --write src/app src/components src/config src/lib src/types src/validators src/services/excel tests prisma.config.ts playwright.config.ts playwright.unit.config.ts",
+    "format": "prettier --write src/app src/components src/config src/lib src/types src/validators src/services tests prisma.config.ts playwright.config.ts playwright.unit.config.ts",
     "test:unit": "playwright test --config=playwright.unit.config.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
     "@prisma/adapter-better-sqlite3": "^7.10.0",
     "@prisma/client": "^7.10.0",
+    "chart.js": "^4.5.1",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.2.6",
     "dotenv": "^17.4.2",
@@ -28,6 +29,7 @@
     "next": "16.3.4",
     "radix-ui": "^1.6.7",
     "react": "19.2.8",
+    "react-chartjs-2": "^5.3.1",
     "react-dom": "19.2.8",
     "react-hook-form": "^7.87.0",
     "server-only": "^0.0.1",

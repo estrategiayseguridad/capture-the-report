@@ -1,6 +1,6 @@
 # CSC Report Automation
 
-Aplicación web para automatizar reportes mensuales del Cyber Shield Center. Incluye la arquitectura base y la **fase 2: importar, validar, transformar y visualizar tickets XLSX**, sin persistencia de tickets ni generación de documentos. Consulta [la guía de importación](docs/IMPORTACION-XLSX.md) para probar el flujo y revisar los archivos de esta fase.
+Aplicación web para automatizar reportes mensuales del Cyber Shield Center. Incluye la arquitectura base, la importación XLSX y la **fase 3: gráficas editables de estados y tickets del período**, sin persistencia de tickets ni generación de documentos. Consulta [la guía de importación](docs/IMPORTACION-XLSX.md) y [la guía de gráficas](docs/GRAFICAS.md) para probar cada flujo y revisar sus archivos.
 
 ## Requisitos e inicio
 
@@ -30,8 +30,8 @@ Abrir **http://localhost:3000**; redirige a **/dashboard**.
 | `npm run lint` | ESLint |
 | `npm run typecheck` | Generar tipos de rutas y comprobar TypeScript |
 | `npm run format` | Formatear código propio y componentes UI |
-| `npm run test:e2e` | Verificar navegación de escritorio y móvil sobre una compilación existente |
-| `npm run test:unit` | Probar detección de hojas, columnas, normalización, conversión y advertencias |
+| `npm run test:e2e` | Verificar navegación, importación y edición de gráficas en escritorio y móvil sobre una compilación existente |
+| `npm run test:unit` | Probar importación, agrupación de gráficas, validación y conservación de datos fuente |
 | `npm run db:validate` | Validar esquema Prisma |
 | `npm run db:generate` | Generar Prisma Client tras instalar o modificar el esquema |
 | `npm run db:deploy` | Aplicar migraciones existentes, incluida la inicial |
@@ -43,7 +43,7 @@ Abrir **http://localhost:3000**; redirige a **/dashboard**.
 | Ruta | Estado |
 | --- | --- |
 | `/dashboard` | Cuatro indicadores iniciales y acceso a nuevo reporte |
-| `/reportes/nuevo` | Formulario funcional, importación temporal, resúmenes y tabla paginada |
+| `/reportes/nuevo` | Importación temporal, resúmenes, tabla paginada y paso de gráficas editables |
 | `/reportes` | Tabla vacía con siete columnas |
 | `/historial` | Espacio reservado al historial anual |
 | `/configuracion` | Secciones visuales para clientes, SLA y plantillas |
@@ -61,8 +61,11 @@ prisma/
 tests/
   navigation.spec.ts
   import.spec.ts
+  charts.spec.ts
   fixtures/excel.ts
+  fixtures/charts.ts
   unit/excel.spec.ts
+  unit/charts.spec.ts
 src/
   app/
     dashboard/
@@ -76,12 +79,12 @@ src/
     reports/              # resultados, advertencias, resúmenes y tablas
     forms/                # formulario funcional de importación
     ui/                   # componentes shadcn/ui
-    charts/               # reservado
+    charts/               # formularios, validación visual y barras Chart.js
     sla/                  # reservado
   services/
     excel/                # lectura, detección de hoja, normalización y mapeo
     sla/
-    charts/
+    charts/               # agrupación pura de Ticket[] y adaptación de etiquetas
     word/
   config/                 # navegación y constantes SLA
   types/                  # tipos de dominio independientes de Prisma
@@ -111,7 +114,7 @@ Los tipos de dominio y componentes no necesitan cambiar por el proveedor. No se 
 
 ## Pendiente
 
-Persistencia desde UI, historial real, cálculos SLA, gráficas, información complementaria, Word, PDF, autenticación, IA y entrega automática. TMAD no se utiliza. No se han agregado motores ni dependencias para gráficas o documentos.
+Persistencia desde UI, historial real, gráfica histórica, cálculos SLA, información complementaria, Word, PDF, autenticación, IA y entrega automática. TMAD no se utiliza. Las dos gráficas actuales usan Chart.js en el navegador; no hay generación de PNG en servidor ni dependencias de documentos.
 
 Las constantes SLA contienen CRITICA (10 min/4 h/95%), ALTA (10 min/8 h/95%), MEDIA (15 min/24 h/90%) y BAJA (15 min/48 h/90%).
 
