@@ -160,6 +160,34 @@ export function tasaHistoricaPorFranja(franja: Franja): {
   };
 }
 
+export interface ResumenFranja {
+  franja: Franja;
+  eventos: number;
+  invitados: number;
+  asistentes: number;
+  tasa: number;
+}
+
+/** Tasa de asistencia agrupada por franja: es la base de la proyeccion. */
+export function resumenPorFranja(): ResumenFranja[] {
+  const franjas: Franja[] = ["matutino", "vespertino", "jornada", "nocturno"];
+
+  return franjas
+    .map((franja) => {
+      const eventos = HISTORICO.filter((e) => e.franja === franja && e.invitados > 0);
+      const invitados = eventos.reduce((s, e) => s + e.invitados, 0);
+      const asistentes = eventos.reduce((s, e) => s + e.asistentes, 0);
+      return {
+        franja,
+        eventos: eventos.length,
+        invitados,
+        asistentes,
+        tasa: invitados > 0 ? asistentes / invitados : 0,
+      };
+    })
+    .filter((r) => r.eventos > 0);
+}
+
 export function proyectarAsistencia(
   asistentes: AsistenteCrudo[],
   franja: Franja,

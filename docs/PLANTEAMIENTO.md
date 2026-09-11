@@ -30,7 +30,8 @@
   1. Interfaz para subir el listado de asistentes (CSV).
   2. Motor de segmentación y asignación de ejecutivos.
   3. Dashboard visual que muestra el estatus de los leads.
-- **Hoy NO (queda para después):** Integración con Mailchimp, envío automático de correos, histórico de eventos pasados, exportación a PDF.
+  4. Pestaña de eventos con el histórico: los eventos ya analizados y el histórico de referencia que alimenta la proyección de asistencia.
+- **Hoy NO (queda para después):** Integración con Mailchimp, envío automático de correos, lectura directa de los `.xlsx`, exportación nativa a PDF (se resuelve con la impresión del navegador), empuje del estatus al CRM.
 - **Datos de entrada para la demo:** `data/asistentes-demo.csv`
 
 ## 6. Reparto rápido

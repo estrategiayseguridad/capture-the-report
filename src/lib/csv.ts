@@ -9,8 +9,27 @@ function normalizar(texto: string): string {
     .toLowerCase();
 }
 
-/** Parser de CSV que soporta comillas dobles, comas dentro de comillas y CRLF. */
-export function parseCsv(texto: string): string[][] {
+/**
+ * Detecta el separador mirando la primera linea: Excel en locale espanol exporta
+ * con punto y coma en lugar de coma.
+ */
+function detectarSeparador(texto: string): string {
+  const primera = texto.split("\n", 1)[0] ?? "";
+  const comas = (primera.match(/,/g) ?? []).length;
+  const puntoYComa = (primera.match(/;/g) ?? []).length;
+  const tabs = (primera.match(/\t/g) ?? []).length;
+  if (puntoYComa > comas && puntoYComa >= tabs) return ";";
+  if (tabs > comas && tabs > puntoYComa) return "\t";
+  return ",";
+}
+
+/**
+ * Parser de CSV que soporta comillas dobles, separadores dentro de comillas y
+ * CRLF. Quita el BOM que Excel agrega al guardar como CSV UTF-8.
+ */
+export function parseCsv(textoCrudo: string): string[][] {
+  const texto = textoCrudo.replace(/^\uFEFF/, "");
+  const separador = detectarSeparador(texto);
   const filas: string[][] = [];
   let fila: string[] = [];
   let campo = "";
@@ -35,7 +54,7 @@ export function parseCsv(texto: string): string[][] {
 
     if (c === '"') {
       enComillas = true;
-    } else if (c === ",") {
+    } else if (c === separador) {
       fila.push(campo);
       campo = "";
     } else if (c === "\n") {
