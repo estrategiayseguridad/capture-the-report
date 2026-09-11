@@ -1,261 +1,240 @@
-Cliente,TicketID,FechaCreacion,FechaCierre,Categoria,Tipo,Producto,Estado,Prioridad,SLA_Cumplido
-Umbrella Ltda,HT-10170,2026-04-01,2026-04-04,Requerimiento,Cambio de Permisos,VPN,Resuelto,Baja,Si
-Initech,HT-10205,2026-04-01,,Incidente,Falla de Servidor,Antivirus / EDR,Abierto,Alta,
-Initech,HT-10248,2026-04-04,2026-04-04,Incidente,Caida de Servicio,VPN,Resuelto,Alta,Si
-Initech,HT-10256,2026-04-04,,Requerimiento,Alta de Usuario,SIEM,Abierto,Media,
-Globex S.A.,HT-10067,2026-04-05,,Requerimiento,Solicitud de Reporte,Correo Corporativo,Con el usuario,Media,
-Initech,HT-10207,2026-04-06,,Requerimiento,Instalacion de Software,Active Directory,Abierto,Baja,
-Initech,HT-10235,2026-04-06,,Incidente,Falla de Aplicacion,Backup,Con el usuario,Media,
-Globex S.A.,HT-10047,2026-04-09,,Requerimiento,Solicitud de Reporte,Firewall,Con el usuario,Media,
-Globex S.A.,HT-10073,2026-04-09,,Incidente,Malware / Virus,VPN,Con el usuario,Baja,
-Umbrella Ltda,HT-10132,2026-04-09,,Incidente,Falla de Hardware,Active Directory,Con el usuario,Alta,
-Umbrella Ltda,HT-10189,2026-04-09,2026-04-10,Requerimiento,Cambio de Permisos,SIEM,Resuelto,Media,Si
-ACME Corp,HT-10025,2026-04-10,,Requerimiento,Instalacion de Software,SIEM,En espera,Media,
-Globex S.A.,HT-10052,2026-04-10,2026-04-10,Incidente,Falla de Aplicacion,Correo Corporativo,Resuelto,Media,No
-ACME Corp,HT-10013,2026-04-13,,Incidente,Falla de Aplicacion,Correo Corporativo,Con el usuario,Media,
-ACME Corp,HT-10024,2026-04-13,,Requerimiento,Solicitud de Reporte,VPN,Con el usuario,Alta,
-Umbrella Ltda,HT-10120,2026-04-13,,Incidente,Falla de Hardware,Antivirus / EDR,Con el usuario,Baja,
-Globex S.A.,HT-10068,2026-04-14,,Requerimiento,Instalacion de Software,VPN,En espera,Media,
-Initech,HT-10221,2026-04-16,,Requerimiento,Solicitud de Acceso,Correo Corporativo,Con el usuario,Baja,
-ACME Corp,HT-10004,2026-04-17,2026-04-17,Incidente,Falla de Aplicacion,Servidor Web,Resuelto,Alta,Si
-Umbrella Ltda,HT-10128,2026-04-17,,Requerimiento,Instalacion de Software,Correo Corporativo,Abierto,Alta,
-Initech,HT-10194,2026-04-18,,Requerimiento,Solicitud de Reporte,Backup,Con el usuario,Baja,
-Initech,HT-10224,2026-04-18,,Incidente,Falla de Aplicacion,Active Directory,En espera,Media,
-Umbrella Ltda,HT-10148,2026-04-19,,Requerimiento,Solicitud de Acceso,SIEM,En espera,Media,
-Globex S.A.,HT-10097,2026-04-21,,Incidente,Caida de Servicio,Estacion de Trabajo,Abierto,Baja,
-Initech,HT-10241,2026-04-22,2026-04-22,Incidente,Caida de Servicio,VPN,Resuelto,Alta,Si
-Initech,HT-10246,2026-04-22,,Requerimiento,Cambio de Permisos,VPN,Con el usuario,Baja,
-Umbrella Ltda,HT-10113,2026-04-23,,Requerimiento,Alta de Usuario,Firewall,Con el usuario,Alta,
-Umbrella Ltda,HT-10161,2026-04-23,,Requerimiento,Solicitud de Reporte,Estacion de Trabajo,Abierto,Baja,
-Umbrella Ltda,HT-10180,2026-04-24,,Incidente,Caida de Servicio,Active Directory,En espera,Alta,
-ACME Corp,HT-10034,2026-04-25,,Incidente,Falla de Red,Base de Datos,Abierto,Media,
-ACME Corp,HT-10040,2026-04-25,2026-04-25,Incidente,Falla de Hardware,Backup,Resuelto,Baja,Si
-Globex S.A.,HT-10106,2026-04-26,,Incidente,Falla de Hardware,Base de Datos,Con el usuario,Baja,
-ACME Corp,HT-10007,2026-04-27,,Incidente,Falla de Aplicacion,Antivirus / EDR,Con el usuario,Media,
-Umbrella Ltda,HT-10133,2026-04-27,2026-04-28,Requerimiento,Reseteo de Contrasena,Active Directory,Resuelto,Media,Si
-Initech,HT-10198,2026-04-27,,Requerimiento,Solicitud de Acceso,SIEM,En espera,Media,
-Umbrella Ltda,HT-10188,2026-04-29,2026-04-29,Incidente,Falla de Aplicacion,Active Directory,Resuelto,Media,Si
-Umbrella Ltda,HT-10124,2026-04-30,2026-05-01,Requerimiento,Reseteo de Contrasena,Firewall,Resuelto,Alta,Si
-Globex S.A.,HT-10096,2026-05-01,,Requerimiento,Reseteo de Contrasena,Correo Corporativo,Abierto,Baja,
-ACME Corp,HT-10032,2026-05-03,,Incidente,Falla de Servidor,Active Directory,Abierto,Media,
-ACME Corp,HT-10036,2026-05-03,,Requerimiento,Solicitud de Reporte,Active Directory,Con el usuario,Media,
-Globex S.A.,HT-10077,2026-05-03,2026-05-03,Incidente,Malware / Virus,VPN,Resuelto,Media,Si
-Globex S.A.,HT-10094,2026-05-04,,Requerimiento,Solicitud de Reporte,Estacion de Trabajo,En espera,Media,
-ACME Corp,HT-10012,2026-05-05,,Requerimiento,Alta de Usuario,Active Directory,Abierto,Baja,
-Umbrella Ltda,HT-10190,2026-05-05,2026-05-06,Incidente,Falla de Aplicacion,SIEM,Resuelto,Media,No
-Globex S.A.,HT-10086,2026-05-06,,Requerimiento,Alta de Usuario,Firewall,Con el usuario,Media,
-Initech,HT-10253,2026-05-06,,Incidente,Falla de Red,Correo Corporativo,Abierto,Baja,
-ACME Corp,HT-10008,2026-05-07,,Requerimiento,Solicitud de Acceso,VPN,Abierto,Baja,
-Globex S.A.,HT-10074,2026-05-09,,Requerimiento,Solicitud de Reporte,Servidor Web,Con el usuario,Baja,
-Umbrella Ltda,HT-10165,2026-05-09,,Requerimiento,Alta de Usuario,Firewall,Con el usuario,Media,
-Globex S.A.,HT-10084,2026-05-11,,Requerimiento,Solicitud de Reporte,Firewall,En espera,Media,
-Umbrella Ltda,HT-10183,2026-05-11,,Incidente,Malware / Virus,Base de Datos,Con el usuario,Alta,
-Initech,HT-10239,2026-05-11,,Incidente,Falla de Aplicacion,VPN,Abierto,Media,
-Globex S.A.,HT-10105,2026-05-12,2026-05-15,Requerimiento,Alta de Usuario,Servidor Web,Resuelto,Media,No
-Umbrella Ltda,HT-10149,2026-05-12,,Requerimiento,Alta de Usuario,Antivirus / EDR,Con el usuario,Baja,
-ACME Corp,HT-10019,2026-05-13,2026-05-13,Requerimiento,Solicitud de Reporte,SIEM,Resuelto,Alta,Si
-Umbrella Ltda,HT-10125,2026-05-13,,Incidente,Malware / Virus,SIEM,En espera,Baja,
-Initech,HT-10203,2026-05-14,,Incidente,Falla de Hardware,Backup,Abierto,Alta,
-Initech,HT-10208,2026-05-14,,Requerimiento,Alta de Usuario,Servidor Web,Con el usuario,Baja,
-Umbrella Ltda,HT-10114,2026-05-15,,Incidente,Falla de Red,Backup,En espera,Media,
-ACME Corp,HT-10037,2026-05-16,,Requerimiento,Instalacion de Software,Backup,En espera,Media,
-Initech,HT-10242,2026-05-16,,Incidente,Caida de Servicio,Antivirus / EDR,Con el usuario,Alta,
-Umbrella Ltda,HT-10168,2026-05-18,,Requerimiento,Alta de Usuario,Active Directory,En espera,Media,
-Initech,HT-10204,2026-05-18,,Incidente,Caida de Servicio,Correo Corporativo,Con el usuario,Baja,
-Globex S.A.,HT-10075,2026-05-19,2026-05-19,Requerimiento,Cambio de Permisos,Servidor Web,Resuelto,Alta,Si
-Umbrella Ltda,HT-10174,2026-05-19,,Incidente,Malware / Virus,Antivirus / EDR,En espera,Media,
-Globex S.A.,HT-10048,2026-05-21,2026-05-22,Incidente,Falla de Hardware,Estacion de Trabajo,Resuelto,Media,Si
-Globex S.A.,HT-10069,2026-05-21,2026-05-21,Incidente,Falla de Servidor,Base de Datos,Resuelto,Media,Si
-Globex S.A.,HT-10092,2026-05-21,,Incidente,Falla de Servidor,Servidor Web,Abierto,Alta,
-Umbrella Ltda,HT-10111,2026-05-21,,Incidente,Falla de Servidor,Firewall,En espera,Alta,
-Initech,HT-10210,2026-05-21,,Incidente,Falla de Servidor,Correo Corporativo,Abierto,Baja,
-Initech,HT-10213,2026-05-21,,Incidente,Caida de Servicio,Firewall,Abierto,Alta,
-Globex S.A.,HT-10071,2026-05-22,,Requerimiento,Solicitud de Reporte,Active Directory,Abierto,Media,
-ACME Corp,HT-10043,2026-05-23,2026-05-25,Requerimiento,Instalacion de Software,Estacion de Trabajo,Resuelto,Baja,Si
-Globex S.A.,HT-10087,2026-05-23,,Incidente,Caida de Servicio,Firewall,Con el usuario,Media,
-ACME Corp,HT-10010,2026-05-24,2026-05-24,Requerimiento,Cambio de Permisos,SIEM,Resuelto,Alta,Si
-Initech,HT-10199,2026-05-24,,Incidente,Falla de Red,Active Directory,Abierto,Media,
-Initech,HT-10258,2026-05-24,2026-05-25,Requerimiento,Reseteo de Contrasena,Estacion de Trabajo,Resuelto,Media,Si
-ACME Corp,HT-10016,2026-05-25,,Incidente,Falla de Servidor,Antivirus / EDR,Abierto,Media,
-Umbrella Ltda,HT-10116,2026-05-25,2026-05-27,Requerimiento,Instalacion de Software,SIEM,Resuelto,Baja,Si
-Umbrella Ltda,HT-10152,2026-05-25,2026-05-27,Requerimiento,Solicitud de Reporte,VPN,Resuelto,Baja,Si
-Umbrella Ltda,HT-10141,2026-05-26,,Requerimiento,Solicitud de Acceso,VPN,Abierto,Alta,
-Globex S.A.,HT-10098,2026-05-27,2026-05-28,Requerimiento,Solicitud de Acceso,Backup,Resuelto,Media,Si
-Globex S.A.,HT-10085,2026-05-28,,Requerimiento,Solicitud de Reporte,Antivirus / EDR,Con el usuario,Media,
-Umbrella Ltda,HT-10162,2026-05-28,,Requerimiento,Reseteo de Contrasena,Antivirus / EDR,Abierto,Media,
-Umbrella Ltda,HT-10193,2026-05-28,2026-05-29,Incidente,Caida de Servicio,SIEM,Resuelto,Media,Si
-Globex S.A.,HT-10058,2026-05-29,,Incidente,Falla de Servidor,SIEM,Con el usuario,Media,
-Globex S.A.,HT-10103,2026-05-29,,Requerimiento,Reseteo de Contrasena,Base de Datos,Con el usuario,Baja,
-ACME Corp,HT-10017,2026-06-01,,Incidente,Falla de Aplicacion,Active Directory,Abierto,Baja,
-Umbrella Ltda,HT-10178,2026-06-01,,Incidente,Caida de Servicio,SIEM,Abierto,Media,
-Umbrella Ltda,HT-10185,2026-06-01,,Incidente,Falla de Hardware,Base de Datos,Con el usuario,Baja,
-Initech,HT-10233,2026-06-01,,Requerimiento,Reseteo de Contrasena,Active Directory,En espera,Media,
-Initech,HT-10245,2026-06-01,,Requerimiento,Cambio de Permisos,Firewall,En espera,Media,
-Globex S.A.,HT-10078,2026-06-02,,Requerimiento,Solicitud de Acceso,Correo Corporativo,Con el usuario,Media,
-Umbrella Ltda,HT-10115,2026-06-02,,Requerimiento,Cambio de Permisos,Backup,En espera,Baja,
-Initech,HT-10260,2026-06-02,,Incidente,Falla de Red,Backup,Con el usuario,Alta,
-ACME Corp,HT-10023,2026-06-03,,Incidente,Falla de Aplicacion,Base de Datos,Con el usuario,Media,
-Initech,HT-10196,2026-06-04,,Requerimiento,Cambio de Permisos,Correo Corporativo,En espera,Alta,
-ACME Corp,HT-10030,2026-06-05,,Requerimiento,Solicitud de Acceso,Antivirus / EDR,Abierto,Alta,
-ACME Corp,HT-10039,2026-06-06,,Incidente,Falla de Red,VPN,Abierto,Alta,
-Umbrella Ltda,HT-10126,2026-06-06,,Requerimiento,Cambio de Permisos,Base de Datos,Con el usuario,Media,
-Initech,HT-10215,2026-06-06,,Incidente,Falla de Hardware,Backup,Abierto,Baja,
-Initech,HT-10220,2026-06-06,,Incidente,Caida de Servicio,Active Directory,En espera,Alta,
-ACME Corp,HT-10021,2026-06-07,,Incidente,Falla de Hardware,Active Directory,Con el usuario,Alta,
-Umbrella Ltda,HT-10127,2026-06-07,,Requerimiento,Reseteo de Contrasena,Correo Corporativo,Con el usuario,Alta,
-Umbrella Ltda,HT-10191,2026-06-07,,Incidente,Falla de Red,Correo Corporativo,En espera,Alta,
-Initech,HT-10217,2026-06-07,,Requerimiento,Solicitud de Acceso,Antivirus / EDR,Abierto,Media,
-Initech,HT-10231,2026-06-08,,Incidente,Falla de Aplicacion,Estacion de Trabajo,En espera,Media,
-Umbrella Ltda,HT-10137,2026-06-09,,Incidente,Caida de Servicio,SIEM,Abierto,Media,
-Globex S.A.,HT-10051,2026-06-10,,Incidente,Falla de Red,Servidor Web,Con el usuario,Alta,
-Umbrella Ltda,HT-10143,2026-06-10,2026-06-10,Incidente,Caida de Servicio,Firewall,Resuelto,Baja,Si
-Initech,HT-10244,2026-06-11,,Requerimiento,Solicitud de Reporte,Correo Corporativo,Con el usuario,Alta,
-Globex S.A.,HT-10070,2026-06-12,,Requerimiento,Alta de Usuario,Active Directory,Abierto,Baja,
-Globex S.A.,HT-10099,2026-06-12,,Requerimiento,Instalacion de Software,Active Directory,En espera,Baja,
-Umbrella Ltda,HT-10142,2026-06-17,2026-06-18,Requerimiento,Reseteo de Contrasena,VPN,Resuelto,Alta,No
-Initech,HT-10219,2026-06-17,2026-06-19,Requerimiento,Solicitud de Reporte,Estacion de Trabajo,Resuelto,Media,No
-Initech,HT-10234,2026-06-17,2026-06-17,Incidente,Falla de Red,Correo Corporativo,Resuelto,Media,Si
-Initech,HT-10214,2026-06-18,,Incidente,Falla de Servidor,SIEM,En espera,Alta,
-Initech,HT-10216,2026-06-18,,Incidente,Malware / Virus,Estacion de Trabajo,Con el usuario,Baja,
-Initech,HT-10251,2026-06-18,,Requerimiento,Alta de Usuario,Servidor Web,Abierto,Media,
-ACME Corp,HT-10020,2026-06-19,2026-06-19,Incidente,Caida de Servicio,Firewall,Resuelto,Media,Si
-Globex S.A.,HT-10056,2026-06-19,,Requerimiento,Reseteo de Contrasena,SIEM,En espera,Media,
-Umbrella Ltda,HT-10140,2026-06-19,,Incidente,Caida de Servicio,Base de Datos,Abierto,Alta,
-Umbrella Ltda,HT-10182,2026-06-19,,Incidente,Falla de Servidor,VPN,En espera,Media,
-Umbrella Ltda,HT-10108,2026-06-20,,Requerimiento,Reseteo de Contrasena,Estacion de Trabajo,Abierto,Baja,
-Initech,HT-10237,2026-06-21,2026-06-21,Incidente,Malware / Virus,Backup,Resuelto,Media,Si
-ACME Corp,HT-10002,2026-06-23,,Incidente,Falla de Red,VPN,Abierto,Alta,
-ACME Corp,HT-10003,2026-06-24,,Requerimiento,Solicitud de Acceso,VPN,Abierto,Alta,
-Initech,HT-10209,2026-06-24,,Requerimiento,Cambio de Permisos,Active Directory,En espera,Baja,
-Globex S.A.,HT-10066,2026-06-25,,Requerimiento,Solicitud de Reporte,Backup,Con el usuario,Media,
-Umbrella Ltda,HT-10144,2026-06-25,,Incidente,Caida de Servicio,Backup,Con el usuario,Media,
-Initech,HT-10195,2026-06-25,,Requerimiento,Reseteo de Contrasena,Base de Datos,En espera,Baja,
-Globex S.A.,HT-10100,2026-06-26,,Requerimiento,Instalacion de Software,Antivirus / EDR,En espera,Baja,
-Initech,HT-10225,2026-06-26,2026-06-27,Incidente,Malware / Virus,Servidor Web,Resuelto,Media,No
-ACME Corp,HT-10031,2026-06-27,,Incidente,Malware / Virus,Correo Corporativo,Con el usuario,Media,
-Initech,HT-10230,2026-06-27,,Requerimiento,Cambio de Permisos,Base de Datos,En espera,Baja,
-Umbrella Ltda,HT-10110,2026-06-28,2026-06-28,Incidente,Falla de Aplicacion,Base de Datos,Resuelto,Media,Si
-Initech,HT-10223,2026-06-29,,Incidente,Caida de Servicio,Active Directory,Con el usuario,Media,
-ACME Corp,HT-10009,2026-06-30,,Requerimiento,Solicitud de Reporte,Antivirus / EDR,Con el usuario,Baja,
-Initech,HT-10238,2026-06-30,2026-06-30,Incidente,Malware / Virus,Estacion de Trabajo,Resuelto,Alta,No
-Globex S.A.,HT-10088,2026-07-02,,Requerimiento,Alta de Usuario,Estacion de Trabajo,Con el usuario,Alta,
-Initech,HT-10226,2026-07-02,,Incidente,Malware / Virus,Correo Corporativo,Abierto,Media,
-ACME Corp,HT-10011,2026-07-03,2026-07-04,Incidente,Malware / Virus,Servidor Web,Resuelto,Baja,Si
-Globex S.A.,HT-10089,2026-07-03,,Incidente,Falla de Red,Antivirus / EDR,En espera,Media,
-Umbrella Ltda,HT-10109,2026-07-03,,Incidente,Falla de Red,Servidor Web,Abierto,Media,
-Umbrella Ltda,HT-10134,2026-07-03,2026-07-06,Requerimiento,Alta de Usuario,VPN,Resuelto,Baja,Si
-Umbrella Ltda,HT-10159,2026-07-03,,Requerimiento,Instalacion de Software,Antivirus / EDR,En espera,Media,
-ACME Corp,HT-10028,2026-07-04,2026-07-04,Incidente,Falla de Red,Antivirus / EDR,Resuelto,Alta,No
-Umbrella Ltda,HT-10136,2026-07-04,,Requerimiento,Solicitud de Reporte,Estacion de Trabajo,Con el usuario,Baja,
-ACME Corp,HT-10027,2026-07-06,,Requerimiento,Reseteo de Contrasena,Correo Corporativo,Con el usuario,Baja,
-Globex S.A.,HT-10055,2026-07-07,,Incidente,Malware / Virus,Servidor Web,En espera,Media,
-Globex S.A.,HT-10061,2026-07-07,2026-07-10,Requerimiento,Cambio de Permisos,VPN,Resuelto,Media,No
-Umbrella Ltda,HT-10151,2026-07-07,,Incidente,Malware / Virus,Firewall,Con el usuario,Media,
-Umbrella Ltda,HT-10154,2026-07-09,2026-07-09,Incidente,Caida de Servicio,Antivirus / EDR,Resuelto,Alta,Si
-Umbrella Ltda,HT-10166,2026-07-09,,Requerimiento,Cambio de Permisos,Base de Datos,Con el usuario,Media,
-Initech,HT-10259,2026-07-11,,Incidente,Caida de Servicio,Firewall,En espera,Baja,
-Globex S.A.,HT-10053,2026-07-13,2026-07-15,Requerimiento,Cambio de Permisos,Servidor Web,Resuelto,Baja,Si
-Umbrella Ltda,HT-10172,2026-07-13,,Incidente,Falla de Hardware,Firewall,Con el usuario,Alta,
-Initech,HT-10206,2026-07-13,2026-07-13,Incidente,Falla de Hardware,Active Directory,Resuelto,Media,Si
-Umbrella Ltda,HT-10139,2026-07-14,,Incidente,Malware / Virus,Active Directory,Abierto,Media,
-Initech,HT-10247,2026-07-14,2026-07-15,Requerimiento,Instalacion de Software,Active Directory,Resuelto,Media,Si
-Globex S.A.,HT-10076,2026-07-15,,Incidente,Falla de Aplicacion,Servidor Web,Con el usuario,Baja,
-Globex S.A.,HT-10081,2026-07-15,,Requerimiento,Alta de Usuario,Backup,Abierto,Baja,
-Initech,HT-10257,2026-07-17,,Requerimiento,Solicitud de Reporte,Base de Datos,Con el usuario,Media,
-Initech,HT-10228,2026-07-18,,Requerimiento,Instalacion de Software,Base de Datos,Abierto,Alta,
-ACME Corp,HT-10015,2026-07-19,2026-07-20,Requerimiento,Alta de Usuario,Base de Datos,Resuelto,Baja,Si
-ACME Corp,HT-10018,2026-07-19,,Incidente,Falla de Red,Backup,Abierto,Media,
-Umbrella Ltda,HT-10155,2026-07-19,,Requerimiento,Alta de Usuario,Base de Datos,Abierto,Media,
-Initech,HT-10197,2026-07-20,2026-07-20,Incidente,Falla de Red,Firewall,Resuelto,Alta,No
-Globex S.A.,HT-10062,2026-07-21,2026-07-22,Requerimiento,Instalacion de Software,SIEM,Resuelto,Alta,No
-Globex S.A.,HT-10095,2026-07-22,,Requerimiento,Reseteo de Contrasena,Antivirus / EDR,En espera,Media,
-ACME Corp,HT-10001,2026-07-23,2026-07-23,Incidente,Falla de Aplicacion,Base de Datos,Resuelto,Alta,Si
-ACME Corp,HT-10026,2026-07-23,,Incidente,Falla de Servidor,SIEM,Abierto,Alta,
-ACME Corp,HT-10006,2026-07-24,,Requerimiento,Solicitud de Reporte,Correo Corporativo,Con el usuario,Media,
-Umbrella Ltda,HT-10187,2026-07-24,,Incidente,Falla de Hardware,Firewall,Abierto,Alta,
-Initech,HT-10243,2026-07-25,,Incidente,Malware / Virus,Antivirus / EDR,Abierto,Media,
-Umbrella Ltda,HT-10179,2026-07-26,,Requerimiento,Alta de Usuario,Servidor Web,Con el usuario,Media,
-Initech,HT-10202,2026-07-26,,Incidente,Caida de Servicio,Correo Corporativo,Abierto,Baja,
-Umbrella Ltda,HT-10131,2026-07-27,2026-07-28,Incidente,Malware / Virus,Backup,Resuelto,Baja,Si
-Umbrella Ltda,HT-10147,2026-07-27,,Incidente,Falla de Red,Estacion de Trabajo,En espera,Media,
-Initech,HT-10254,2026-07-28,,Requerimiento,Alta de Usuario,SIEM,Con el usuario,Baja,
-Umbrella Ltda,HT-10119,2026-07-30,,Requerimiento,Reseteo de Contrasena,Base de Datos,En espera,Media,
-Umbrella Ltda,HT-10138,2026-07-30,2026-07-30,Incidente,Falla de Red,VPN,Resuelto,Media,No
-ACME Corp,HT-10038,2026-07-31,,Incidente,Caida de Servicio,Antivirus / EDR,Con el usuario,Baja,
-Globex S.A.,HT-10060,2026-07-31,,Incidente,Malware / Virus,Correo Corporativo,Abierto,Alta,
-ACME Corp,HT-10014,2026-08-01,2026-08-01,Incidente,Malware / Virus,Backup,Resuelto,Alta,Si
-Globex S.A.,HT-10090,2026-08-01,,Incidente,Falla de Servidor,SIEM,Con el usuario,Media,
-ACME Corp,HT-10045,2026-08-02,,Incidente,Caida de Servicio,SIEM,Con el usuario,Baja,
-Globex S.A.,HT-10104,2026-08-02,2026-08-03,Requerimiento,Instalacion de Software,Active Directory,Resuelto,Baja,Si
-Umbrella Ltda,HT-10146,2026-08-02,,Requerimiento,Solicitud de Reporte,Antivirus / EDR,En espera,Media,
-Globex S.A.,HT-10079,2026-08-03,2026-08-03,Incidente,Falla de Hardware,SIEM,Resuelto,Media,Si
-Globex S.A.,HT-10080,2026-08-03,,Incidente,Malware / Virus,Estacion de Trabajo,En espera,Media,
-Globex S.A.,HT-10093,2026-08-03,,Incidente,Malware / Virus,SIEM,En espera,Baja,
-Umbrella Ltda,HT-10192,2026-08-03,2026-08-03,Requerimiento,Instalacion de Software,Base de Datos,Resuelto,Media,Si
-Umbrella Ltda,HT-10164,2026-08-04,,Incidente,Falla de Servidor,Base de Datos,Con el usuario,Baja,
-Umbrella Ltda,HT-10173,2026-08-04,2026-08-04,Incidente,Malware / Virus,Antivirus / EDR,Resuelto,Baja,Si
-Umbrella Ltda,HT-10123,2026-08-05,,Incidente,Caida de Servicio,Estacion de Trabajo,Abierto,Alta,
-Umbrella Ltda,HT-10153,2026-08-05,,Incidente,Falla de Red,Correo Corporativo,Abierto,Media,
-Initech,HT-10252,2026-08-05,,Requerimiento,Solicitud de Reporte,Active Directory,Con el usuario,Media,
-Globex S.A.,HT-10057,2026-08-06,,Requerimiento,Reseteo de Contrasena,Antivirus / EDR,Abierto,Media,
-Umbrella Ltda,HT-10156,2026-08-06,,Incidente,Malware / Virus,SIEM,En espera,Media,
-Umbrella Ltda,HT-10186,2026-08-06,,Incidente,Falla de Red,SIEM,Abierto,Alta,
-ACME Corp,HT-10022,2026-08-07,,Requerimiento,Instalacion de Software,Active Directory,Con el usuario,Baja,
-ACME Corp,HT-10044,2026-08-08,,Requerimiento,Instalacion de Software,Correo Corporativo,En espera,Alta,
-Globex S.A.,HT-10072,2026-08-08,2026-08-10,Requerimiento,Solicitud de Reporte,Servidor Web,Resuelto,Baja,Si
-Umbrella Ltda,HT-10176,2026-08-08,,Requerimiento,Instalacion de Software,Antivirus / EDR,En espera,Media,
-Initech,HT-10218,2026-08-08,,Requerimiento,Solicitud de Reporte,Active Directory,Abierto,Baja,
-Umbrella Ltda,HT-10121,2026-08-09,,Requerimiento,Solicitud de Acceso,Antivirus / EDR,En espera,Media,
-Umbrella Ltda,HT-10184,2026-08-09,,Requerimiento,Cambio de Permisos,Servidor Web,Con el usuario,Media,
-ACME Corp,HT-10041,2026-08-11,,Incidente,Falla de Red,SIEM,En espera,Baja,
-Umbrella Ltda,HT-10129,2026-08-11,,Requerimiento,Reseteo de Contrasena,Servidor Web,Abierto,Baja,
-Umbrella Ltda,HT-10177,2026-08-11,2026-08-11,Incidente,Falla de Servidor,Correo Corporativo,Resuelto,Alta,Si
-Initech,HT-10229,2026-08-12,,Requerimiento,Reseteo de Contrasena,VPN,Abierto,Baja,
-Initech,HT-10222,2026-08-13,,Requerimiento,Alta de Usuario,Estacion de Trabajo,Abierto,Baja,
-Umbrella Ltda,HT-10145,2026-08-14,,Incidente,Falla de Red,Estacion de Trabajo,En espera,Media,
-Umbrella Ltda,HT-10171,2026-08-14,,Incidente,Caida de Servicio,Base de Datos,Abierto,Alta,
-ACME Corp,HT-10042,2026-08-15,,Incidente,Falla de Red,Correo Corporativo,Con el usuario,Alta,
-Umbrella Ltda,HT-10117,2026-08-15,,Incidente,Falla de Servidor,Active Directory,Abierto,Baja,
-Globex S.A.,HT-10082,2026-08-16,,Requerimiento,Solicitud de Acceso,VPN,En espera,Alta,
-Umbrella Ltda,HT-10150,2026-08-16,,Incidente,Falla de Aplicacion,Antivirus / EDR,Abierto,Media,
-Umbrella Ltda,HT-10181,2026-08-16,,Incidente,Caida de Servicio,Active Directory,Con el usuario,Baja,
-Initech,HT-10250,2026-08-16,,Requerimiento,Cambio de Permisos,Servidor Web,Con el usuario,Media,
-Initech,HT-10212,2026-08-19,2026-08-19,Requerimiento,Instalacion de Software,VPN,Resuelto,Alta,Si
-Initech,HT-10249,2026-08-19,2026-08-19,Incidente,Falla de Servidor,Base de Datos,Resuelto,Media,Si
-Globex S.A.,HT-10064,2026-08-20,,Incidente,Falla de Hardware,Base de Datos,Con el usuario,Alta,
-Umbrella Ltda,HT-10112,2026-08-21,,Incidente,Falla de Aplicacion,Antivirus / EDR,En espera,Media,
-Globex S.A.,HT-10059,2026-08-22,2026-08-25,Requerimiento,Solicitud de Acceso,Antivirus / EDR,Resuelto,Baja,No
-Initech,HT-10236,2026-08-22,2026-08-22,Incidente,Malware / Virus,Base de Datos,Resuelto,Alta,Si
-Globex S.A.,HT-10046,2026-08-23,,Requerimiento,Solicitud de Acceso,VPN,Abierto,Baja,
-Globex S.A.,HT-10091,2026-08-24,,Incidente,Falla de Aplicacion,Correo Corporativo,Abierto,Alta,
-Initech,HT-10227,2026-08-24,2026-08-26,Requerimiento,Reseteo de Contrasena,Correo Corporativo,Resuelto,Media,Si
-ACME Corp,HT-10035,2026-08-25,,Incidente,Falla de Hardware,Correo Corporativo,Abierto,Baja,
-Globex S.A.,HT-10054,2026-08-25,,Incidente,Falla de Red,Firewall,En espera,Baja,
-Globex S.A.,HT-10083,2026-08-25,,Requerimiento,Reseteo de Contrasena,Correo Corporativo,Abierto,Media,
-Umbrella Ltda,HT-10167,2026-08-25,2026-08-25,Incidente,Malware / Virus,Firewall,Resuelto,Alta,Si
-Initech,HT-10240,2026-08-25,,Requerimiento,Cambio de Permisos,Backup,Abierto,Baja,
-ACME Corp,HT-10005,2026-08-26,,Requerimiento,Solicitud de Acceso,Servidor Web,Abierto,Media,
-Umbrella Ltda,HT-10122,2026-08-26,,Requerimiento,Solicitud de Reporte,Servidor Web,En espera,Alta,
-Umbrella Ltda,HT-10118,2026-08-28,2026-08-28,Incidente,Falla de Aplicacion,Active Directory,Resuelto,Alta,Si
-Initech,HT-10211,2026-08-28,2026-08-28,Requerimiento,Alta de Usuario,SIEM,Resuelto,Alta,Si
-ACME Corp,HT-10029,2026-08-29,,Requerimiento,Instalacion de Software,Base de Datos,Abierto,Baja,
-Globex S.A.,HT-10065,2026-08-29,,Incidente,Caida de Servicio,Estacion de Trabajo,Abierto,Alta,
-Umbrella Ltda,HT-10135,2026-08-29,2026-08-31,Incidente,Caida de Servicio,Servidor Web,Resuelto,Baja,No
-Initech,HT-10200,2026-08-29,2026-08-29,Incidente,Caida de Servicio,Active Directory,Resuelto,Alta,Si
-Initech,HT-10255,2026-08-30,,Incidente,Falla de Hardware,Backup,En espera,Media,
-Globex S.A.,HT-10107,2026-08-31,,Requerimiento,Solicitud de Acceso,Correo Corporativo,Con el usuario,Media,
-Initech,HT-10232,2026-08-31,,Incidente,Falla de Hardware,Backup,Abierto,Alta,
-Globex S.A.,HT-10049,2026-09-01,,Incidente,Falla de Hardware,Firewall,En espera,Alta,
-Umbrella Ltda,HT-10158,2026-09-01,,Requerimiento,Cambio de Permisos,Estacion de Trabajo,En espera,Baja,
-Umbrella Ltda,HT-10169,2026-09-01,,Incidente,Falla de Hardware,Estacion de Trabajo,En espera,Alta,
-Globex S.A.,HT-10050,2026-09-02,2026-09-02,Requerimiento,Instalacion de Software,Estacion de Trabajo,Resuelto,Alta,Si
-Umbrella Ltda,HT-10130,2026-09-02,2026-09-02,Incidente,Falla de Aplicacion,VPN,Resuelto,Alta,No
-Globex S.A.,HT-10063,2026-09-03,2026-09-04,Requerimiento,Reseteo de Contrasena,Base de Datos,Resuelto,Baja,Si
-Umbrella Ltda,HT-10160,2026-09-03,2026-09-04,Incidente,Caida de Servicio,SIEM,Resuelto,Baja,Si
-Globex S.A.,HT-10101,2026-09-05,,Requerimiento,Alta de Usuario,Servidor Web,Abierto,Media,
-Initech,HT-10201,2026-09-06,,Requerimiento,Cambio de Permisos,Antivirus / EDR,En espera,Media,
-Umbrella Ltda,HT-10163,2026-09-08,,Incidente,Falla de Red,Estacion de Trabajo,En espera,Alta,
-ACME Corp,HT-10033,2026-09-09,,Requerimiento,Alta de Usuario,Backup,Resuelto,Baja,
-Globex S.A.,HT-10102,2026-09-09,,Incidente,Falla de Aplicacion,Backup,Abierto,Baja,
-Umbrella Ltda,HT-10157,2026-09-09,,Incidente,Falla de Aplicacion,Backup,Con el usuario,Media,
-Umbrella Ltda,HT-10175,2026-09-09,,Requerimiento,Cambio de Permisos,SIEM,En espera,Media,
+Ticket ID,Summary,Status,Date Created,Hour Created,Category,Team,ITIL Type,Ticket Type,Assigned Agent,User Name,Client,SLA,Time to Respond (Decimal),Time to Resolve (Decimal),Priority,Date Closed
+20184,,With User,4/1/2026 8:30,8,Darktrace>Network,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20196,,Closed,4/10/2026 15:52,15,Cloudflare>ZTNA,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,4.148813853,Media,4/10/2026 20:01
+20220,,In Progress,4/10/2026 2:58,2,Darktrace>Network,3ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Baja,
+20091,,Closed,4/10/2026 5:29,5,General>Reporte,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,10.781950364,Baja,4/10/2026 16:16
+20075,,New,4/10/2026 6:12,6,Cloudflare>WAF,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Alta,
+20128,,On Hold,4/11/2026 4:19,4,Darktrace>Network,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20016,,Closed,4/11/2026 6:46,6,ElasticSearch>SIEM,2da Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,2.044621506,Alta,4/11/2026 8:49
+20098,,With User,4/13/2026 20:39,20,Darktrace>Network,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Media,
+20055,,New,4/14/2026 21:41,21,General>Reporte,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20190,,New,4/14/2026 3:04,3,General>Reporte,3ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20090,,Closed,4/14/2026 9:33,9,Cloudflare>ZTNA,1ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,18.795165681,Media,4/15/2026 4:21
+20135,,New,4/15/2026 11:35,11,CTI,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20216,,In Progress,4/16/2026 0:20,0,General>Otros,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Baja,
+20166,,New,4/16/2026 10:02,10,ElasticSearch>SIEM,1ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Alta,
+20080,,In Progress,4/16/2026 14:02,14,ElasticSearch>SIEM,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Media,
+20082,,Closed,4/17/2026 20:19,20,Darktrace>Network,3ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,29.048270332,Media,4/19/2026 1:22
+20083,,In Progress,4/17/2026 20:20,20,General>Otros,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Media,
+20084,,On Hold,4/18/2026 14:01,14,ThreatDown,1ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20172,,With User,4/18/2026 15:42,15,ThreatDown,3ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20044,,Closed,4/2/2026 19:20,19,Cloudflare>WAF,3ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,10.901089613,Media,4/3/2026 6:14
+20077,,In Progress,4/2/2026 2:27,2,Cloudflare>ZTNA,3ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20147,,Closed,4/20/2026 22:04,22,ThreatDown,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,3.053332945,Alta,4/21/2026 1:07
+20002,,Closed,4/20/2026 5:17,5,General>Otros,2da Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,20.681058433,Media,4/21/2026 1:58
+20114,,Closed,4/21/2026 3:46,3,Darktrace>Network,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,0.802124138,Media,4/21/2026 4:34
+20073,,New,4/21/2026 9:18,9,SOC Radar>Brand Protection,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Alta,
+20067,,Closed,4/23/2026 12:10,12,General>Reporte,2da Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,9.368041830,Alta,4/23/2026 21:32
+20120,,In Progress,4/24/2026 22:22,22,SOC Radar>Brand Protection,2da Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Media,
+20020,,New,4/24/2026 6:10,6,ElasticSearch>SIEM,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20146,,Closed,4/25/2026 1:22,1,Cloudflare>WAF,1ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,44.758677902,Baja,4/26/2026 22:08
+20034,,With User,4/26/2026 18:02,18,Cloudflare>WAF,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20226,,In Progress,4/27/2026 11:25,11,Cloudflare>WAF,3ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Media,
+20238,,With User,4/27/2026 16:23,16,CTI,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Alta,
+20011,,With User,4/27/2026 18:52,18,General>Reporte,3ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Alta,
+20153,,New,4/27/2026 2:09,2,SOC Radar>Brand Protection,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Baja,
+20087,,Closed,4/28/2026 2:13,2,Darktrace>Network,2da Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,56.551197362,Baja,4/30/2026 10:46
+20106,,On Hold,4/28/2026 22:19,22,Cloudflare>ZTNA,2da Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Media,
+20127,,On Hold,4/28/2026 23:19,23,ThreatDown,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20173,,New,4/29/2026 12:20,12,CTI,3ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20123,,Closed,4/3/2026 13:52,13,General>Reporte,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,0.247346119,Baja,4/3/2026 14:06
+20202,,On Hold,4/3/2026 21:14,21,Cloudflare>ZTNA,1ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Alta,
+20033,,On Hold,4/3/2026 5:02,5,SOC Radar>Brand Protection,2da Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20008,,In Progress,4/4/2026 1:39,1,General>Reporte,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Baja,
+20072,,New,4/4/2026 15:08,15,ThreatDown,3ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Alta,
+20031,,With User,4/4/2026 22:48,22,General>Otros,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Baja,
+20161,,New,4/5/2026 1:14,1,CTI,2da Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Media,
+20062,,On Hold,4/6/2026 10:08,10,ElasticSearch>SIEM,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Baja,
+20049,,In Progress,4/6/2026 7:56,7,Darktrace>Network,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20088,,New,4/7/2026 18:44,18,General>Reporte,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Alta,
+20117,,In Progress,4/7/2026 7:50,7,General>Otros,3ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Baja,
+20100,,On Hold,4/7/2026 9:21,9,Cloudflare>WAF,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Baja,
+20096,,On Hold,4/8/2026 23:08,23,General>Otros,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Media,
+20040,,In Progress,4/9/2026 10:52,10,ThreatDown,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20089,,With User,4/9/2026 22:55,22,SOC Radar>Brand Protection,1ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20134,,Closed,4/9/2026 23:53,23,General>Reporte,1ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,37.075360317,Media,4/11/2026 12:57
+20144,,With User,4/9/2026 3:10,3,General>Otros,3ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Baja,
+20107,,New,5/1/2026 23:07,23,ElasticSearch>SIEM,2da Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Alta,
+20163,,New,5/1/2026 9:24,9,CTI,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Baja,
+20015,,In Progress,5/10/2026 8:47,8,ThreatDown,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Baja,
+20133,,New,5/11/2026 5:14,5,Cloudflare>WAF,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20061,,New,5/12/2026 15:19,15,General>Otros,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Media,
+20159,,New,5/12/2026 8:22,8,General>Reporte,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20030,,Closed,5/13/2026 3:20,3,CTI,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,10.904358058,Alta,5/13/2026 14:14
+20112,,Closed,5/14/2026 20:30,20,General>Otros,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,6.794602815,Media,5/15/2026 3:17
+20188,,In Progress,5/14/2026 6:47,6,CTI,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20170,,New,5/15/2026 18:49,18,Cloudflare>WAF,3ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20060,,With User,5/16/2026 1:08,1,General>Otros,1ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Media,
+20198,,New,5/17/2026 20:27,20,CTI,2da Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Alta,
+20158,,In Progress,5/18/2026 10:59,10,ElasticSearch>SIEM,3ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20003,,On Hold,5/18/2026 19:49,19,General>Reporte,1ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Alta,
+20192,,New,5/18/2026 8:18,8,CTI,3ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20057,,On Hold,5/18/2026 9:58,9,Cloudflare>ZTNA,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Baja,
+20115,,With User,5/19/2026 3:56,3,CTI,1ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Media,
+20207,,In Progress,5/2/2026 17:44,17,CTI,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Media,
+20018,,Closed,5/2/2026 5:52,5,SOC Radar>Brand Protection,3ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,48.029868192,Media,5/4/2026 5:53
+20069,,Closed,5/20/2026 13:57,13,General>Otros,3ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,40.257882706,Baja,5/22/2026 6:12
+20210,,In Progress,5/20/2026 16:54,16,Darktrace>Network,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Media,
+20131,,Closed,5/20/2026 5:13,5,CTI,1ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,47.504108736,Alta,5/22/2026 4:44
+20235,,On Hold,5/20/2026 5:20,5,SOC Radar>Brand Protection,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Baja,
+20145,,Closed,5/21/2026 1:24,1,ElasticSearch>SIEM,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,0.724159115,Media,5/21/2026 2:08
+20221,,Closed,5/23/2026 0:57,0,Darktrace>Network,3ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,18.814101935,Baja,5/23/2026 19:46
+20063,,On Hold,5/23/2026 9:08,9,Cloudflare>ZTNA,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Alta,
+20141,,Closed,5/24/2026 0:35,0,CTI,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,0.345898033,Alta,5/24/2026 0:56
+20005,,In Progress,5/24/2026 12:55,12,SOC Radar>Brand Protection,1ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Media,
+20065,,With User,5/24/2026 4:47,4,SOC Radar>Brand Protection,2da Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20174,,New,5/26/2026 13:16,13,General>Otros,3ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20177,,New,5/27/2026 17:29,17,General>Otros,1ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Media,
+20193,,With User,5/27/2026 2:06,2,SOC Radar>Brand Protection,2da Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Baja,
+20225,,With User,5/27/2026 3:40,3,Cloudflare>ZTNA,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Media,
+20056,,On Hold,5/28/2026 11:13,11,SOC Radar>Brand Protection,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Baja,
+20035,,New,5/28/2026 20:19,20,General>Otros,1ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Media,
+20004,,Closed,5/29/2026 10:50,10,ElasticSearch>SIEM,1ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,24.193376828,Baja,5/30/2026 11:02
+20085,,Closed,5/30/2026 15:29,15,SOC Radar>Brand Protection,1ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,39.344116341,Baja,6/1/2026 6:49
+20079,,New,5/31/2026 19:25,19,General>Otros,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Media,
+20068,,On Hold,5/4/2026 0:24,0,ElasticSearch>SIEM,1ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Alta,
+20168,,With User,5/4/2026 21:19,21,ElasticSearch>SIEM,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20217,,New,5/7/2026 1:54,1,General>Reporte,2da Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Media,
+20024,,Closed,5/7/2026 20:29,20,SOC Radar>Brand Protection,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,2.698442944,Media,5/7/2026 23:11
+20014,,On Hold,5/7/2026 21:45,21,ElasticSearch>SIEM,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Media,
+20152,,On Hold,5/8/2026 13:39,13,ElasticSearch>SIEM,2da Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Media,
+20048,,New,5/9/2026 14:25,14,General>Otros,2da Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Media,
+20059,,Closed,6/1/2026 10:33,10,ThreatDown,2da Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,132.072637752,Media,6/6/2026 22:38
+20195,,In Progress,6/1/2026 12:19,12,Cloudflare>ZTNA,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Alta,
+20169,,New,6/10/2026 0:39,0,SOC Radar>Brand Protection,3ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20066,,Closed,6/10/2026 18:14,18,ElasticSearch>SIEM,1ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,169.597807577,Baja,6/17/2026 19:50
+20021,,New,6/12/2026 6:14,6,General>Reporte,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Media,
+20039,,On Hold,6/15/2026 0:50,0,ThreatDown,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Media,
+20164,,In Progress,6/17/2026 2:46,2,Cloudflare>WAF,3ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20045,,New,6/18/2026 1:43,1,Cloudflare>ZTNA,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Alta,
+20205,,New,6/18/2026 16:36,16,ElasticSearch>SIEM,2da Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Alta,
+20053,,Closed,6/18/2026 5:57,5,CTI,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,1.800783729,Alta,6/18/2026 7:45
+20203,,In Progress,6/19/2026 12:41,12,CTI,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Baja,
+20036,,With User,6/2/2026 15:23,15,SOC Radar>Brand Protection,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Media,
+20237,,Closed,6/2/2026 23:27,23,General>Reporte,2da Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,32.439438890,Media,6/4/2026 7:53
+20211,,Closed,6/2/2026 3:33,3,General>Otros,1ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,21.592847305,Media,6/3/2026 1:08
+20038,,With User,6/20/2026 17:07,17,SOC Radar>Brand Protection,3ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Baja,
+20026,,Closed,6/20/2026 8:58,8,CTI,2da Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,0.312543916,Alta,6/20/2026 9:17
+20213,,On Hold,6/21/2026 18:22,18,Cloudflare>WAF,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Media,
+20058,,In Progress,6/21/2026 3:19,3,ElasticSearch>SIEM,2da Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Baja,
+20126,,Closed,6/23/2026 16:10,16,General>Reporte,3ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,14.984674485,Alta,6/24/2026 7:09
+20197,,New,6/24/2026 23:09,23,General>Reporte,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Media,
+20122,,New,6/25/2026 15:21,15,ThreatDown,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20156,,New,6/26/2026 21:38,21,General>Otros,3ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20214,,With User,6/27/2026 21:22,21,SOC Radar>Brand Protection,1ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Baja,
+20138,,On Hold,6/27/2026 22:09,22,General>Reporte,1ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Alta,
+20233,,In Progress,6/29/2026 3:29,3,ElasticSearch>SIEM,3ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Baja,
+20160,,Closed,6/29/2026 4:00,4,SOC Radar>Brand Protection,1ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,27.445030820,Media,6/30/2026 7:27
+20140,,With User,6/3/2026 21:13,21,ElasticSearch>SIEM,3ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Media,
+20074,,New,6/30/2026 1:16,1,General>Otros,2da Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20234,,New,6/30/2026 18:56,18,ThreatDown,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Alta,
+20183,,New,6/30/2026 19:54,19,General>Otros,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20102,,New,6/6/2026 12:15,12,ThreatDown,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Media,
+20204,,In Progress,6/6/2026 18:07,18,Cloudflare>ZTNA,2da Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Alta,
+20142,,On Hold,6/6/2026 4:25,4,Darktrace>Network,3ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20051,,On Hold,6/7/2026 17:57,17,ElasticSearch>SIEM,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Media,
+20054,,Closed,6/8/2026 10:57,10,Cloudflare>WAF,3ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,1.837024191,Media,6/8/2026 12:47
+20165,,New,6/8/2026 15:43,15,General>Reporte,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20064,,In Progress,6/8/2026 6:06,6,Cloudflare>ZTNA,1ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20124,,On Hold,6/9/2026 12:06,12,General>Otros,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20167,,New,7/1/2026 5:42,5,General>Reporte,3ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Alta,
+20218,,In Progress,7/10/2026 20:44,20,CTI,2da Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Media,
+20010,,Closed,7/10/2026 4:24,4,SOC Radar>Brand Protection,2da Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,2.628705808,Media,7/10/2026 7:01
+20149,,With User,7/11/2026 17:16,17,SOC Radar>Brand Protection,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20070,,In Progress,7/11/2026 3:54,3,General>Otros,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Alta,
+20099,,With User,7/12/2026 10:42,10,Darktrace>Network,3ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20186,,In Progress,7/13/2026 14:39,14,Cloudflare>ZTNA,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20200,,With User,7/13/2026 21:32,21,SOC Radar>Brand Protection,1ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Baja,
+20119,,Closed,7/13/2026 5:34,5,CTI,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,1.885868482,Media,7/13/2026 7:27
+20041,,On Hold,7/15/2026 3:59,3,SOC Radar>Brand Protection,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Media,
+20105,,With User,7/15/2026 7:54,7,Cloudflare>WAF,3ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Media,
+20086,,In Progress,7/15/2026 9:28,9,Cloudflare>ZTNA,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Baja,
+20109,,Closed,7/16/2026 17:01,17,Cloudflare>WAF,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,71.288944997,Baja,7/19/2026 16:19
+20101,,Closed,7/17/2026 11:59,11,General>Otros,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,23.565164628,Media,7/18/2026 11:33
+20154,,With User,7/19/2026 11:33,11,Cloudflare>ZTNA,1ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Media,
+20230,,In Progress,7/20/2026 16:48,16,Cloudflare>WAF,1ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Alta,
+20206,,With User,7/22/2026 2:11,2,General>Reporte,3ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Alta,
+20181,,New,7/22/2026 8:53,8,ElasticSearch>SIEM,1ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Alta,
+20078,,In Progress,7/23/2026 7:08,7,Cloudflare>WAF,3ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Media,
+20224,,Closed,7/25/2026 1:30,1,CTI,3ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,58.018329807,Baja,7/27/2026 11:31
+20093,,On Hold,7/25/2026 18:47,18,General>Otros,2da Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Alta,
+20175,,On Hold,7/25/2026 20:08,20,ThreatDown,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20110,,In Progress,7/25/2026 3:04,3,ThreatDown,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Media,
+20232,,New,7/27/2026 11:26,11,ThreatDown,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Media,
+20155,,Closed,7/28/2026 0:16,0,Cloudflare>ZTNA,2da Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,8.981575304,Alta,7/28/2026 9:15
+20023,,New,7/28/2026 7:14,7,CTI,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Media,
+20025,,With User,7/28/2026 9:00,9,SOC Radar>Brand Protection,1ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Media,
+20228,,With User,7/29/2026 16:08,16,Darktrace>Network,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Baja,
+20108,,New,7/29/2026 6:53,6,Darktrace>Network,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Baja,
+20042,,Closed,7/30/2026 5:33,5,SOC Radar>Brand Protection,3ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,21.630078757,Baja,7/31/2026 3:10
+20046,,On Hold,7/31/2026 21:35,21,ThreatDown,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Alta,
+20185,,Closed,7/4/2026 14:17,14,CTI,1ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,29.175731162,Baja,7/5/2026 19:28
+20071,,New,7/4/2026 18:11,18,Darktrace>Network,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Alta,
+20043,,On Hold,7/5/2026 13:02,13,ThreatDown,3ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Baja,
+20116,,With User,7/5/2026 6:41,6,General>Reporte,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20199,,In Progress,7/6/2026 4:12,4,Darktrace>Network,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Baja,
+20136,,In Progress,7/6/2026 5:12,5,Cloudflare>ZTNA,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20047,,On Hold,7/8/2026 1:08,1,General>Reporte,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Baja,
+20179,,Closed,7/9/2026 23:30,23,SOC Radar>Brand Protection,2da Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,64.107100854,Baja,7/12/2026 15:37
+20151,,In Progress,8/10/2026 15:48,15,SOC Radar>Brand Protection,2da Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20209,,In Progress,8/10/2026 3:48,3,Darktrace>Network,2da Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Media,
+20113,,In Progress,8/10/2026 7:12,7,ThreatDown,1ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20012,,New,8/11/2026 13:24,13,ThreatDown,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Baja,
+20076,,Closed,8/11/2026 16:19,16,General>Reporte,3ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,70.400454140,Alta,8/14/2026 14:43
+20178,,In Progress,8/11/2026 8:08,8,General>Otros,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20006,,With User,8/12/2026 22:32,22,General>Reporte,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20231,,On Hold,8/13/2026 23:19,23,SOC Radar>Brand Protection,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Alta,
+20219,,On Hold,8/13/2026 3:19,3,Darktrace>Network,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Alta,
+20182,,Closed,8/13/2026 4:02,4,ElasticSearch>SIEM,2da Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,3.103056236,Alta,8/13/2026 7:08
+20171,,New,8/14/2026 22:52,22,CTI,1ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Media,
+20239,,New,8/14/2026 5:31,5,ThreatDown,3ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Alta,
+20148,,In Progress,8/15/2026 2:41,2,General>Reporte,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20187,,With User,8/15/2026 22:17,22,CTI,2da Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Baja,
+20201,,In Progress,8/15/2026 23:03,23,Cloudflare>WAF,3ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Alta,
+20215,,Closed,8/16/2026 17:03,17,ElasticSearch>SIEM,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,44.864039999,Media,8/18/2026 13:55
+20028,,With User,8/16/2026 20:49,20,ThreatDown,2da Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20125,,New,8/16/2026 7:14,7,ThreatDown,3ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20137,,With User,8/17/2026 22:28,22,General>Otros,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20229,,With User,8/17/2026 9:43,9,General>Otros,3ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Media,
+20104,,With User,8/19/2026 2:47,2,Cloudflare>ZTNA,1ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20052,,In Progress,8/19/2026 23:44,23,General>Reporte,3ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Media,
+20094,,In Progress,8/19/2026 6:43,6,SOC Radar>Brand Protection,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Baja,
+20132,,Closed,8/20/2026 16:11,16,General>Reporte,2da Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,15.803599370,Alta,8/21/2026 7:59
+20032,,In Progress,8/21/2026 1:56,1,Cloudflare>ZTNA,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20050,,In Progress,8/21/2026 10:37,10,Cloudflare>WAF,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20019,,On Hold,8/21/2026 22:24,22,ThreatDown,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20037,,In Progress,8/22/2026 12:34,12,Cloudflare>ZTNA,3ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20111,,Closed,8/23/2026 0:07,0,Cloudflare>ZTNA,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,18.931406570,Media,8/23/2026 19:03
+20236,,With User,8/23/2026 22:13,22,SOC Radar>Brand Protection,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Alta,
+20121,,With User,8/23/2026 23:32,23,CTI,1ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Media,
+20022,,On Hold,8/23/2026 9:00,9,CTI,3ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20223,,In Progress,8/24/2026 16:45,16,ThreatDown,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Alta,
+20097,,Closed,8/24/2026 22:29,22,Cloudflare>WAF,3ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,6.825077717,Media,8/25/2026 5:19
+20208,,With User,8/25/2026 19:16,19,SOC Radar>Brand Protection,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Media,
+20081,,With User,8/26/2026 2:20,2,General>Otros,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Globex S.A.,SLA Incidente -24/7 General,,,Media,
+20118,,With User,8/27/2026 5:04,5,General>Reporte,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20001,,On Hold,8/27/2026 5:28,5,Darktrace>Network,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20191,,Closed,8/28/2026 6:35,6,Cloudflare>WAF,2da Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,2.601273308,Media,8/28/2026 9:11
+20129,,On Hold,8/29/2026 10:14,10,General>Reporte,1ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Media,
+20194,,Closed,8/3/2026 12:00,12,Cloudflare>WAF,1ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,24.463372814,Baja,8/4/2026 12:28
+20143,,On Hold,8/30/2026 1:59,1,Darktrace>Network,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20017,,With User,8/30/2026 16:57,16,Cloudflare>WAF,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Baja,
+20162,,New,8/30/2026 5:33,5,Cloudflare>WAF,1ra Linea de Soporte,Service Request,ABC de Usuario,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,,Baja,
+20029,,In Progress,8/31/2026 0:22,0,General>Otros,2da Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Media,
+20013,,On Hold,8/31/2026 2:07,2,Cloudflare>ZTNA,1ra Linea de Soporte,Service Request,Tarea Administrativa,Unassigned,Contacto Demo,ACME Corp,SLA Requerimiento -24/7 General,,,Alta,
+20176,,On Hold,8/5/2026 7:02,7,Darktrace>Network,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,
+20180,,Closed,8/5/2026 8:25,8,Cloudflare>ZTNA,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,21.124225142,Baja,8/6/2026 5:33
+20130,,Closed,8/5/2026 9:18,9,CTI,1ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Umbrella Ltda,SLA Requerimiento -24/7 General,,13.258479625,Media,8/5/2026 22:34
+20150,,On Hold,8/7/2026 20:20,20,ThreatDown,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Baja,
+20027,,In Progress,8/8/2026 18:16,18,Cloudflare>ZTNA,1ra Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Media,
+20092,,New,9/1/2026 10:53,10,Cloudflare>ZTNA,2da Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20189,,New,9/1/2026 23:04,23,CTI,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Alta,
+20103,,With User,9/2/2026 1:46,1,ThreatDown,3ra Linea de Soporte,Change Request,Cambio,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,,Baja,
+20007,,On Hold,9/2/2026 1:51,1,CTI,1ra Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20009,,With User,9/4/2026 14:45,14,Cloudflare>WAF,2da Linea de Soporte,Incident,CTI Advisory,Unassigned,Contacto Demo,ACME Corp,SLA Incidente -24/7 General,,,Alta,
+20139,,On Hold,9/4/2026 2:42,2,ElasticSearch>SIEM,1ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Baja,
+20212,,In Progress,9/4/2026 21:37,21,CTI,2da Linea de Soporte,Incident,Alerta,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,,Baja,
+20095,,Closed,9/5/2026 13:03,13,General>Reporte,1ra Linea de Soporte,Service Request,Solicitud de Reporte,Unassigned,Contacto Demo,Globex S.A.,SLA Requerimiento -24/7 General,,59.852378371,Baja,9/8/2026 0:54
+20227,,Closed,9/5/2026 15:10,15,General>Otros,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Initech,SLA Incidente -24/7 General,,5.496059198,Alta,9/5/2026 20:40
+20222,,On Hold,9/6/2026 11:46,11,Cloudflare>WAF,3ra Linea de Soporte,Service Request,Solicitud,Unassigned,Contacto Demo,Initech,SLA Requerimiento -24/7 General,,,Baja,
+20157,,New,9/7/2026 7:28,7,Cloudflare>WAF,3ra Linea de Soporte,Incident,Incidente Menor,Unassigned,Contacto Demo,Umbrella Ltda,SLA Incidente -24/7 General,,,Media,

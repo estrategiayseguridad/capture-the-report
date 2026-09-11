@@ -17,7 +17,16 @@ import {
   Cell,
   Legend,
 } from "recharts";
-import { computeReport, getClientes, normalizeRows, type ReportData, type TicketRow } from "@/lib/report";
+import {
+  computeReport,
+  getClientes,
+  normalizeRows,
+  SLA_THRESHOLDS_DEFAULT,
+  type ReportData,
+  type SlaThresholds,
+  type TicketRow,
+} from "@/lib/report";
+import { guardarThresholds, obtenerThresholds } from "@/lib/slaStorage";
 
 const COLORES = ["#2563eb", "#16a34a", "#f59e0b", "#dc2626", "#7c3aed", "#0891b2", "#db2777", "#65a30d"];
 
@@ -35,6 +44,112 @@ function ChartCard({ title, children }: { title: string; children: React.ReactNo
     <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
       <h3 className="mb-3 text-sm font-semibold text-slate-700">{title}</h3>
       <div className="h-64 w-full">{children}</div>
+    </div>
+  );
+}
+
+type NivelPrioridad = "alta" | "media" | "baja";
+
+function CampoUmbral({
+  label,
+  valor,
+  onChange,
+}: {
+  label: string;
+  valor: number;
+  onChange: (v: number) => void;
+}) {
+  return (
+    <label className="flex items-center justify-between gap-2 text-xs text-slate-600">
+      <span>{label}</span>
+      <input
+        type="number"
+        min={1}
+        value={valor}
+        onChange={(e) => onChange(Number(e.target.value) || 1)}
+        className="w-16 rounded border border-slate-300 px-2 py-1 text-right text-sm text-slate-900"
+      />
+    </label>
+  );
+}
+
+function ConfiguracionSla({
+  cliente,
+  thresholds,
+  onChange,
+}: {
+  cliente: string;
+  thresholds: SlaThresholds;
+  onChange: (t: SlaThresholds) => void;
+}) {
+  const [abierto, setAbierto] = useState(false);
+  const [guardado, setGuardado] = useState(false);
+
+  function actualizar(categoria: "incidente" | "requerimiento", nivel: NivelPrioridad, valor: number) {
+    onChange({ ...thresholds, [categoria]: { ...thresholds[categoria], [nivel]: valor } });
+    setGuardado(false);
+  }
+
+  function handleGuardar() {
+    guardarThresholds(cliente, thresholds);
+    setGuardado(true);
+  }
+
+  function handleRestaurar() {
+    onChange(SLA_THRESHOLDS_DEFAULT);
+    setGuardado(false);
+  }
+
+  return (
+    <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+      <button
+        onClick={() => setAbierto((v) => !v)}
+        className="flex w-full items-center justify-between text-left text-sm font-semibold text-slate-700"
+      >
+        <span>Umbrales de SLA (horas) para {cliente}</span>
+        <span className="text-slate-400">{abierto ? "▲" : "▼"}</span>
+      </button>
+
+      {abierto && (
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="space-y-2">
+            <p className="text-xs font-semibold uppercase text-slate-500">Incidentes</p>
+            <CampoUmbral label="Alta" valor={thresholds.incidente.alta} onChange={(v) => actualizar("incidente", "alta", v)} />
+            <CampoUmbral label="Media" valor={thresholds.incidente.media} onChange={(v) => actualizar("incidente", "media", v)} />
+            <CampoUmbral label="Baja" valor={thresholds.incidente.baja} onChange={(v) => actualizar("incidente", "baja", v)} />
+          </div>
+          <div className="space-y-2">
+            <p className="text-xs font-semibold uppercase text-slate-500">Requerimientos</p>
+            <CampoUmbral
+              label="Alta"
+              valor={thresholds.requerimiento.alta}
+              onChange={(v) => actualizar("requerimiento", "alta", v)}
+            />
+            <CampoUmbral
+              label="Media"
+              valor={thresholds.requerimiento.media}
+              onChange={(v) => actualizar("requerimiento", "media", v)}
+            />
+            <CampoUmbral
+              label="Baja"
+              valor={thresholds.requerimiento.baja}
+              onChange={(v) => actualizar("requerimiento", "baja", v)}
+            />
+          </div>
+          <div className="flex items-center gap-3 sm:col-span-2">
+            <button
+              onClick={handleGuardar}
+              className="rounded-md bg-slate-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-700"
+            >
+              Guardar para este cliente
+            </button>
+            <button onClick={handleRestaurar} className="text-xs text-slate-500 underline hover:text-slate-700">
+              Restaurar valores por defecto
+            </button>
+            {guardado && <span className="text-xs text-green-600">Guardado ✓</span>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -65,12 +180,18 @@ export default function Home() {
   const [fuenteArchivo, setFuenteArchivo] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [descargando, setDescargando] = useState(false);
+  const [thresholds, setThresholds] = useState<SlaThresholds>(SLA_THRESHOLDS_DEFAULT);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleClienteChange(cliente: string) {
+    setClienteSeleccionado(cliente);
+    setThresholds(obtenerThresholds(cliente));
+  }
 
   const report: ReportData | null = useMemo(() => {
     if (!clienteSeleccionado || rows.length === 0) return null;
-    return computeReport(rows, clienteSeleccionado);
-  }, [rows, clienteSeleccionado]);
+    return computeReport(rows, clienteSeleccionado, thresholds);
+  }, [rows, clienteSeleccionado, thresholds]);
 
   function cargarCsv(texto: string, nombreArchivo: string) {
     const parsed = Papa.parse<Record<string, string>>(texto, {
@@ -89,7 +210,7 @@ export default function Home() {
     const listaClientes = getClientes(normalizadas);
     setRows(normalizadas);
     setClientes(listaClientes);
-    setClienteSeleccionado(listaClientes[0] ?? "");
+    handleClienteChange(listaClientes[0] ?? "");
     setFuenteArchivo(nombreArchivo);
     setError("");
   }
@@ -163,7 +284,7 @@ export default function Home() {
                 <label className="text-sm text-slate-600">Cliente:</label>
                 <select
                   value={clienteSeleccionado}
-                  onChange={(e) => setClienteSeleccionado(e.target.value)}
+                  onChange={(e) => handleClienteChange(e.target.value)}
                   className="rounded-md border border-slate-300 px-3 py-2 text-sm"
                 >
                   {clientes.map((c) => (
@@ -203,6 +324,8 @@ export default function Home() {
                 {descargando ? "Generando Word..." : "Descargar reporte Word"}
               </button>
             </div>
+
+            <ConfiguracionSla cliente={report.cliente} thresholds={thresholds} onChange={setThresholds} />
 
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               <StatCard label="Total tickets" value={report.totalTickets} />

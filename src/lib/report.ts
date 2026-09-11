@@ -12,42 +12,77 @@ export interface TicketRow {
   producto: string;
   estado: Estado;
   prioridad: Prioridad;
-  slaCumplido: boolean | null;
+  /** Horas reales de resolución (columna "Time to Resolve (Decimal)" de Halo). null = aún no cierra. */
+  horasResolucion: number | null;
 }
 
-interface RawCsvRow {
-  Cliente?: string;
-  TicketID?: string;
-  FechaCreacion?: string;
-  FechaCierre?: string;
-  Categoria?: string;
-  Tipo?: string;
-  Producto?: string;
-  Estado?: string;
-  Prioridad?: string;
-  SLA_Cumplido?: string;
+/** Fila cruda tal como la exporta Halo ITSM (encabezados en inglés, todos los clientes mezclados). */
+interface RawHaloRow {
+  "Ticket ID"?: string;
+  Status?: string;
+  "Date Created"?: string;
+  Category?: string;
+  "ITIL Type"?: string;
+  "Ticket Type"?: string;
+  Client?: string;
+  SLA?: string;
+  "Time to Resolve (Decimal)"?: string;
+  Priority?: string;
+  "Date Closed"?: string;
 }
 
-export function normalizeRows(raw: RawCsvRow[]): TicketRow[] {
+const ESTADO_MAP: Record<string, Estado> = {
+  closed: "Resuelto",
+  resuelto: "Resuelto",
+  "with user": "Con el usuario",
+  "on hold": "En espera",
+  new: "Abierto",
+  "in progress": "Abierto",
+  updated: "Abierto",
+};
+
+function mapEstado(status: string): Estado {
+  return ESTADO_MAP[status.trim().toLowerCase()] ?? "Abierto";
+}
+
+function mapCategoria(sla: string, itilType: string): Categoria {
+  const s = sla.toLowerCase();
+  if (s.includes("incidente")) return "Incidente";
+  if (s.includes("requerimiento")) return "Requerimiento";
+  return itilType.toLowerCase().includes("incident") ? "Incidente" : "Requerimiento";
+}
+
+function mapPrioridad(prioridad: string): Prioridad {
+  const v = prioridad.trim();
+  return v === "Alta" || v === "Media" || v === "Baja" ? v : "Media";
+}
+
+/** Extrae "YYYY-MM-DD" de fechas tipo "8/10/2026 16:24" o "8/14/2026 1:11 PM" (formato M/D/YYYY de Halo). */
+function extraerFecha(valor: string): string {
+  const m = valor.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (!m) return "";
+  const [, mes, dia, anio] = m;
+  return `${anio}-${mes.padStart(2, "0")}-${dia.padStart(2, "0")}`;
+}
+
+export function normalizeRows(raw: RawHaloRow[]): TicketRow[] {
   return raw
-    .filter((r) => r.Cliente && r.TicketID)
-    .map((r) => ({
-      cliente: (r.Cliente ?? "").trim(),
-      ticketId: (r.TicketID ?? "").trim(),
-      fechaCreacion: (r.FechaCreacion ?? "").trim(),
-      fechaCierre: (r.FechaCierre ?? "").trim(),
-      categoria: (r.Categoria?.trim() as Categoria) || "Incidente",
-      tipo: (r.Tipo ?? "").trim(),
-      producto: (r.Producto ?? "").trim(),
-      estado: (r.Estado?.trim() as Estado) || "Abierto",
-      prioridad: (r.Prioridad?.trim() as Prioridad) || "Media",
-      slaCumplido:
-        r.SLA_Cumplido?.trim().toLowerCase() === "si"
-          ? true
-          : r.SLA_Cumplido?.trim().toLowerCase() === "no"
-          ? false
-          : null,
-    }));
+    .filter((r) => r["Ticket ID"] && r.Client)
+    .map((r) => {
+      const horas = parseFloat((r["Time to Resolve (Decimal)"] ?? "").trim());
+      return {
+        cliente: (r.Client ?? "").trim(),
+        ticketId: (r["Ticket ID"] ?? "").trim(),
+        fechaCreacion: extraerFecha(r["Date Created"] ?? ""),
+        fechaCierre: extraerFecha(r["Date Closed"] ?? ""),
+        categoria: mapCategoria(r.SLA ?? "", r["ITIL Type"] ?? ""),
+        tipo: (r["Ticket Type"] ?? "").trim() || "Sin tipo",
+        producto: (r.Category ?? "").trim() || "Sin categoría",
+        estado: mapEstado(r.Status ?? ""),
+        prioridad: mapPrioridad(r.Priority ?? ""),
+        horasResolucion: Number.isFinite(horas) ? horas : null,
+      };
+    });
 }
 
 export function getClientes(rows: TicketRow[]): string[] {
@@ -66,6 +101,17 @@ export interface SlaResumen {
   porcentaje: number;
 }
 
+/** Umbral de horas de resolución por categoría y prioridad. Editable por cliente desde la web. */
+export interface SlaThresholds {
+  incidente: { alta: number; media: number; baja: number };
+  requerimiento: { alta: number; media: number; baja: number };
+}
+
+export const SLA_THRESHOLDS_DEFAULT: SlaThresholds = {
+  incidente: { alta: 4, media: 8, baja: 24 },
+  requerimiento: { alta: 24, media: 48, baja: 72 },
+};
+
 export interface ReportData {
   cliente: string;
   periodo: { desde: string; hasta: string };
@@ -76,6 +122,7 @@ export interface ReportData {
   porEstado: CountItem[];
   slaIncidentes: SlaResumen;
   slaSolicitudes: SlaResumen;
+  thresholds: SlaThresholds;
   narrativa: {
     introduccion: string;
     analisis: string;
@@ -94,24 +141,12 @@ function countBy(rows: TicketRow[], key: (r: TicketRow) => string): CountItem[] 
     .sort((a, b) => b.total - a.total);
 }
 
+const MESES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
 function mesLabel(fecha: string): string {
   const [y, m] = fecha.split("-");
-  const nombres = [
-    "Ene",
-    "Feb",
-    "Mar",
-    "Abr",
-    "May",
-    "Jun",
-    "Jul",
-    "Ago",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dic",
-  ];
   const idx = Number(m) - 1;
-  return `${nombres[idx] ?? m} ${y}`;
+  return `${MESES[idx] ?? m} ${y}`;
 }
 
 function historialMensual(rows: TicketRow[]): CountItem[] {
@@ -126,17 +161,33 @@ function historialMensual(rows: TicketRow[]): CountItem[] {
     .sort((a, b) => {
       const parse = (l: string) => {
         const [mes, anio] = l.split(" ");
-        const idx = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"].indexOf(mes);
-        return Number(anio) * 100 + idx;
+        return Number(anio) * 100 + MESES.indexOf(mes);
       };
       return parse(a.label) - parse(b.label);
     });
 }
 
-function calcularSla(rows: TicketRow[]): SlaResumen {
-  const cumplidos = rows.filter((r) => r.slaCumplido === true).length;
-  const incumplidos = rows.filter((r) => r.slaCumplido === false).length;
-  const sinCierre = rows.filter((r) => r.slaCumplido === null).length;
+function umbralHoras(thresholds: SlaThresholds, categoria: Categoria, prioridad: Prioridad): number {
+  const grupo = categoria === "Incidente" ? thresholds.incidente : thresholds.requerimiento;
+  const key = prioridad.toLowerCase() as "alta" | "media" | "baja";
+  return grupo[key] ?? grupo.media;
+}
+
+function calcularSla(rows: TicketRow[], thresholds: SlaThresholds): SlaResumen {
+  let cumplidos = 0;
+  let incumplidos = 0;
+  let sinCierre = 0;
+
+  for (const r of rows) {
+    if (r.horasResolucion === null) {
+      sinCierre++;
+      continue;
+    }
+    const umbral = umbralHoras(thresholds, r.categoria, r.prioridad);
+    if (r.horasResolucion <= umbral) cumplidos++;
+    else incumplidos++;
+  }
+
   const base = cumplidos + incumplidos;
   const porcentaje = base > 0 ? Math.round((cumplidos / base) * 1000) / 10 : 0;
   return { cumplidos, incumplidos, sinCierre, porcentaje };
@@ -208,7 +259,11 @@ function generarNarrativa(data: {
   return { introduccion, analisis, recomendacion };
 }
 
-export function computeReport(rows: TicketRow[], cliente: string): ReportData {
+export function computeReport(
+  rows: TicketRow[],
+  cliente: string,
+  thresholds: SlaThresholds = SLA_THRESHOLDS_DEFAULT
+): ReportData {
   const filtradas = rows.filter((r) => r.cliente === cliente);
   const fechas = filtradas.map((r) => r.fechaCreacion).filter(Boolean).sort();
   const periodo = {
@@ -222,8 +277,8 @@ export function computeReport(rows: TicketRow[], cliente: string): ReportData {
   const porTipo = countBy(filtradas, (r) => r.tipo);
   const porProducto = countBy(filtradas, (r) => r.producto);
   const porEstado = countBy(filtradas, (r) => r.estado);
-  const slaIncidentes = calcularSla(incidentes);
-  const slaSolicitudes = calcularSla(requerimientos);
+  const slaIncidentes = calcularSla(incidentes, thresholds);
+  const slaSolicitudes = calcularSla(requerimientos, thresholds);
 
   const narrativa = generarNarrativa({
     cliente,
@@ -246,6 +301,7 @@ export function computeReport(rows: TicketRow[], cliente: string): ReportData {
     porEstado,
     slaIncidentes,
     slaSolicitudes,
+    thresholds,
     narrativa,
   };
 }
