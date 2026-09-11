@@ -53,7 +53,9 @@ Los umbrales de SLA por defecto son: Incidente Alta 4h / Media 8h / Baja 24h, Re
 
 El botón se dispara solo (no hay que darle click) al cargar el CSV o cambiar de cliente. Requiere una API key de Anthropic en `.env.local` (copiar `.env.example`); sin ella, el reporte sigue funcionando con un texto de respaldo generado por reglas fijas.
 
-A la API de Anthropic se le envía, **por cliente**: el nombre del cliente, las métricas agregadas (conteos por tipo/producto/estado, % de SLA) y el **asunto (`Summary`) de cada ticket de ese cliente** — es la fuente que le permite a la IA describir actividades reales (ej. "bloqueo de IP en WAF", "revisión de certificados mTLS") en vez de un texto genérico. Si el CSV trae asuntos con detalles internos del cliente (hosts, IPs, nombres de proyectos), esos detalles pueden aparecer redactados en el reporte final — igual que en el reporte que arma un analista humano hoy. El resultado se guarda en memoria durante la sesión (por cliente + umbrales de SLA) para no volver a llamar a la IA si ya se había redactado.
+A la API de Anthropic se le envía, **por cliente**: el nombre del cliente, las métricas agregadas (conteos por tipo/producto/estado, % de SLA) y el **asunto (`Summary`) de cada ticket de ese cliente** — es la fuente que le permite a la IA describir actividades reales (ej. "bloqueo de IP en WAF", "revisión de certificados mTLS") en vez de un texto genérico.
+
+**Sanitización:** antes de armar el prompt, `src/lib/sanitizar.ts` reemplaza IPs, dominios y hostnames/sensores del asunto por marcadores genéricos (`[IP-1]`, `[DOMINIO-2]`, `[HOST-3]`) — esos datos nunca salen de la máquina en su forma real. Al recibir la respuesta, se restauran los valores reales en el texto final, así que el reporte no pierde detalle. Es una detección heurística (patrones de IP/dominio y una regla para hostnames alfanuméricos), no infalible: puede sobre-redactar algún término técnico ambiguo, pero no debería dejar pasar IPs o dominios reales. El resultado final se guarda en memoria durante la sesión (por cliente + umbrales de SLA) para no volver a llamar a la IA si ya se había redactado.
 
 ## Qué quedó pendiente
 
