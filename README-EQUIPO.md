@@ -25,24 +25,29 @@ Abrir [http://localhost:3000](http://localhost:3000).
 
 En la web:
 
-- Click en **"Usar dato de ejemplo"** para probar de inmediato con el CSV sintético incluido en `data/halo-itsm-ejemplo.csv` (4 clientes ficticios, ~260 tickets, 6 meses), o
-- Click en **"Subir CSV de Halo ITSM"** para cargar un export propio (ver formato de columnas abajo).
+- Click en **"Usar dato de ejemplo"** para probar de inmediato con el CSV sintético incluido en `data/halo-itsm-ejemplo.csv` (4 clientes ficticios, ~240 tickets, 6 meses, mismas columnas que un export real de Halo), o
+- Click en **"Subir CSV de Halo ITSM"** para cargar el export real del mes (deja el archivo en `data/local/`, que está excluido de git, y selecciónalo desde ahí).
 - Elegir el cliente en el selector.
+- Revisar/ajustar los **umbrales de SLA (horas)** para ese cliente si su contrato es distinto al estándar (panel "Umbrales de SLA"). Se guardan por cliente en el navegador (`localStorage`), no en el repo.
 - Revisar el reporte en pantalla (métricas, gráficos, narrativa).
 - Click en **"Descargar reporte Word"** para obtener el `.docx` final.
 
 ### Formato de CSV esperado
 
-Columnas (en este orden, con estos nombres exactos en el header):
+El mismo export nativo de Halo ITSM (todos los clientes juntos, del rango de fechas elegido en Halo). Columnas usadas:
 
 ```
-Cliente,TicketID,FechaCreacion,FechaCierre,Categoria,Tipo,Producto,Estado,Prioridad,SLA_Cumplido
+Ticket ID, Status, Date Created, Category, ITIL Type, Ticket Type, Client, SLA, Time to Resolve (Decimal), Priority, Date Closed
 ```
 
-- `Categoria`: `Incidente` o `Requerimiento`.
-- `Estado`: `Abierto`, `En espera`, `Resuelto` o `Con el usuario`.
-- `SLA_Cumplido`: `Si`, `No`, o vacío si el ticket aún no cierra.
-- `FechaCreacion` / `FechaCierre`: formato `YYYY-MM-DD`.
+- `Status`: `New`, `In Progress`, `On Hold`, `With User`, `Closed` (se normalizan a Abierto / En espera / Con el usuario / Resuelto).
+- `SLA` / `ITIL Type`: se usan para clasificar el ticket como Incidente o Requerimiento.
+- `Category`: la herramienta/producto (ej. `Cloudflare>WAF`, `ElasticSearch>SIEM`).
+- `Ticket Type`: el tipo de ticket (Alerta, Solicitud, Cambio, etc.).
+- `Time to Resolve (Decimal)`: horas reales de resolución — se compara contra el umbral de SLA configurado (por categoría y prioridad) para determinar cumplido/incumplido. Vacío si el ticket sigue abierto.
+- `Date Created` / `Date Closed`: formato `M/D/YYYY` (con o sin hora/AM-PM), tal como lo exporta Halo.
+
+Los umbrales de SLA por defecto son: Incidente Alta 4h / Media 8h / Baja 24h, Requerimiento Alta 24h / Media 48h / Baja 72h — son un valor de referencia inicial y se ajustan por cliente desde la propia web si el contrato real es distinto.
 
 ## Qué quedó pendiente
 
@@ -50,6 +55,7 @@ Cliente,TicketID,FechaCreacion,FechaCierre,Categoria,Tipo,Producto,Estado,Priori
 - El Word incluye las secciones con tablas de datos, no imágenes de los gráficos (los gráficos interactivos solo se ven en la web).
 - Sin login, sin historial de reportes generados, sin envío automático por correo, sin exportación a PDF — queda para una siguiente iteración (ver `docs/PLANTEAMIENTO.md`).
 - Falta soportar más de un archivo/periodo a la vez (comparar mes contra mes).
+- Los umbrales de SLA por defecto (sección "Cómo correrlo") son un punto de partida razonable, no los tiempos contractuales reales por cliente — hay que confirmarlos y ajustarlos desde el panel de configuración antes de enviar un reporte real.
 
 ## Nota de entorno
 

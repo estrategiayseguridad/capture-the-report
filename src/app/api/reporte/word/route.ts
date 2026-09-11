@@ -28,12 +28,12 @@ function parrafo(texto: string) {
   );
 }
 
-function tablaConteo(items: CountItem[], encabezado: string) {
+function tablaConteo(items: CountItem[], encabezado: string, encabezadoValor: string = "Tickets") {
   const filas = [
     new TableRow({
       children: [
         new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: encabezado, bold: true })] })] }),
-        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Tickets", bold: true })] })] }),
+        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: encabezadoValor, bold: true })] })] }),
       ],
     }),
     ...items.map(
@@ -156,7 +156,24 @@ export async function POST(req: NextRequest) {
           seccion("Anexo"),
           new Paragraph({
             text: "Reporte generado automáticamente a partir del export de Halo ITSM del periodo indicado. Documento sujeto a revisión antes de su envío al cliente.",
+            spacing: { after: 150 },
           }),
+          new Paragraph({
+            text: "Umbrales de SLA aplicados en este reporte (horas de resolución, configurables por cliente):",
+            spacing: { after: 100 },
+          }),
+          tablaConteo(
+            [
+              { label: "Incidente - Alta", total: report.thresholds.incidente.alta },
+              { label: "Incidente - Media", total: report.thresholds.incidente.media },
+              { label: "Incidente - Baja", total: report.thresholds.incidente.baja },
+              { label: "Requerimiento - Alta", total: report.thresholds.requerimiento.alta },
+              { label: "Requerimiento - Media", total: report.thresholds.requerimiento.media },
+              { label: "Requerimiento - Baja", total: report.thresholds.requerimiento.baja },
+            ],
+            "Categoría - Prioridad",
+            "Horas"
+          ),
         ],
       },
     ],
