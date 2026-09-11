@@ -1,73 +1,300 @@
-const pasos = [
-  {
-    n: "1",
-    titulo: "Crea la rama de tu equipo",
-    detalle: "git checkout -b equipo-XX — nunca trabajes en main.",
-  },
-  {
-    n: "2",
-    titulo: "Planteamiento primero",
-    detalle:
-      "Completa docs/PLANTEAMIENTO.md antes de la primera línea de código. Se evalúa (30%).",
-  },
-  {
-    n: "3",
-    titulo: "Construye el camino feliz",
-    detalle:
-      "Entra el dato de ejemplo (data/), sale el resultado en pantalla. Después se pule.",
-  },
-  {
-    n: "4",
-    titulo: "Prepara la demo",
-    detalle:
-      "Code freeze 6:00 PM. README-EQUIPO.md, ensayo con cronómetro y último push.",
-  },
-];
+"use client";
+
+import { useMemo, useRef, useState } from "react";
+import Papa from "papaparse";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+} from "recharts";
+import { computeReport, getClientes, normalizeRows, type ReportData, type TicketRow } from "@/lib/report";
+
+const COLORES = ["#2563eb", "#16a34a", "#f59e0b", "#dc2626", "#7c3aed", "#0891b2", "#db2777", "#65a30d"];
+
+function StatCard({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+      <p className="text-sm text-slate-500">{label}</p>
+      <p className="mt-1 text-2xl font-semibold text-slate-900">{value}</p>
+    </div>
+  );
+}
+
+function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+      <h3 className="mb-3 text-sm font-semibold text-slate-700">{title}</h3>
+      <div className="h-64 w-full">{children}</div>
+    </div>
+  );
+}
+
+function SlaPie({ cumplidos, incumplidos }: { cumplidos: number; incumplidos: number }) {
+  const data = [
+    { name: "Cumplidos", value: cumplidos },
+    { name: "Incumplidos", value: incumplidos },
+  ];
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart>
+        <Pie data={data} dataKey="value" nameKey="name" outerRadius={80} label>
+          <Cell fill="#16a34a" />
+          <Cell fill="#dc2626" />
+        </Pie>
+        <Tooltip />
+        <Legend />
+      </PieChart>
+    </ResponsiveContainer>
+  );
+}
 
 export default function Home() {
+  const [rows, setRows] = useState<TicketRow[]>([]);
+  const [clientes, setClientes] = useState<string[]>([]);
+  const [clienteSeleccionado, setClienteSeleccionado] = useState<string>("");
+  const [fuenteArchivo, setFuenteArchivo] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [descargando, setDescargando] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const report: ReportData | null = useMemo(() => {
+    if (!clienteSeleccionado || rows.length === 0) return null;
+    return computeReport(rows, clienteSeleccionado);
+  }, [rows, clienteSeleccionado]);
+
+  function cargarCsv(texto: string, nombreArchivo: string) {
+    const parsed = Papa.parse<Record<string, string>>(texto, {
+      header: true,
+      skipEmptyLines: true,
+    });
+    if (parsed.errors.length > 0) {
+      setError("No se pudo leer el CSV. Verifica que tenga las columnas esperadas.");
+      return;
+    }
+    const normalizadas = normalizeRows(parsed.data);
+    if (normalizadas.length === 0) {
+      setError("El CSV no contiene filas válidas.");
+      return;
+    }
+    const listaClientes = getClientes(normalizadas);
+    setRows(normalizadas);
+    setClientes(listaClientes);
+    setClienteSeleccionado(listaClientes[0] ?? "");
+    setFuenteArchivo(nombreArchivo);
+    setError("");
+  }
+
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const texto = await file.text();
+    cargarCsv(texto, file.name);
+  }
+
+  async function handleUsarEjemplo() {
+    setError("");
+    const res = await fetch("/api/datos-ejemplo");
+    const texto = await res.text();
+    cargarCsv(texto, "halo-itsm-ejemplo.csv (dato de ejemplo)");
+  }
+
+  async function handleDescargarWord() {
+    if (!report) return;
+    setDescargando(true);
+    try {
+      const res = await fetch("/api/reporte/word", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(report),
+      });
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `reporte-soc-${report.cliente.replace(/\s+/g, "-").toLowerCase()}.docx`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } finally {
+      setDescargando(false);
+    }
+  }
+
   return (
-    <main className="min-h-screen bg-[#0a1030] text-white font-mono">
-      <div className="mx-auto max-w-3xl px-6 py-16">
-        <p className="text-cyan-400 text-sm tracking-[0.3em] uppercase">
-          ES Consulting · Hackathon interna
-        </p>
-        <h1 className="mt-4 text-5xl font-bold tracking-tight">
-          <span className="bg-white text-[#0a1030] px-2">CAPTURE</span>{" "}
-          <span className="bg-white text-[#0a1030] px-2">THE</span>{" "}
-          <span className="bg-white text-[#0a1030] px-2">REPORT</span>
-        </h1>
-        <p className="mt-6 text-lg text-slate-300">
-          ✅ El boilerplate está corriendo. Este es el punto de partida de tu
-          prototipo: bórralo y construye encima.
-        </p>
+    <div className="min-h-screen bg-slate-50 px-4 py-8 sm:px-8">
+      <div className="mx-auto max-w-6xl">
+        <header className="mb-8">
+          <h1 className="text-2xl font-bold text-slate-900">Reporte Mensual SOC</h1>
+          <p className="mt-1 text-sm text-slate-600">
+            Sube el CSV exportado de Halo ITSM, elige un cliente y genera el reporte con gráficos, análisis y el Word
+            final listo para revisión.
+          </p>
+        </header>
 
-        <ol className="mt-10 space-y-4">
-          {pasos.map((p) => (
-            <li
-              key={p.n}
-              className="flex gap-4 rounded-lg border border-slate-700 bg-[#111a42] p-4"
+        <section className="mb-8 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
             >
-              <span className="text-2xl text-cyan-400 font-bold">
-                {p.n}
-              </span>
-              <div>
-                <h2 className="font-bold">{p.titulo}</h2>
-                <p className="text-sm text-slate-400">{p.detalle}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+              Subir CSV de Halo ITSM
+            </button>
+            <input ref={fileInputRef} type="file" accept=".csv" className="hidden" onChange={handleFileChange} />
+            <button
+              onClick={handleUsarEjemplo}
+              className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+            >
+              Usar dato de ejemplo
+            </button>
 
-        <p className="mt-10 text-sm text-slate-500">
-          Stack: Next.js 15 · TypeScript · Tailwind — reglas completas en{" "}
-          <span className="text-slate-300">README.md</span> y{" "}
-          <span className="text-slate-300">CLAUDE.md</span>. 🔒 Cero datos
-          reales de clientes.
-        </p>
-        <p className="mt-4 text-xs tracking-[0.25em] uppercase text-cyan-400">
-          Protection // Security // Privacy
-        </p>
+            {clientes.length > 0 && (
+              <div className="ml-auto flex items-center gap-2">
+                <label className="text-sm text-slate-600">Cliente:</label>
+                <select
+                  value={clienteSeleccionado}
+                  onChange={(e) => setClienteSeleccionado(e.target.value)}
+                  className="rounded-md border border-slate-300 px-3 py-2 text-sm"
+                >
+                  {clientes.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+
+          {fuenteArchivo && <p className="mt-3 text-xs text-slate-500">Archivo cargado: {fuenteArchivo}</p>}
+          {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+        </section>
+
+        {!report && (
+          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
+            Sube un CSV o usa el dato de ejemplo para generar el reporte.
+          </div>
+        )}
+
+        {report && (
+          <div className="space-y-8">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h2 className="text-xl font-semibold text-slate-900">{report.cliente}</h2>
+                <p className="text-sm text-slate-500">
+                  Periodo: {report.periodo.desde} a {report.periodo.hasta} · {report.totalTickets} tickets
+                </p>
+              </div>
+              <button
+                onClick={handleDescargarWord}
+                disabled={descargando}
+                className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-60"
+              >
+                {descargando ? "Generando Word..." : "Descargar reporte Word"}
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              <StatCard label="Total tickets" value={report.totalTickets} />
+              <StatCard label="SLA Incidentes" value={`${report.slaIncidentes.porcentaje}%`} />
+              <StatCard label="SLA Solicitudes" value={`${report.slaSolicitudes.porcentaje}%`} />
+              <StatCard
+                label="Pendientes"
+                value={
+                  (report.porEstado.find((e) => e.label === "Abierto")?.total ?? 0) +
+                  (report.porEstado.find((e) => e.label === "En espera")?.total ?? 0) +
+                  (report.porEstado.find((e) => e.label === "Con el usuario")?.total ?? 0)
+                }
+              />
+            </div>
+
+            <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+              <h3 className="mb-2 text-sm font-semibold text-slate-700">Introducción</h3>
+              <p className="text-sm leading-relaxed text-slate-700">{report.narrativa.introduccion}</p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              <ChartCard title="Historial de tickets">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={report.historial}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="label" fontSize={12} />
+                    <YAxis allowDecimals={false} fontSize={12} />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="total" stroke="#2563eb" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </ChartCard>
+
+              <ChartCard title="Tipos de tickets">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={report.porTipo} layout="vertical" margin={{ left: 40 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis type="number" allowDecimals={false} fontSize={12} />
+                    <YAxis type="category" dataKey="label" width={140} fontSize={11} />
+                    <Tooltip />
+                    <Bar dataKey="total" fill="#2563eb" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartCard>
+
+              <ChartCard title="Tickets por herramienta o producto">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={report.porProducto} layout="vertical" margin={{ left: 40 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis type="number" allowDecimals={false} fontSize={12} />
+                    <YAxis type="category" dataKey="label" width={140} fontSize={11} />
+                    <Tooltip />
+                    <Bar dataKey="total" fill="#16a34a" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartCard>
+
+              <ChartCard title="Estado de los tickets">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie data={report.porEstado} dataKey="total" nameKey="label" outerRadius={80} label>
+                      {report.porEstado.map((_, i) => (
+                        <Cell key={i} fill={COLORES[i % COLORES.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </ChartCard>
+
+              <ChartCard title="SLA — Incidentes">
+                <SlaPie cumplidos={report.slaIncidentes.cumplidos} incumplidos={report.slaIncidentes.incumplidos} />
+              </ChartCard>
+
+              <ChartCard title="SLA — Solicitudes">
+                <SlaPie cumplidos={report.slaSolicitudes.cumplidos} incumplidos={report.slaSolicitudes.incumplidos} />
+              </ChartCard>
+            </div>
+
+            <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+              <h3 className="mb-2 text-sm font-semibold text-slate-700">Análisis de resultados</h3>
+              <p className="text-sm leading-relaxed text-slate-700">{report.narrativa.analisis}</p>
+            </div>
+
+            <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+              <h3 className="mb-2 text-sm font-semibold text-slate-700">Recomendación</h3>
+              <p className="whitespace-pre-line text-sm leading-relaxed text-slate-700">{report.narrativa.recomendacion}</p>
+            </div>
+          </div>
+        )}
       </div>
-    </main>
+    </div>
   );
 }
