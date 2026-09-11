@@ -1,64 +1,42 @@
-# 📐 Planteamiento — Equipo XX
+# 📐 Planteamiento — Equipo de Gestión de Eventos
 
-> ⛔ **Completar este documento ANTES de escribir código.** Es obligatorio, se evalúa (35% del puntaje), y es lo que hace que el agente de IA trabaje bien: un planteamiento claro = un prototipo que avanza solo.
->
-> Tiempo sugerido: 30–40 minutos entre todo el equipo. Sean concretos — frases cortas valen más que párrafos.
+> ⛔ **Completar este documento ANTES de escribir código.**
 
 ## 1. Equipo
-
-- **Número de equipo:**
-- **Integrantes:**
-- **Nombre del prototipo:** (pónganle nombre, es más divertido)
+- **Número de equipo:** 04
+- **Integrantes:** Evander Ramirez, Alejandra Morales, Geovani Milian, Pamela Coronado, Gerber Villegas.
+- **Nombre del prototipo:** EventPulse 360
 
 ## 2. El problema
-
-_¿Qué reporte o proceso duele hoy? Sean específicos._
-
-- **¿Qué reporte/proceso es?** (ej. "el reporte semanal de escaneos que se arma a mano en Word")
-- **¿Quién lo sufre y con qué frecuencia?** (ej. "los consultores de VAPT, cada lunes")
-- **¿Cuánto tiempo toma hoy y por qué?** (ej. "2 horas: copiar datos del escáner, dar formato, revisar")
-- **¿Qué es lo peor del proceso actual?**
+- **¿Qué reporte/proceso es?** Gestión manual de eventos (invitaciones, control de asistencia, seguimiento post-evento y reportes de ROI para sponsors) dispersos en hojas de cálculo.
+- **¿Quién lo sufre y con qué frecuencia?** Marketing y Ejecutivos de cuenta (CAMs), en cada evento (mensual/bimensual).
+- **¿Cuánto tiempo toma hoy y por qué?** Varios días post-evento: consolidar listas, cruzar asistencia real, perseguir ejecutivos para el estatus de leads y armar reportes manuales para sponsors.
+- **¿Qué es lo peor del proceso actual?** Pérdida de leads por seguimiento tardío (enfriamiento) e incapacidad de justificar el ROI a patrocinadores por falta de datos.
 
 ## 3. La solución
-
-_En 2–3 frases: ¿qué va a hacer el prototipo?_
-
-- **¿Qué hace?**
-- **¿Qué deja de hacer el humano gracias a esto?**
-- **¿Dónde encajaría en la futura plataforma unificada de reportería?** (¿es un generador? ¿un conector? ¿un validador? ¿un panel?)
+- **¿Qué hace?** Centraliza el ciclo de vida del evento: desde la segmentación de asistentes hasta la asignación en tiempo real de leads a ejecutivos (CAMs).
+- **¿Qué deja de hacer el humano gracias a esto?** Tabular asistencias manualmente, perseguir ejecutivos para actualizar estados y crear reportes de patrocinio desde cero.
+- **¿Dónde encajaría en la futura plataforma unificada?** Módulo Core de "Marketing & Sales Event Orchestration", actuando como conector entre encuestas, asistencia y CRM.
 
 ## 4. El flujo
-
-_El camino de punta a punta. Complétenlo como una lista de pasos:_
-
-1. **Entrada:** ¿qué recibe el prototipo? (ej. "un CSV exportado del escáner" — usen los datos de `data/`)
-2. **Proceso:** ¿qué hace con eso? (ej. "agrupa por severidad, redacta resumen con IA")
-3. **Salida:** ¿qué produce? (ej. "un reporte HTML con branding listo para imprimir")
-4. **¿Quién valida antes de que se use/envíe?**
-
-```
-[Entrada] ──▶ [Paso 1] ──▶ [Paso 2] ──▶ [Salida]
-```
-_(Opcional: dibujen el flujo con más detalle)_
-
+1. **Entrada:** Listado de asistentes (CSV) con datos de registro y perfil.
+2. **Proceso:** 
+   - Cálculo de proyección de asistencia (histórico).
+   - Clasificación por perfil (técnico vs gerencial).
+   - Asignación automática de leads a ejecutivos (CAMs).
+3. **Salida:** Dashboard de estatus en tiempo real: leads asignados, pendientes y métricas para sponsors.
 ## 5. Alcance del prototipo de HOY
-
-_Con ~3 horas de desarrollo, sean brutalmente realistas:_
-
-- **Hoy SÍ se demuestra:** (máximo 3 cosas — el camino feliz)
-  1.
-  2.
-  3.
-- **Hoy NO (queda para después):**
-  -
-- **Datos de entrada para la demo:** (¿cuál archivo de `data/` o qué dato sintético?)
+- **Hoy SÍ se demuestra:**
+  1. Interfaz para subir el listado de asistentes (CSV).
+  2. Motor de segmentación y asignación de ejecutivos.
+  3. Dashboard visual que muestra el estatus de los leads.
+- **Hoy NO (queda para después):** Integración con Mailchimp, envío automático de correos, histórico de eventos pasados, exportación a PDF.
+- **Datos de entrada para la demo:** `data/asistentes-demo.csv`
 
 ## 6. Reparto rápido
-
-- ¿Quién maneja el agente / código?
-- ¿Quién prepara datos y prueba el flujo?
-- ¿Quién arma el pitch y la demo?
-
+- **¿Quién maneja el agente / código?** [Nombre]
+- **¿Quién prepara datos y prueba el flujo?** [Nombre]
+- **¿Quién arma el pitch y la demo?** [Nombre]
 ---
 
 ### Ejemplo express

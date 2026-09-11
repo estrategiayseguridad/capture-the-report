@@ -1,0 +1,35 @@
+{
+  "_fuente": "Roster ficticio de ejecutivos de cuenta (CAM) para la demo. Reemplazar por el roster real al integrar con CRM.",
+  "cams": [
+    {
+      "id": "cam-01",
+      "nombre": "Alejandra Morales",
+      "industrias": ["Banca", "Fintech", "Seguros"],
+      "capacidad": 8
+    },
+    {
+      "id": "cam-02",
+      "nombre": "Geovani Milian",
+      "industrias": ["Gobierno", "Energia", "Industria"],
+      "capacidad": 8
+    },
+    {
+      "id": "cam-03",
+      "nombre": "Pamela Coronado",
+      "industrias": ["Retail", "Ecommerce", "Turismo", "Salud"],
+      "capacidad": 8
+    },
+    {
+      "id": "cam-04",
+      "nombre": "Gerber Villegas",
+      "industrias": ["Telecom", "Logistica", "Servicios"],
+      "capacidad": 8
+    },
+    {
+      "id": "cam-05",
+      "nombre": "Evander Ramirez",
+      "industrias": ["Educacion", "Construccion", "Agroindustria"],
+      "capacidad": 8
+    }
+  ]
+}
