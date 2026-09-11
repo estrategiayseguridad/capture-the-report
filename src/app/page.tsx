@@ -188,7 +188,12 @@ export default function Home() {
   const [narrativaIA, setNarrativaIA] = useState<Narrativa | null>(null);
   const [estadoIA, setEstadoIA] = useState<"idle" | "cargando" | "listo" | "error">("idle");
   const [errorIA, setErrorIA] = useState<string>("");
+  const [cacheIA, setCacheIA] = useState<Record<string, Narrativa>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function claveCacheIA(cliente: string, t: SlaThresholds): string {
+    return `${cliente}::${JSON.stringify(t)}`;
+  }
 
   function handleClienteChange(cliente: string) {
     setClienteSeleccionado(cliente);
@@ -205,7 +210,7 @@ export default function Home() {
     return narrativaIA ? { ...report, narrativa: narrativaIA } : report;
   }, [report, narrativaIA]);
 
-  async function analizarConIA(base: ReportData) {
+  async function analizarConIA(base: ReportData, clave: string) {
     setNarrativaIA(null);
     setEstadoIA("cargando");
     setErrorIA("");
@@ -231,20 +236,30 @@ export default function Home() {
       const narrativa: Narrativa = await res.json();
       setNarrativaIA(narrativa);
       setEstadoIA("listo");
+      setCacheIA((prev) => ({ ...prev, [clave]: narrativa }));
     } catch (e) {
       setErrorIA(e instanceof Error ? e.message : "No se pudo generar el análisis con IA.");
       setEstadoIA("error");
     }
   }
 
-  // Al cargar datos o cambiar de cliente, se redacta el análisis con IA automáticamente.
+  // Al cargar datos o cambiar de cliente: si ya se redacto antes para este cliente y estos
+  // umbrales en esta sesion, se reutiliza de la cache; si no, se redacta con IA automaticamente.
   useEffect(() => {
     if (!clienteSeleccionado || rows.length === 0) return;
     const thresholdsCliente = obtenerThresholds(clienteSeleccionado);
+    const clave = claveCacheIA(clienteSeleccionado, thresholdsCliente);
+    const enCache = cacheIA[clave];
+    if (enCache) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- reutiliza el analisis ya generado, sin llamar de nuevo a la IA
+      setNarrativaIA(enCache);
+      setEstadoIA("listo");
+      setErrorIA("");
+      return;
+    }
     const base = computeReport(rows, clienteSeleccionado, thresholdsCliente);
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- dispara el fetch a la IA; el estado de carga se refleja de inmediato a propósito
-    analizarConIA(base);
-  }, [clienteSeleccionado, rows]);
+    analizarConIA(base, clave);
+  }, [clienteSeleccionado, rows, cacheIA]);
 
   function cargarCsv(texto: string, nombreArchivo: string) {
     const parsed = Papa.parse<Record<string, string>>(texto, {
@@ -263,6 +278,7 @@ export default function Home() {
     const listaClientes = getClientes(normalizadas);
     setRows(normalizadas);
     setClientes(listaClientes);
+    setCacheIA({});
     handleClienteChange(listaClientes[0] ?? "");
     setFuenteArchivo(nombreArchivo);
     setError("");
@@ -393,7 +409,9 @@ export default function Home() {
               cliente={reportFinal.cliente}
               thresholds={thresholds}
               onChange={setThresholds}
-              onGuardado={(t) => analizarConIA(computeReport(rows, clienteSeleccionado, t))}
+              onGuardado={(t) =>
+                analizarConIA(computeReport(rows, clienteSeleccionado, t), claveCacheIA(clienteSeleccionado, t))
+              }
             />
 
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
