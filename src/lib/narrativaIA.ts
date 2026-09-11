@@ -1,13 +1,21 @@
 import "server-only";
 import Anthropic from "@anthropic-ai/sdk";
-import type { Narrativa, NarrativaInput } from "./report";
+import type { Bullet, GrupoDetalle, Narrativa, NarrativaInput, TicketResumen } from "./report";
 
 const MODEL = "claude-opus-5";
+const MAX_TICKETS_EN_PROMPT = 400;
+
+function formatearTickets(tickets: TicketResumen[]): string {
+  return tickets
+    .slice(0, MAX_TICKETS_EN_PROMPT)
+    .map((t) => `- [${t.producto} | ${t.tipo} | ${t.estado}] ${t.asunto || "(sin asunto)"}`)
+    .join("\n");
+}
 
 function construirPrompt(data: NarrativaInput): string {
   return `Eres un analista de un SOC (Centro de Operaciones de Seguridad) redactando el reporte mensual de tickets para un cliente.
 
-Datos del periodo (ya agregados, sin detalle de tickets individuales):
+Datos agregados del periodo:
 - Cliente: ${data.cliente}
 - Periodo: ${data.periodo.desde} a ${data.periodo.hasta}
 - Total de tickets: ${data.totalTickets}
@@ -17,14 +25,28 @@ Datos del periodo (ya agregados, sin detalle de tickets individuales):
 - SLA de incidentes: ${JSON.stringify(data.slaIncidentes)}
 - SLA de solicitudes: ${JSON.stringify(data.slaSolicitudes)}
 
-Redacta tres secciones en español, en tono profesional y ejecutivo, para un reporte que un consultor de SOC entrega a un cliente corporativo. No inventes datos ni herramientas que no aparezcan en los datos anteriores.
+Listado real de tickets del periodo (formato "[producto | tipo | estado] asunto"), úsalo como fuente principal para describir el trabajo realizado — NO inventes actividades que no puedan inferirse de estos asuntos:
+${formatearTickets(data.tickets)}
 
-1. "introduccion": 2-3 frases presentando el alcance y el total de tickets del periodo.
-2. "analisis": un párrafo (4-6 frases) analizando los tipos de ticket y productos con mayor volumen, el estado de cierre de los tickets, y el cumplimiento de SLA de incidentes y solicitudes con sus porcentajes.
-3. "recomendacion": entre 2 y 4 recomendaciones accionables numeradas ("1. ...", "2. ...", cada una en su propia línea dentro del string, separadas por \\n), basadas en los datos (SLA bajo, producto con más tickets, tickets pendientes, etc.).
+Redacta en español, tono profesional y ejecutivo, para un reporte que un consultor de SOC entrega a un cliente corporativo. Responde ÚNICAMENTE con un objeto JSON válido (sin texto adicional, sin bloques de código markdown) con esta forma exacta:
 
-Responde ÚNICAMENTE con un objeto JSON válido, sin texto adicional ni bloques de código, con exactamente esta forma:
-{"introduccion": "...", "analisis": "...", "recomendacion": "..."}`;
+{
+  "introduccion": "2-3 frases presentando el alcance y el total de tickets del periodo",
+  "tiposDetalle": [
+    { "grupo": "nombre de la herramienta/producto (ej. Cloudflare, Darktrace, ElasticSearch)",
+      "puntos": [ { "titulo": "frase corta (3-6 palabras) que resume la actividad", "detalle": "1-2 frases describiendo la actividad real, basada en los asuntos de los tickets de ese grupo" } ] }
+  ],
+  "analisis": [
+    { "titulo": "frase corta (3-6 palabras)", "detalle": "1-3 frases de análisis con datos reales (números, porcentajes)" }
+  ],
+  "recomendacion": [
+    { "titulo": "frase corta (3-6 palabras) accionable", "detalle": "1-2 frases explicando la recomendación" }
+  ]
+}
+
+Para "tiposDetalle": agrupa por herramienta/producto (usa la parte antes de ">" en el campo producto, o el nombre completo si no tiene ">"). Genera entre 2 y 5 puntos por grupo, solo para los grupos con tickets relevantes (puedes omitir grupos triviales). Sé específico citando lo que realmente dicen los asuntos de los tickets.
+Para "analisis": entre 3 y 5 puntos cubriendo volumen/distribución, estado de cierre, y cumplimiento de SLA de incidentes y solicitudes con sus porcentajes.
+Para "recomendacion": entre 2 y 4 puntos accionables basados en los datos (SLA bajo, producto con más tickets, tickets pendientes, patrones que veas en los asuntos, etc.).`;
 }
 
 function extraerJson(texto: string): unknown {
@@ -34,6 +56,19 @@ function extraerJson(texto: string): unknown {
     throw new Error("La respuesta de la IA no contiene un objeto JSON.");
   }
   return JSON.parse(texto.slice(inicio, fin + 1));
+}
+
+function validarBullets(valor: unknown, campo: string): Bullet[] {
+  if (!Array.isArray(valor)) throw new Error(`La respuesta de la IA no incluye "${campo}" como lista.`);
+  return valor.map((b) => ({ titulo: String(b.titulo ?? ""), detalle: String(b.detalle ?? "") }));
+}
+
+function validarGrupos(valor: unknown): GrupoDetalle[] {
+  if (!Array.isArray(valor)) throw new Error('La respuesta de la IA no incluye "tiposDetalle" como lista.');
+  return valor.map((g) => ({
+    grupo: String(g.grupo ?? "General"),
+    puntos: validarBullets(g.puntos, "puntos"),
+  }));
 }
 
 export async function generarNarrativaConIA(data: NarrativaInput): Promise<Narrativa> {
@@ -48,8 +83,8 @@ export async function generarNarrativaConIA(data: NarrativaInput): Promise<Narra
 
   const response = await client.messages.create({
     model: MODEL,
-    max_tokens: 2048,
-    output_config: { effort: "medium" },
+    max_tokens: 8192,
+    output_config: { effort: "high" },
     messages: [{ role: "user", content: construirPrompt(data) }],
   });
 
@@ -58,14 +93,15 @@ export async function generarNarrativaConIA(data: NarrativaInput): Promise<Narra
     throw new Error("La IA no devolvió texto en la respuesta.");
   }
 
-  const json = extraerJson(bloqueTexto.text) as Partial<Narrativa>;
-  if (!json.introduccion || !json.analisis || !json.recomendacion) {
-    throw new Error("La respuesta de la IA no incluye las tres secciones esperadas.");
+  const json = extraerJson(bloqueTexto.text) as Record<string, unknown>;
+  if (!json.introduccion) {
+    throw new Error("La respuesta de la IA no incluye la introducción.");
   }
 
   return {
-    introduccion: json.introduccion,
-    analisis: json.analisis,
-    recomendacion: json.recomendacion,
+    introduccion: String(json.introduccion),
+    tiposDetalle: validarGrupos(json.tiposDetalle),
+    analisis: validarBullets(json.analisis, "analisis"),
+    recomendacion: validarBullets(json.recomendacion, "recomendacion"),
   };
 }

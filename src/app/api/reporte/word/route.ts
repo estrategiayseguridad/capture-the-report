@@ -11,24 +11,45 @@ import {
   AlignmentType,
   WidthType,
   PageBreak,
+  ImageRun,
+  TableOfContents,
 } from "docx";
-import type { CountItem, ReportData, SlaResumen } from "@/lib/report";
+import type { Bullet, CountItem, GrupoDetalle, ReportData, SlaResumen, TicketPendiente } from "@/lib/report";
+import { barrasHorizontales, pastelConEtiquetas, COLORES } from "@/lib/chartImages";
+
+const ANCHO_IMAGEN = 560;
 
 function seccion(titulo: string, nivel: (typeof HeadingLevel)[keyof typeof HeadingLevel] = HeadingLevel.HEADING_1) {
   return new Paragraph({ text: titulo, heading: nivel, spacing: { before: 300, after: 150 } });
 }
 
 function parrafo(texto: string) {
-  return texto.split("\n").map(
-    (linea) =>
-      new Paragraph({
-        children: [new TextRun(linea)],
-        spacing: { after: 120 },
-      })
-  );
+  return new Paragraph({ children: [new TextRun(texto)], spacing: { after: 120 } });
 }
 
-function tablaConteo(items: CountItem[], encabezado: string, encabezadoValor: string = "Tickets") {
+function vinieta(b: Bullet) {
+  return new Paragraph({
+    bullet: { level: 0 },
+    spacing: { after: 100 },
+    children: [new TextRun({ text: `${b.titulo}: `, bold: true }), new TextRun(b.detalle)],
+  });
+}
+
+async function imagenDesdeBuffer(buffer: Buffer, altoOriginal: number, anchoOriginal: number) {
+  const alto = Math.round(ANCHO_IMAGEN * (altoOriginal / anchoOriginal));
+  return new Paragraph({
+    children: [
+      new ImageRun({
+        type: "png",
+        data: buffer,
+        transformation: { width: ANCHO_IMAGEN, height: alto },
+      }),
+    ],
+    spacing: { after: 200 },
+  });
+}
+
+function tablaConteo(items: CountItem[], encabezado: string, encabezadoValor: string = "Cantidad") {
   const filas = [
     new TableRow({
       children: [
@@ -85,10 +106,73 @@ function tablaSla(sla: SlaResumen) {
   return new Table({ rows: filas, width: { size: 100, type: WidthType.PERCENTAGE } });
 }
 
+function tablaPendientes(pendientes: TicketPendiente[]) {
+  const filas = [
+    new TableRow({
+      children: [
+        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "ID del ticket", bold: true })] })] }),
+        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Estado", bold: true })] })] }),
+        new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Asunto", bold: true })] })] }),
+      ],
+    }),
+    ...pendientes.map(
+      (p) =>
+        new TableRow({
+          children: [
+            new TableCell({ children: [new Paragraph(p.ticketId)] }),
+            new TableCell({ children: [new Paragraph(p.estado)] }),
+            new TableCell({ children: [new Paragraph(p.asunto)] }),
+          ],
+        })
+    ),
+  ];
+  return new Table({ rows: filas, width: { size: 100, type: WidthType.PERCENTAGE } });
+}
+
+function seccionTiposDetalle(grupos: GrupoDetalle[]): Paragraph[] {
+  const salida: Paragraph[] = [];
+  for (const g of grupos) {
+    salida.push(new Paragraph({ text: g.grupo, heading: HeadingLevel.HEADING_2, spacing: { before: 200, after: 100 } }));
+    for (const p of g.puntos) salida.push(vinieta(p));
+  }
+  return salida;
+}
+
+const DEFINICIONES_ESTADO: { estado: string; definicion: string }[] = [
+  { estado: "Resuelto", definicion: "El ticket ha sido completamente atendido o finalizado." },
+  {
+    estado: "Abierto",
+    definicion: "El ticket fue registrado y está pendiente de asignación o en proceso de atención inicial.",
+  },
+  {
+    estado: "En espera",
+    definicion:
+      "El progreso del ticket está temporalmente detenido, habitualmente porque la resolución depende de un factor externo fuera del control inmediato del agente.",
+  },
+  {
+    estado: "Con el usuario",
+    definicion:
+      "El equipo de soporte ha atendido el ticket, pero necesita que el usuario que lo reportó realice una acción para poder continuar.",
+  },
+];
+
 export async function POST(req: NextRequest) {
   const report = (await req.json()) as ReportData;
 
+  const cerrados = report.porEstado.find((e) => e.label === "Resuelto")?.total ?? 0;
+  const pendientesCount = report.totalTickets - cerrados;
+
+  const [imgHistorial, imgTipos, imgProducto, imgEstado] = await Promise.all([
+    barrasHorizontales(report.porTipo, COLORES[0]),
+    barrasHorizontales(report.porTipo, COLORES[1]),
+    barrasHorizontales(report.porProducto, COLORES[2]),
+    pastelConEtiquetas(report.porEstado),
+  ]);
+
+  const altoBarras = (items: CountItem[]) => 40 + Math.min(items.length, 12) * 42;
+
   const doc = new Document({
+    features: { updateFields: true },
     sections: [
       {
         children: [
@@ -110,31 +194,59 @@ export async function POST(req: NextRequest) {
           }),
           new Paragraph({ children: [new PageBreak()] }),
 
+          // Índice
+          new Paragraph({ text: "Índice", heading: HeadingLevel.HEADING_1, spacing: { after: 150 } }),
+          new TableOfContents("Índice", { hyperlink: true, headingStyleRange: "1-2" }),
+          new Paragraph({ children: [new PageBreak()] }),
+
           // Introduccion
           seccion("Introducción"),
-          ...parrafo(report.narrativa.introduccion),
+          parrafo(report.narrativa.introduccion),
 
-          // Historial de tickets
+          // Historial de tickets (tabla tipo/cantidad + grafica)
           seccion("Historial de tickets"),
           new Paragraph({ text: `Total de tickets en el periodo: ${report.totalTickets}`, spacing: { after: 150 } }),
-          tablaConteo(report.historial, "Mes"),
+          tablaConteo(report.porTipo, "Tipo", "Cantidad"),
+          await imagenDesdeBuffer(imgHistorial, altoBarras(report.porTipo), 900),
 
           // Tipos de Tickets
-          seccion("Tipos de Tickets"),
-          tablaConteo(report.porTipo, "Tipo de ticket"),
+          seccion("Tipos de Tickets en el Periodo"),
+          await imagenDesdeBuffer(imgTipos, altoBarras(report.porTipo), 900),
+          ...seccionTiposDetalle(report.narrativa.tiposDetalle),
 
           // Tickets por herramienta o producto
-          seccion("Tickets por herramienta o producto"),
-          tablaConteo(report.porProducto, "Producto / Herramienta"),
+          seccion("Tickets por Herramienta"),
+          await imagenDesdeBuffer(imgProducto, altoBarras(report.porProducto), 900),
 
           // Estado de los tickets
-          seccion("Estado de los tickets"),
-          tablaConteo(report.porEstado, "Estado"),
+          seccion("Estado de los Tickets"),
+          new Paragraph({
+            text: `Al cierre del periodo, se presentan ${cerrados} tickets cerrados y ${pendientesCount} pendientes.`,
+            spacing: { after: 150 },
+          }),
+          await imagenDesdeBuffer(imgEstado, 480, 900),
+          new Paragraph({ text: "Definiciones de ESTADO del ticket", spacing: { before: 100, after: 100 } }),
+          ...DEFINICIONES_ESTADO.map(
+            (d) =>
+              new Paragraph({
+                bullet: { level: 0 },
+                spacing: { after: 80 },
+                children: [new TextRun({ text: `${d.estado}: `, bold: true }), new TextRun(d.definicion)],
+              })
+          ),
+          new Paragraph({ text: "Tickets pendientes de cierre", heading: HeadingLevel.HEADING_2, spacing: { before: 200, after: 100 } }),
+          report.pendientes.length > 0
+            ? tablaPendientes(report.pendientes)
+            : new Paragraph({ text: "No hay tickets pendientes de cierre en el periodo." }),
 
           // SLA
           seccion("SLA"),
           new Paragraph({
-            text: "A continuación se presenta el cumplimiento de SLA para incidentes y requerimientos del periodo.",
+            text: "El Tiempo Medio de Primera Atención (TPA) es el tiempo promedio que transcurre desde que llega una solicitud de servicio al SOC hasta su asignación.",
+            spacing: { after: 100 },
+          }),
+          new Paragraph({
+            text: "El Tiempo Medio de Resolución (TMR) es el tiempo promedio del ticket desde que se asigna hasta que se resuelve. A continuación se presenta el cumplimiento de SLA para incidentes y requerimientos del periodo, según los umbrales de horas configurados para este cliente.",
             spacing: { after: 150 },
           }),
 
@@ -146,34 +258,15 @@ export async function POST(req: NextRequest) {
 
           // Analisis de resultados
           seccion("Análisis de Resultados"),
-          ...parrafo(report.narrativa.analisis),
+          ...report.narrativa.analisis.map(vinieta),
 
           // Recomendacion
-          seccion("Recomendación"),
-          ...parrafo(report.narrativa.recomendacion),
+          seccion("Recomendaciones"),
+          ...report.narrativa.recomendacion.map(vinieta),
 
           // Anexo
           seccion("Anexo"),
-          new Paragraph({
-            text: "Reporte generado automáticamente a partir del export de Halo ITSM del periodo indicado. Documento sujeto a revisión antes de su envío al cliente.",
-            spacing: { after: 150 },
-          }),
-          new Paragraph({
-            text: "Umbrales de SLA aplicados en este reporte (horas de resolución, configurables por cliente):",
-            spacing: { after: 100 },
-          }),
-          tablaConteo(
-            [
-              { label: "Incidente - Alta", total: report.thresholds.incidente.alta },
-              { label: "Incidente - Media", total: report.thresholds.incidente.media },
-              { label: "Incidente - Baja", total: report.thresholds.incidente.baja },
-              { label: "Requerimiento - Alta", total: report.thresholds.requerimiento.alta },
-              { label: "Requerimiento - Media", total: report.thresholds.requerimiento.media },
-              { label: "Requerimiento - Baja", total: report.thresholds.requerimiento.baja },
-            ],
-            "Categoría - Prioridad",
-            "Horas"
-          ),
+          new Paragraph({ text: "Se comparte la fuente del registro de las alertas." }),
         ],
       },
     ],
