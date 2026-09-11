@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Papa from "papaparse";
 import {
   ResponsiveContainer,
@@ -78,10 +78,12 @@ function ConfiguracionSla({
   cliente,
   thresholds,
   onChange,
+  onGuardado,
 }: {
   cliente: string;
   thresholds: SlaThresholds;
   onChange: (t: SlaThresholds) => void;
+  onGuardado: (t: SlaThresholds) => void;
 }) {
   const [abierto, setAbierto] = useState(false);
   const [guardado, setGuardado] = useState(false);
@@ -94,6 +96,7 @@ function ConfiguracionSla({
   function handleGuardar() {
     guardarThresholds(cliente, thresholds);
     setGuardado(true);
+    onGuardado(thresholds);
   }
 
   function handleRestaurar() {
@@ -183,15 +186,13 @@ export default function Home() {
   const [descargando, setDescargando] = useState(false);
   const [thresholds, setThresholds] = useState<SlaThresholds>(SLA_THRESHOLDS_DEFAULT);
   const [narrativaIA, setNarrativaIA] = useState<Narrativa | null>(null);
-  const [redactandoIA, setRedactandoIA] = useState(false);
+  const [estadoIA, setEstadoIA] = useState<"idle" | "cargando" | "listo" | "error">("idle");
   const [errorIA, setErrorIA] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   function handleClienteChange(cliente: string) {
     setClienteSeleccionado(cliente);
     setThresholds(obtenerThresholds(cliente));
-    setNarrativaIA(null);
-    setErrorIA("");
   }
 
   const report: ReportData | null = useMemo(() => {
@@ -204,23 +205,23 @@ export default function Home() {
     return narrativaIA ? { ...report, narrativa: narrativaIA } : report;
   }, [report, narrativaIA]);
 
-  async function handleRedactarIA() {
-    if (!report) return;
-    setRedactandoIA(true);
+  async function analizarConIA(base: ReportData) {
+    setNarrativaIA(null);
+    setEstadoIA("cargando");
     setErrorIA("");
     try {
       const res = await fetch("/api/reporte/analisis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          cliente: report.cliente,
-          periodo: report.periodo,
-          totalTickets: report.totalTickets,
-          porTipo: report.porTipo,
-          porProducto: report.porProducto,
-          porEstado: report.porEstado,
-          slaIncidentes: report.slaIncidentes,
-          slaSolicitudes: report.slaSolicitudes,
+          cliente: base.cliente,
+          periodo: base.periodo,
+          totalTickets: base.totalTickets,
+          porTipo: base.porTipo,
+          porProducto: base.porProducto,
+          porEstado: base.porEstado,
+          slaIncidentes: base.slaIncidentes,
+          slaSolicitudes: base.slaSolicitudes,
         }),
       });
       if (!res.ok) {
@@ -229,12 +230,21 @@ export default function Home() {
       }
       const narrativa: Narrativa = await res.json();
       setNarrativaIA(narrativa);
+      setEstadoIA("listo");
     } catch (e) {
       setErrorIA(e instanceof Error ? e.message : "No se pudo generar el análisis con IA.");
-    } finally {
-      setRedactandoIA(false);
+      setEstadoIA("error");
     }
   }
+
+  // Al cargar datos o cambiar de cliente, se redacta el análisis con IA automáticamente.
+  useEffect(() => {
+    if (!clienteSeleccionado || rows.length === 0) return;
+    const thresholdsCliente = obtenerThresholds(clienteSeleccionado);
+    const base = computeReport(rows, clienteSeleccionado, thresholdsCliente);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- dispara el fetch a la IA; el estado de carga se refleja de inmediato a propósito
+    analizarConIA(base);
+  }, [clienteSeleccionado, rows]);
 
   function cargarCsv(texto: string, nombreArchivo: string) {
     const parsed = Papa.parse<Record<string, string>>(texto, {
@@ -359,38 +369,31 @@ export default function Home() {
                   Periodo: {reportFinal.periodo.desde} a {reportFinal.periodo.hasta} · {reportFinal.totalTickets} tickets
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={handleRedactarIA}
-                  disabled={redactandoIA}
-                  className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 disabled:opacity-60"
-                >
-                  {redactandoIA ? "Redactando con IA..." : narrativaIA ? "Volver a redactar con IA" : "Redactar con IA"}
-                </button>
-                <button
-                  onClick={handleDescargarWord}
-                  disabled={descargando}
-                  className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-60"
-                >
-                  {descargando ? "Generando Word..." : "Descargar reporte Word"}
-                </button>
-              </div>
+              <button
+                onClick={handleDescargarWord}
+                disabled={descargando}
+                className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-60"
+              >
+                {descargando ? "Generando Word..." : "Descargar reporte Word"}
+              </button>
             </div>
 
-            {errorIA && <p className="text-sm text-red-600">{errorIA}</p>}
-            {narrativaIA && !errorIA && (
-              <p className="text-xs text-green-600">
-                Introducción, análisis y recomendación redactados con IA para este cliente y estos umbrales de SLA.
+            {estadoIA === "cargando" && (
+              <p className="flex items-center gap-2 text-sm text-blue-600">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-blue-600" />
+                Analizando con IA...
               </p>
+            )}
+            {estadoIA === "listo" && <p className="text-sm text-green-600">Análisis finalizado ✓</p>}
+            {estadoIA === "error" && (
+              <p className="text-sm text-red-600">{errorIA} (se muestra el texto por reglas mientras tanto)</p>
             )}
 
             <ConfiguracionSla
               cliente={reportFinal.cliente}
               thresholds={thresholds}
-              onChange={(t) => {
-                setThresholds(t);
-                setNarrativaIA(null);
-              }}
+              onChange={setThresholds}
+              onGuardado={(t) => analizarConIA(computeReport(rows, clienteSeleccionado, t))}
             />
 
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
