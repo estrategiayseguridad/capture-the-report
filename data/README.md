@@ -29,7 +29,12 @@ Son un **dataset sintético derivado de un export real**: se preservó la estruc
 python scripts/sanitizar-datos.py
 ```
 
-> El script lee de `assets/`, que **no está versionado** (contiene los archivos reales del cliente). Sin esa carpeta el script no corre — pero tampoco hace falta: los archivos ya generados están acá.
+> El script lee dos cosas de `assets/`, que **no está versionado** (contiene los archivos reales del cliente):
+> `GRAFICAS.xlsx` (el export) y `mapeo-sanitizacion.json` (la tabla real → sintético).
+>
+> La tabla de reemplazos vive **fuera** del script a propósito: sus *claves* son datos del cliente (dominios de producción, nombres de proyecto, el buzón del SOC), así que dejarlas en un `.py` versionado sería la fuga que el script intenta evitar. Como efecto secundario útil, la lista negra de la verificación final se deriva de esas mismas claves y no puede desincronizarse del mapeo.
+>
+> Sin la carpeta `assets/` el script no corre — pero tampoco hace falta: los archivos ya generados están acá.
 
 **Se preservó exacto** (para que las métricas del informe cuadren y se puedan verificar):
 `Status` · `Category` · `Team` · `ITIL Type` · `Ticket Type` · `SLA` · `Priority` · fecha y hora de creación · los decimales de `Time to Respond` y `Time to Resolve`.

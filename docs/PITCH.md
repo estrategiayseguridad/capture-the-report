@@ -13,7 +13,7 @@ _Arranquen con el problema, no con la solución. Que todos en la sala digan "uf,
 
 **Nuestro gancho:**
 
-> "Cada mes, el equipo de **CSC** pierde **entre 4 y 6 horas** armando a mano el informe de tickets de **Banrural**: refrescar cinco tablas dinámicas, crear una pestaña por herramienta filtrando a mano, re-pegar cuatro gráficas en Word y transcribir quince números a doce páginas.
+> "Cada mes, el equipo de **CSC** pierde **entre 4 y 6 horas** armando a mano el informe de tickets de **Banco Demo**: refrescar cinco tablas dinámicas, crear una pestaña por herramienta filtrando a mano, re-pegar cuatro gráficas en Word y transcribir quince números a doce páginas.
 >
 > Y les traigo un dato: nos pusimos a abrir el archivo del cierre de Agosto. **Las pestañas por herramienta tienen 47 tickets. `DATOS` tiene 63.** Dieciséis tickets no aparecen. Nadie lo notó, porque **nadie tiene tiempo de auditar lo que copió a mano.**
 >
@@ -58,7 +58,7 @@ _Qué van a mostrar funcionando a las 6:00 PM. Comprométanse a algo concreto._
 
 > "A las 6 nos van a ver **arrastrar el Excel de Agosto y que aparezcan las cuatro gráficas en pantalla**, con las pestañas por herramienta generadas solas — y les vamos a mostrar, en vivo, **los 16 tickets que el proceso manual perdió.**
 >
-> Y después le damos a un botón y **se descarga el informe de Banrural abriéndose en Word**, con los 63 tickets, los 53 cerrados y los 10 pendientes ya escritos en el texto.
+> Y después le damos a un botón y **se descarga el informe de Banco Demo abriéndose en Word**, con los 63 tickets, los 53 cerrados y los 10 pendientes ya escritos en el texto.
 >
 > Lo que hoy toma cinco horas, en la demo va a tomar **menos de un minuto.**"
 
@@ -71,7 +71,7 @@ _Qué van a mostrar funcionando a las 6:00 PM. Comprométanse a algo concreto._
 Estructura que funciona:
 
 1. **(30 seg)** Recuerden el dolor: "prometimos resolver X".
-   > "Prometimos que el cierre mensual de Banrural dejara de tomar cinco horas de copiar y pegar. Vamos a hacerlo en un minuto."
+   > "Prometimos que el cierre mensual de Banco Demo dejara de tomar cinco horas de copiar y pegar. Vamos a hacerlo en un minuto."
 
 2. **(3 min)** Demo en vivo del camino feliz — con los datos de prueba ya cargados y ensayado al menos una vez.
 
@@ -94,11 +94,11 @@ Estructura que funciona:
    - **Fácil:** leer el Excel y calcular las métricas. Lo que en Excel son cinco tablas dinámicas, en código son unas líneas de agrupar y contar — y se ejecutan igual todos los meses.
    - **Difícil:** el `.docx` fiel a la plantilla corporativa. Word por dentro es un ZIP con fuentes embebidas y gráficas enlazadas a rutas absolutas. Hoy entregamos un documento que Word abre bien; el `.docx` pixel-perfect es el siguiente paso.
    - **Lo que no esperábamos:** que al leer el archivo real íbamos a **encontrar las inconsistencias**. No salimos a buscar errores, salimos a automatizar — y automatizar los hizo visibles. Eso, por sí solo, ya justifica la herramienta.
-   - **Impacto:** **~4 horas ahorradas por cierre**, de 5 h a menos de 1 h. Son **~48 horas al año en un solo cliente**. Y el motor no es de Banrural: es de cualquier cliente de CSC que reporte tickets de Halo. Con cinco clientes son **20 horas al mes de analista senior** liberadas.
+   - **Impacto:** **~4 horas ahorradas por cierre**, de 5 h a menos de 1 h. Son **~48 horas al año en un solo cliente**. Y el motor no es de Banco Demo: es de cualquier cliente de CSC que reporte tickets de Halo. Con cinco clientes son **20 horas al mes de analista senior** liberadas.
 
 4. **(30 seg)** Dónde encaja en la plataforma unificada y qué construirían después.
 
-   > "REPORTERO CSC son tres piezas que la plataforma unificada va a necesitar igual: **un conector** de entrada, **un motor de métricas** y **un renderizador de plantillas por cliente**. Banrural es la primera plantilla, no el producto.
+   > "REPORTERO CSC son tres piezas que la plataforma unificada va a necesitar igual: **un conector** de entrada, **un motor de métricas** y **un renderizador de plantillas por cliente**. Banco Demo es la primera plantilla, no el producto.
    >
    > Lo siguiente, en orden: **uno**, conectarnos a la API de Halo para que ni el Excel haga falta; **dos**, guardar cada cierre para que el historial mensual se construya solo en lugar de escribirse a mano; **tres**, la segunda plantilla de cliente — que es donde se prueba que el motor sirve de verdad."
 

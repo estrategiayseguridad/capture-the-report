@@ -1,7 +1,8 @@
 """
 Genera el dataset de demo SANITIZADO a partir del export real de Halo.
 
-Entrada  (NO se versiona):  assets/GRAFICAS.xlsx  -> pestana DATOS
+Entradas (NO se versionan):  assets/GRAFICAS.xlsx            -> pestana DATOS
+                             assets/mapeo-sanitizacion.json  -> tabla de reemplazos
 Salidas  (si se versionan): data/halo-demo-agosto.xlsx   (pestana DATOS, mismo layout que Halo)
                             data/halo-demo-agosto.json   (mismos tickets, para import directo)
                             data/historial-mensual.json  (conteo Ene-Ago del grafico de historial)
@@ -12,6 +13,11 @@ Que se PRESERVA exacto (para que las metricas del informe cuadren):
 
 Que se REEMPLAZA (datos identificables del cliente):
   Ticket ID, Summary, Assigned Agent, User Name, Client.
+
+Nota importante: la tabla de reemplazos NO vive en este archivo, porque sus CLAVES
+son datos del cliente (dominios de produccion, nombres de proyecto, correo del SOC).
+Vive en assets/mapeo-sanitizacion.json, que esta en .gitignore junto con el resto de
+assets/. Este script es publicable; ese JSON no.
 
 Uso:  python scripts/sanitizar-datos.py
 """
@@ -27,6 +33,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 ORIGEN = RAIZ / "assets" / "GRAFICAS.xlsx"
+MAPEO = RAIZ / "assets" / "mapeo-sanitizacion.json"
 DESTINO = RAIZ / "data"
 NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
 HOJA_DATOS = "xl/worksheets/sheet5.xml"
@@ -39,33 +46,6 @@ COLUMNAS = [
     "Time to Resolve (Decimal)", "Priority",
 ]
 
-# Reemplazos de texto libre. El orden importa: primero lo mas especifico.
-REEMPLAZOS = [
-    ("gsic.ciberseguridad@banrural.com.gt", "soc@banco-demo.example"),
-    ("appmovil.banrural.com.gt", "appmovil.banco-demo.example"),
-    ("bvnegocios.banrural.com.gt", "portalnegocios.banco-demo.example"),
-    ("rrhh.banrural.com.gt", "rrhh.banco-demo.example"),
-    ("dspm.banrural.com.gt", "dspm.banco-demo.example"),
-    ("gfbanrural.com.gt", "banco-demo.example"),
-    ("banrural.com.gt", "banco-demo.example"),
-    ("banrural.tech", "banco-demo.example"),
-    ("BVNegocios", "PortalNegocios"),
-    ("bvnegocios", "portalnegocios"),
-    ("Bancavirtual", "BancaWeb"),
-    ("bancavirtual", "bancaweb"),
-    ("CREDIAPP", "PROYECTOFENIX"),
-    ("CrediApp", "ProyectoFenix"),
-    ("crediapp", "proyectofenix"),
-    ("Pixto", "Proveedor Zeta"),
-    ("Pragma", "Integrador Beta"),
-    ("Cyera", "Plataforma DSPM"),
-    ("Portal 360", "Portal Unico"),
-    ("BANRURAL", "BANCO DEMO"),
-    ("Banrural", "Banco Demo"),
-    ("172.212.194.58", "198.51.100.58"),
-    ("34.58.4.151", "198.51.100.23"),
-]
-
 # Historial mensual: esta escrito a mano en la pestana GRAFICAS (A17:B24).
 # No se deriva de DATOS, asi que se replica aqui para que el grafico se pueda dibujar.
 HISTORIAL = [
@@ -73,8 +53,25 @@ HISTORIAL = [
     ("Mayo", 53), ("Junio", 52), ("Julio", 62), ("Agosto", 63),
 ]
 
-CLIENTE_DEMO = "Banco Demo, S.A."
-CORREO_SOC = "gsic.ciberseguridad@banrural.com.gt"
+
+def cargar_mapeo(ruta):
+    """La tabla de reemplazos es dato del cliente: se carga de assets/, no se versiona."""
+    if not ruta.exists():
+        raise SystemExit(
+            f"No se encontro {ruta}.\n"
+            "Es la tabla real -> sintetico y no se versiona a proposito (contiene datos\n"
+            "del cliente). Pidansela a quien tenga la carpeta assets/ original."
+        )
+    cfg = json.loads(ruta.read_text(encoding="utf-8"))
+    # El orden importa: primero lo mas especifico, tal como viene en el JSON.
+    reemplazos = [(viejo, nuevo) for viejo, nuevo in cfg["reemplazos"]]
+    return cfg, reemplazos
+
+
+CONFIG, REEMPLAZOS = cargar_mapeo(MAPEO)
+CLIENTE_DEMO = CONFIG["cliente_destino"]
+CORREO_SOC = CONFIG["correo_soc"]
+CORREO_SOC_DEMO = CONFIG["correo_soc_destino"]
 
 
 def leer_datos(ruta):
@@ -132,7 +129,7 @@ def construir_mapas(filas):
         if u != CORREO_SOC
     ]
     mapa_usuarios = {u: f"Usuario {i + 1:02d}" for i, u in enumerate(usuarios)}
-    mapa_usuarios[CORREO_SOC] = "soc@banco-demo.example"
+    mapa_usuarios[CORREO_SOC] = CORREO_SOC_DEMO
 
     ids = sorted({int(f["B"]) for f in filas})
     mapa_ids = {viejo: 40001 + i for i, viejo in enumerate(ids)}
@@ -190,10 +187,14 @@ def escribir_xlsx(tickets, ruta):
 
 
 def verificar(tickets):
-    """Falla ruidosamente si se filtro algo. Es la red de seguridad del script."""
+    """Falla ruidosamente si se filtro algo. Es la red de seguridad del script.
+
+    Los terminos prohibidos son exactamente las CLAVES del mapeo: si una sobrevive
+    al reemplazo, es una fuga. Asi la lista negra no se puede desincronizar del mapeo
+    (y no hay que escribir datos del cliente dos veces).
+    """
     prohibido = re.compile(
-        r"(?i)banrural|pixto|crediapp|pragma|cyera|bvnegocios|bancavirtual"
-        r"|34\.58\.4\.151|172\.212\.194\.58|Portal 360"
+        "|".join(re.escape(viejo) for viejo, _ in REEMPLAZOS), re.IGNORECASE
     )
     fugas = [t for t in tickets if prohibido.search(json.dumps(t, ensure_ascii=False))]
     if fugas:
@@ -261,7 +262,13 @@ def main():
     tpa = [t["time_to_respond"] for t in tickets if t["time_to_respond"] is not None]
     tmr = [t["time_to_resolve"] for t in tickets if t["time_to_resolve"] is not None]
     print(f"    TPA={sum(tpa)/len(tpa):.2f} (n={len(tpa)})   TMR={sum(tmr)/len(tmr):.2f} (n={len(tmr)})")
-    print(f"    tickets citados en docs: 11993 -> {mapa_ids[11993]} | 12413 -> {mapa_ids[12413]}")
+    citados = " | ".join(
+        f"{viejo} -> {mapa_ids[viejo]}"
+        for viejo in CONFIG.get("ids_citados_en_docs", [])
+        if viejo in mapa_ids
+    )
+    if citados:
+        print(f"    tickets citados en docs: {citados}")
     print("    escritos: data/halo-demo-agosto.xlsx, data/halo-demo-agosto.json, data/historial-mensual.json")
 
 

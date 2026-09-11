@@ -15,9 +15,9 @@
 _¿Qué reporte o proceso duele hoy? Sean específicos._
 
 - **¿Qué reporte/proceso es?**
-  El **Informe mensual de Atención de Alertas y Solicitudes** que el equipo de **CSC** entrega a **Banrural**. Hoy son dos artefactos hechos a mano, en cadena:
+  El **Informe mensual de Atención de Alertas y Solicitudes** que el equipo de **CSC** entrega a **Banco Demo**. Hoy son dos artefactos hechos a mano, en cadena:
   1. `GRAFICAS.xlsx` — se pega el export de **Halo** en la pestaña `DATOS` y a partir de ahí se construyen **5 tablas dinámicas**, **4 gráficas** y **una pestaña por herramienta** (`CLOUDFLARE`, `BEYONTRUST`, `THINKSCANARY`) filtrando manualmente la columna **G (Category)**.
-  2. `Reporte de Alertas BANRURAL - <Mes> <Año>.docx` — documento de **12 páginas** donde se re-escriben los conteos, se re-pegan las 4 gráficas y se actualizan las tablas de SLA.
+  2. `Reporte de Alertas BANCO DEMO - <Mes> <Año>.docx` — documento de **12 páginas** donde se re-escriben los conteos, se re-pegan las 4 gráficas y se actualizan las tablas de SLA.
 
 - **¿Quién lo sufre y con qué frecuencia?**
   El equipo de **CSC**, **una vez al mes**, todos los meses, para el cierre del mes anterior. Es trabajo de analista senior gastado en copiar y pegar.
@@ -55,7 +55,7 @@ _En 2–3 frases: ¿qué va a hacer el prototipo?_
   Es un **generador de reportes recurrentes con conector de entrada**. Concretamente aporta tres piezas reutilizables a la plataforma:
   - un **conector** (hoy: export de Halo; mañana: la API de Halo directo);
   - un **motor de métricas** que convierte tickets crudos en el set de indicadores del servicio (por herramienta, tipo, estado, SLA);
-  - un **renderizador de plantillas de cliente**, donde "Banrural" es la primera plantilla y el mismo motor sirve para los demás clientes de CSC.
+  - un **renderizador de plantillas de cliente**, donde "Banco Demo" es la primera plantilla y el mismo motor sirve para los demás clientes de CSC.
 
 ## 4. El flujo
 
@@ -70,18 +70,17 @@ _El camino de punta a punta. Complétenlo como una lista de pasos:_
 3. **Salida:**
    - **Dashboard en pantalla** con las 4 gráficas y las tablas del cierre.
    - **Vistas por herramienta** (equivalente a las pestañas `CLOUDFLARE` / `BEYONTRUST` / `THINKSCANARY`).
-   - **El informe** con la estructura y el orden del `.docx` de Banrural, con los números ya puestos, **descargable como documento abrible en Word** e imprimible a PDF.
+   - **El informe** con la estructura y el orden del `.docx` de Banco Demo, con los números ya puestos, **descargable como documento abrible en Word** e imprimible a PDF.
 4. **¿Quién valida antes de que se use/envíe?**
-   El **analista de CSC** revisa el borrador en pantalla y escribe las dos secciones de criterio (*Tipos de tickets en el periodo* y *Análisis de resultados / Recomendaciones*). Luego el **líder de CSC** aprueba antes de enviarlo a Banrural. **El prototipo produce un borrador, nunca envía nada.**
+   El **analista de CSC** revisa el borrador en pantalla y escribe las dos secciones de criterio (*Tipos de tickets en el periodo* y *Análisis de resultados / Recomendaciones*). Luego el **líder de CSC** aprueba antes de enviarlo a Banco Demo. **El prototipo produce un borrador, nunca envía nada.**
 
 ```
-                          ┌─ vista CLOUDFLARE ──┐
-[Halo .xlsx]              ├─ vista BEYONTRUST ──┤
-  pestaña   ──▶ [Parser] ─┼─ vista THINKSCANARY ┼─▶ [Plantilla    ] ──▶ [Informe .doc]
-   DATOS      (Category)  │                     │   Banrural       │    + PDF (Ctrl+P)
-   63 filas               └─ [Métricas] ────────┘   (texto+cifras) │
-                             5 tablas                              │
-                             4 gráficas ────────────────────────────┘
+                          ┌─ vista CLOUDFLARE ───┐
+[Halo .xlsx]              ├─ vista BEYONTRUST ───┤     ┌ Plantilla Banco Demo ┐
+  pestaña   ──▶ [Parser] ─┼─ vista THINKSCANARY ─┼──▶  │   texto + cifras     │ ──▶ [Informe .doc]
+   DATOS      (Category)  │                      │     └──────────────────────┘       + PDF (Ctrl+P)
+   63 filas               └─ [Métricas] ─────────┘
+                             5 tablas · 4 gráficas
                                   │
                                   └──▶ [Dashboard en pantalla]
                                             ▲
@@ -96,13 +95,13 @@ _Con ~3 horas de desarrollo, sean brutalmente realistas:_
 - **Hoy SÍ se demuestra:** (máximo 3 cosas — el camino feliz)
   1. **Subir el `.xlsx` de Halo y ver el dashboard del cierre** — las 4 gráficas (historial mensual, tipos de ticket, herramienta × estado, estado) y las tablas, calculadas de la pestaña `DATOS` sin tocar una tabla dinámica.
   2. **Ver las vistas por herramienta generadas solas** desde la columna `Category`, con el conteo cuadrando contra `DATOS` — y mostrar en vivo los tickets que hoy se pierden en el proceso manual.
-  3. **Generar el informe de Banrural con las cifras ya insertadas** en la redacción y **descargarlo** para abrirlo en Word.
+  3. **Generar el informe de Banco Demo con las cifras ya insertadas** en la redacción y **descargarlo** para abrirlo en Word.
 
 - **Hoy NO (queda para después):**
   - `.docx` nativo fiel a la plantilla corporativa (fuentes embebidas, portada, encabezados, índice automático). **Hoy generamos un documento que Word abre y respeta el formato básico; el `.docx` pixel-perfect con la plantilla real es el siguiente paso.**
   - **Redacción con IA** de *Análisis de resultados* y *Recomendaciones*: hoy van como campos editables con un borrador armado por plantilla. Sin dependencia de red — si el WiFi se cae, la demo sigue.
   - **Historial multi-mes persistente.** Los 8 meses del gráfico de historial (Enero 73 … Agosto 63) hoy se leen de un JSON en el repo; guardar cierres históricos de verdad es después.
-  - Conexión directa a la **API de Halo**, login, usuarios, y multi-cliente (hoy solo la plantilla Banrural).
+  - Conexión directa a la **API de Halo**, login, usuarios, y multi-cliente (hoy solo la plantilla Banco Demo).
   - Cálculo de **% de cumplimiento de SLA** contra los umbrales contractuales reales (hoy se muestran TPA/TMR calculados y los umbrales 10 min / 48 h como en el informe de Agosto).
 
 - **Datos de entrada para la demo:**

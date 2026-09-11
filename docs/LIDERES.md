@@ -86,7 +86,7 @@ claude
 **Líder:** Oscar Gonzalez
 **Equipo:** Oscar Gonzalez, Katherine Felipe, Juan Pascual, Katherine Morales
 **Rama:** `equipo-08`
-**Prototipo:** **REPORTERO CSC** — el cierre mensual de tickets de Banrural, automatizado de punta a punta.
+**Prototipo:** **REPORTERO CSC** — el cierre mensual de tickets de Banco Demo, automatizado de punta a punta.
 **Planteamiento:** [`PLANTEAMIENTO.md`](PLANTEAMIENTO.md) · **Pitch y demo:** [`PITCH.md`](PITCH.md)
 
 ## ✅ Checklist del líder — estado
