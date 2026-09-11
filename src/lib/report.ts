@@ -123,11 +123,7 @@ export interface ReportData {
   slaIncidentes: SlaResumen;
   slaSolicitudes: SlaResumen;
   thresholds: SlaThresholds;
-  narrativa: {
-    introduccion: string;
-    analisis: string;
-    recomendacion: string;
-  };
+  narrativa: Narrativa;
 }
 
 function countBy(rows: TicketRow[], key: (r: TicketRow) => string): CountItem[] {
@@ -193,7 +189,13 @@ function calcularSla(rows: TicketRow[], thresholds: SlaThresholds): SlaResumen {
   return { cumplidos, incumplidos, sinCierre, porcentaje };
 }
 
-function generarNarrativa(data: {
+export interface Narrativa {
+  introduccion: string;
+  analisis: string;
+  recomendacion: string;
+}
+
+export interface NarrativaInput {
   cliente: string;
   periodo: { desde: string; hasta: string };
   totalTickets: number;
@@ -202,7 +204,9 @@ function generarNarrativa(data: {
   porEstado: CountItem[];
   slaIncidentes: SlaResumen;
   slaSolicitudes: SlaResumen;
-}): { introduccion: string; analisis: string; recomendacion: string } {
+}
+
+export function generarNarrativaReglas(data: NarrativaInput): Narrativa {
   const { cliente, periodo, totalTickets, porTipo, porProducto, porEstado, slaIncidentes, slaSolicitudes } = data;
 
   const introduccion =
@@ -280,7 +284,7 @@ export function computeReport(
   const slaIncidentes = calcularSla(incidentes, thresholds);
   const slaSolicitudes = calcularSla(requerimientos, thresholds);
 
-  const narrativa = generarNarrativa({
+  const narrativa = generarNarrativaReglas({
     cliente,
     periodo,
     totalTickets: filtradas.length,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Papa from "papaparse";
 import {
   ResponsiveContainer,
@@ -22,6 +22,7 @@ import {
   getClientes,
   normalizeRows,
   SLA_THRESHOLDS_DEFAULT,
+  type Narrativa,
   type ReportData,
   type SlaThresholds,
   type TicketRow,
@@ -77,10 +78,12 @@ function ConfiguracionSla({
   cliente,
   thresholds,
   onChange,
+  onGuardado,
 }: {
   cliente: string;
   thresholds: SlaThresholds;
   onChange: (t: SlaThresholds) => void;
+  onGuardado: (t: SlaThresholds) => void;
 }) {
   const [abierto, setAbierto] = useState(false);
   const [guardado, setGuardado] = useState(false);
@@ -93,6 +96,7 @@ function ConfiguracionSla({
   function handleGuardar() {
     guardarThresholds(cliente, thresholds);
     setGuardado(true);
+    onGuardado(thresholds);
   }
 
   function handleRestaurar() {
@@ -181,7 +185,15 @@ export default function Home() {
   const [error, setError] = useState<string>("");
   const [descargando, setDescargando] = useState(false);
   const [thresholds, setThresholds] = useState<SlaThresholds>(SLA_THRESHOLDS_DEFAULT);
+  const [narrativaIA, setNarrativaIA] = useState<Narrativa | null>(null);
+  const [estadoIA, setEstadoIA] = useState<"idle" | "cargando" | "listo" | "error">("idle");
+  const [errorIA, setErrorIA] = useState<string>("");
+  const [cacheIA, setCacheIA] = useState<Record<string, Narrativa>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function claveCacheIA(cliente: string, t: SlaThresholds): string {
+    return `${cliente}::${JSON.stringify(t)}`;
+  }
 
   function handleClienteChange(cliente: string) {
     setClienteSeleccionado(cliente);
@@ -192,6 +204,62 @@ export default function Home() {
     if (!clienteSeleccionado || rows.length === 0) return null;
     return computeReport(rows, clienteSeleccionado, thresholds);
   }, [rows, clienteSeleccionado, thresholds]);
+
+  const reportFinal: ReportData | null = useMemo(() => {
+    if (!report) return null;
+    return narrativaIA ? { ...report, narrativa: narrativaIA } : report;
+  }, [report, narrativaIA]);
+
+  async function analizarConIA(base: ReportData, clave: string) {
+    setNarrativaIA(null);
+    setEstadoIA("cargando");
+    setErrorIA("");
+    try {
+      const res = await fetch("/api/reporte/analisis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cliente: base.cliente,
+          periodo: base.periodo,
+          totalTickets: base.totalTickets,
+          porTipo: base.porTipo,
+          porProducto: base.porProducto,
+          porEstado: base.porEstado,
+          slaIncidentes: base.slaIncidentes,
+          slaSolicitudes: base.slaSolicitudes,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "No se pudo generar el análisis con IA.");
+      }
+      const narrativa: Narrativa = await res.json();
+      setNarrativaIA(narrativa);
+      setEstadoIA("listo");
+      setCacheIA((prev) => ({ ...prev, [clave]: narrativa }));
+    } catch (e) {
+      setErrorIA(e instanceof Error ? e.message : "No se pudo generar el análisis con IA.");
+      setEstadoIA("error");
+    }
+  }
+
+  // Al cargar datos o cambiar de cliente: si ya se redacto antes para este cliente y estos
+  // umbrales en esta sesion, se reutiliza de la cache; si no, se redacta con IA automaticamente.
+  useEffect(() => {
+    if (!clienteSeleccionado || rows.length === 0) return;
+    const thresholdsCliente = obtenerThresholds(clienteSeleccionado);
+    const clave = claveCacheIA(clienteSeleccionado, thresholdsCliente);
+    const enCache = cacheIA[clave];
+    if (enCache) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- reutiliza el analisis ya generado, sin llamar de nuevo a la IA
+      setNarrativaIA(enCache);
+      setEstadoIA("listo");
+      setErrorIA("");
+      return;
+    }
+    const base = computeReport(rows, clienteSeleccionado, thresholdsCliente);
+    analizarConIA(base, clave);
+  }, [clienteSeleccionado, rows, cacheIA]);
 
   function cargarCsv(texto: string, nombreArchivo: string) {
     const parsed = Papa.parse<Record<string, string>>(texto, {
@@ -210,6 +278,7 @@ export default function Home() {
     const listaClientes = getClientes(normalizadas);
     setRows(normalizadas);
     setClientes(listaClientes);
+    setCacheIA({});
     handleClienteChange(listaClientes[0] ?? "");
     setFuenteArchivo(nombreArchivo);
     setError("");
@@ -230,19 +299,19 @@ export default function Home() {
   }
 
   async function handleDescargarWord() {
-    if (!report) return;
+    if (!reportFinal) return;
     setDescargando(true);
     try {
       const res = await fetch("/api/reporte/word", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(report),
+        body: JSON.stringify(reportFinal),
       });
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `reporte-soc-${report.cliente.replace(/\s+/g, "-").toLowerCase()}.docx`;
+      a.download = `reporte-soc-${reportFinal.cliente.replace(/\s+/g, "-").toLowerCase()}.docx`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -307,13 +376,13 @@ export default function Home() {
           </div>
         )}
 
-        {report && (
+        {reportFinal && (
           <div className="space-y-8">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h2 className="text-xl font-semibold text-slate-900">{report.cliente}</h2>
+                <h2 className="text-xl font-semibold text-slate-900">{reportFinal.cliente}</h2>
                 <p className="text-sm text-slate-500">
-                  Periodo: {report.periodo.desde} a {report.periodo.hasta} · {report.totalTickets} tickets
+                  Periodo: {reportFinal.periodo.desde} a {reportFinal.periodo.hasta} · {reportFinal.totalTickets} tickets
                 </p>
               </div>
               <button
@@ -325,31 +394,49 @@ export default function Home() {
               </button>
             </div>
 
-            <ConfiguracionSla cliente={report.cliente} thresholds={thresholds} onChange={setThresholds} />
+            {estadoIA === "cargando" && (
+              <p className="flex items-center gap-2 text-sm text-blue-600">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-blue-600" />
+                Analizando con IA...
+              </p>
+            )}
+            {estadoIA === "listo" && <p className="text-sm text-green-600">Análisis finalizado ✓</p>}
+            {estadoIA === "error" && (
+              <p className="text-sm text-red-600">{errorIA} (se muestra el texto por reglas mientras tanto)</p>
+            )}
+
+            <ConfiguracionSla
+              cliente={reportFinal.cliente}
+              thresholds={thresholds}
+              onChange={setThresholds}
+              onGuardado={(t) =>
+                analizarConIA(computeReport(rows, clienteSeleccionado, t), claveCacheIA(clienteSeleccionado, t))
+              }
+            />
 
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              <StatCard label="Total tickets" value={report.totalTickets} />
-              <StatCard label="SLA Incidentes" value={`${report.slaIncidentes.porcentaje}%`} />
-              <StatCard label="SLA Solicitudes" value={`${report.slaSolicitudes.porcentaje}%`} />
+              <StatCard label="Total tickets" value={reportFinal.totalTickets} />
+              <StatCard label="SLA Incidentes" value={`${reportFinal.slaIncidentes.porcentaje}%`} />
+              <StatCard label="SLA Solicitudes" value={`${reportFinal.slaSolicitudes.porcentaje}%`} />
               <StatCard
                 label="Pendientes"
                 value={
-                  (report.porEstado.find((e) => e.label === "Abierto")?.total ?? 0) +
-                  (report.porEstado.find((e) => e.label === "En espera")?.total ?? 0) +
-                  (report.porEstado.find((e) => e.label === "Con el usuario")?.total ?? 0)
+                  (reportFinal.porEstado.find((e) => e.label === "Abierto")?.total ?? 0) +
+                  (reportFinal.porEstado.find((e) => e.label === "En espera")?.total ?? 0) +
+                  (reportFinal.porEstado.find((e) => e.label === "Con el usuario")?.total ?? 0)
                 }
               />
             </div>
 
             <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
               <h3 className="mb-2 text-sm font-semibold text-slate-700">Introducción</h3>
-              <p className="text-sm leading-relaxed text-slate-700">{report.narrativa.introduccion}</p>
+              <p className="text-sm leading-relaxed text-slate-700">{reportFinal.narrativa.introduccion}</p>
             </div>
 
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
               <ChartCard title="Historial de tickets">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={report.historial}>
+                  <LineChart data={reportFinal.historial}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="label" fontSize={12} />
                     <YAxis allowDecimals={false} fontSize={12} />
@@ -361,7 +448,7 @@ export default function Home() {
 
               <ChartCard title="Tipos de tickets">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={report.porTipo} layout="vertical" margin={{ left: 40 }}>
+                  <BarChart data={reportFinal.porTipo} layout="vertical" margin={{ left: 40 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis type="number" allowDecimals={false} fontSize={12} />
                     <YAxis type="category" dataKey="label" width={140} fontSize={11} />
@@ -373,7 +460,7 @@ export default function Home() {
 
               <ChartCard title="Tickets por herramienta o producto">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={report.porProducto} layout="vertical" margin={{ left: 40 }}>
+                  <BarChart data={reportFinal.porProducto} layout="vertical" margin={{ left: 40 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis type="number" allowDecimals={false} fontSize={12} />
                     <YAxis type="category" dataKey="label" width={140} fontSize={11} />
@@ -386,8 +473,8 @@ export default function Home() {
               <ChartCard title="Estado de los tickets">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
-                    <Pie data={report.porEstado} dataKey="total" nameKey="label" outerRadius={80} label>
-                      {report.porEstado.map((_, i) => (
+                    <Pie data={reportFinal.porEstado} dataKey="total" nameKey="label" outerRadius={80} label>
+                      {reportFinal.porEstado.map((_, i) => (
                         <Cell key={i} fill={COLORES[i % COLORES.length]} />
                       ))}
                     </Pie>
@@ -398,22 +485,27 @@ export default function Home() {
               </ChartCard>
 
               <ChartCard title="SLA — Incidentes">
-                <SlaPie cumplidos={report.slaIncidentes.cumplidos} incumplidos={report.slaIncidentes.incumplidos} />
+                <SlaPie cumplidos={reportFinal.slaIncidentes.cumplidos} incumplidos={reportFinal.slaIncidentes.incumplidos} />
               </ChartCard>
 
               <ChartCard title="SLA — Solicitudes">
-                <SlaPie cumplidos={report.slaSolicitudes.cumplidos} incumplidos={report.slaSolicitudes.incumplidos} />
+                <SlaPie
+                  cumplidos={reportFinal.slaSolicitudes.cumplidos}
+                  incumplidos={reportFinal.slaSolicitudes.incumplidos}
+                />
               </ChartCard>
             </div>
 
             <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
               <h3 className="mb-2 text-sm font-semibold text-slate-700">Análisis de resultados</h3>
-              <p className="text-sm leading-relaxed text-slate-700">{report.narrativa.analisis}</p>
+              <p className="text-sm leading-relaxed text-slate-700">{reportFinal.narrativa.analisis}</p>
             </div>
 
             <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
               <h3 className="mb-2 text-sm font-semibold text-slate-700">Recomendación</h3>
-              <p className="whitespace-pre-line text-sm leading-relaxed text-slate-700">{report.narrativa.recomendacion}</p>
+              <p className="whitespace-pre-line text-sm leading-relaxed text-slate-700">
+                {reportFinal.narrativa.recomendacion}
+              </p>
             </div>
           </div>
         )}
