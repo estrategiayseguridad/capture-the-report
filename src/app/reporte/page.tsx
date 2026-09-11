@@ -44,7 +44,9 @@ export default async function Reporte({ searchParams }: PageProps<"/reporte">) {
     .map((id) => inventario.personas.find((p) => p.id === id))
     .filter((p): p is Persona => p !== undefined);
 
-  const volverA = consulta ? `/?q=${encodeURIComponent(consulta)}` : "/";
+  const volverA = consulta
+    ? `/buscar?q=${encodeURIComponent(consulta)}`
+    : "/buscar";
 
   return (
     <main className="min-h-screen bg-white text-slate-900">

@@ -1,291 +1,271 @@
 import Link from "next/link";
 
-import { Disponibilidad, NivelChip } from "@/components/nivel";
-import { buscar } from "@/lib/buscar";
+import {
+  Avatar,
+  Aviso,
+  BarraDato,
+  Etiqueta,
+  NotaDemo,
+  Panel,
+  Tile,
+  TituloSeccion,
+} from "@/components/ui";
+import {
+  certificacionesEnRiesgo,
+  coberturaPorSkill,
+  DIAS_POR_VENCER,
+  resumenPorArea,
+} from "@/lib/analitica";
 import { leerInventario } from "@/lib/datos";
-import { CATEGORIAS, nivelCorto } from "@/lib/skills";
-import type { EscalaNivel } from "@/lib/tipos";
+import { CATEGORIAS } from "@/lib/skills";
 
-/** Consultas de arranque: la primera es la del guion de demo. */
-const EJEMPLOS = [
-  "Infoblox",
-  "VAPT Web + inglés",
-  "ISO 27001 + redacción",
-  "Cloudflare ZTNA + firewall",
-  "DFIR + SIEM",
-];
-
-function textoDe(valor: string | string[] | undefined): string {
-  return typeof valor === "string" ? valor : "";
-}
-
-export default async function Home({ searchParams }: PageProps<"/">) {
-  const { q } = await searchParams;
-  const consulta = textoDe(q);
-
+/**
+ * Dashboard principal (menú 7 del pitch): el motor de búsqueda arriba, cuánta
+ * gente y cuántos proyectos hay por área, el comparativo de las 10 habilidades
+ * con más gente, y los dos avisos que disparan acción — oportunidades abiertas
+ * y certificaciones por vencer.
+ */
+export default async function Dashboard() {
   const inventario = await leerInventario();
-  const resultado = consulta.trim() ? buscar(inventario, consulta) : null;
+  const resumen = resumenPorArea(inventario);
+  const top10 = coberturaPorSkill(inventario).slice(0, 10);
+  const avisos = certificacionesEnRiesgo(inventario);
+  const oportunidades = inventario.proyectos.filter(
+    (p) => p.estado === "oportunidad",
+  );
+
+  const enEjecucion = inventario.proyectos.filter(
+    (p) => p.estado === "en-ejecucion",
+  ).length;
+  const enBanca = inventario.personas.filter((p) => p.carga === 0).length;
+  const maxTop = top10[0]?.personas ?? 1;
 
   return (
-    <main className="min-h-screen bg-[#0a1030] text-slate-100">
-      <div className="mx-auto max-w-4xl px-6 py-12">
-        <p className="text-xs uppercase tracking-[0.3em] text-cyan-400">
-          ES Consulting · Equipo 05
-        </p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight">
-          Prodigi<span className="text-cyan-400">ES</span>
-        </h1>
-        <p className="mt-2 text-lg text-slate-300">
-          ¿Quién de la casa puede hacer esto? Escribe los requisitos de la
-          licitación y te decimos quién califica.
-        </p>
-        <p className="mt-2 text-sm text-slate-500">
-          {inventario.personas.length} colaboradores · CSC, Ingeniería y
-          Consulting · {inventario.skills.length} habilidades en{" "}
-          {CATEGORIAS.length} categorías
-        </p>
+    <main className="mx-auto w-full max-w-6xl px-6 py-10">
+      <p className="text-xs uppercase tracking-[0.3em] text-cyan-400">
+        ES Consulting · Equipo 05
+      </p>
+      <h1 className="mt-2 text-3xl font-bold tracking-tight">
+        Gestión de habilidades y cargabilidad
+      </h1>
+      <p className="mt-2 max-w-3xl text-slate-300">
+        Una sola base de talento para las tres áreas: Comercial encuentra a quién
+        proponer, PM ve la carga antes de asignar y RRHH ve dónde están las
+        brechas.
+      </p>
 
-        <form action="/" className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <input
-            type="search"
-            name="q"
-            defaultValue={consulta}
-            autoFocus
-            placeholder="Infoblox · VAPT Web + inglés · ISO 27001 + redacción"
-            aria-label="Requisitos de la licitación"
-            className="flex-1 rounded-lg border border-slate-600 bg-[#111a42] px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
-          />
-          <button
-            type="submit"
-            className="rounded-lg bg-cyan-400 px-6 py-3 font-bold text-[#0a1030] transition hover:bg-cyan-300"
-          >
-            Buscar talento
-          </button>
-        </form>
+      <form action="/buscar" className="mt-6 flex flex-col gap-3 sm:flex-row">
+        <input
+          type="search"
+          name="q"
+          placeholder="Busca una solución, un conocimiento o una certificación: Infoblox, VAPT Web + inglés…"
+          aria-label="Buscar habilidades"
+          className="flex-1 rounded-lg border border-slate-600 bg-[#111a42] px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
+        />
+        <button
+          type="submit"
+          className="rounded-lg bg-cyan-400 px-6 py-3 font-bold text-[#0a1030] transition hover:bg-cyan-300"
+        >
+          Buscar talento
+        </button>
+      </form>
 
-        <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-slate-500">Prueba con:</span>
-          {EJEMPLOS.map((ejemplo) => (
-            <Link
-              key={ejemplo}
-              href={`/?q=${encodeURIComponent(ejemplo)}`}
-              className="rounded-full border border-slate-700 px-3 py-1 text-slate-300 transition hover:border-cyan-400 hover:text-cyan-300"
-            >
-              {ejemplo}
-            </Link>
-          ))}
-        </div>
+      <section className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <Tile
+          valor={inventario.personas.length}
+          etiqueta="Colaboradores"
+          nota={`${inventario.skills.length} habilidades en ${CATEGORIAS.length} categorías`}
+          href="/perfiles"
+        />
+        <Tile
+          valor={enEjecucion}
+          etiqueta="Proyectos en ejecución"
+          nota={`${oportunidades.length} oportunidades abiertas`}
+          href="/carga"
+        />
+        <Tile
+          valor={enBanca}
+          etiqueta="En banca"
+          nota="100% disponibles para tomar proyecto"
+          href="/carga"
+        />
+        <Tile
+          valor={avisos.length}
+          etiqueta="Certificaciones en riesgo"
+          nota={`Vencidas o vencen en ≤ ${DIAS_POR_VENCER} días`}
+          href="/reportes"
+        />
+      </section>
 
-        {resultado === null ? (
-          <SinBusqueda escala={inventario.escala} />
-        ) : (
-          <section className="mt-10">
-            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <h2 className="text-xl font-bold">
-                {resultado.candidatos.length}{" "}
-                {resultado.candidatos.length === 1
-                  ? "candidato"
-                  : "candidatos"}
-              </h2>
-              {resultado.requisitos.length > 0 ? (
-                <p className="text-sm text-slate-400">
-                  para{" "}
-                  {resultado.requisitos.map((r, i) => (
-                    <span key={r.etiqueta}>
-                      {i > 0 ? " + " : ""}
-                      <span className="font-semibold text-cyan-300">
-                        {r.etiqueta}
-                      </span>
-                      {r.tipo === "idioma" ? (
-                        <span className="text-slate-500"> (idioma)</span>
-                      ) : null}
-                    </span>
-                  ))}
-                </p>
-              ) : null}
+      {oportunidades.length > 0 ? (
+        <section className="mt-8">
+          <TituloSeccion nota="Lo que Comercial tiene en la mesa ahora mismo">
+            Oportunidades abiertas
+          </TituloSeccion>
+          <ul className="mt-3 grid gap-3 sm:grid-cols-2">
+            {oportunidades.map((proyecto) => (
+              <li key={proyecto.id}>
+                <Link
+                  href={`/proyecto/${proyecto.id}`}
+                  className="block rounded-xl border border-cyan-400/30 bg-[#111a42] p-4 transition hover:border-cyan-400"
+                >
+                  <div className="flex items-baseline justify-between gap-3">
+                    <p className="font-bold">{proyecto.nombre}</p>
+                    <Etiqueta tono="info">{proyecto.area}</Etiqueta>
+                  </div>
+                  <p className="mt-1 text-sm text-slate-400">
+                    {proyecto.cliente} · arranca {proyecto.inicio}
+                  </p>
+                  <p className="mt-2 text-sm text-cyan-300">
+                    Buscar quién califica →
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      <section className="mt-8 grid gap-4 lg:grid-cols-3">
+        {resumen.map((area) => (
+          <Panel key={area.area}>
+            <div className="flex items-baseline justify-between gap-3">
+              <h2 className="font-bold">{area.area}</h2>
+              <Link
+                href={`/perfiles?area=${encodeURIComponent(area.area)}`}
+                className="text-xs text-cyan-400 hover:text-cyan-300"
+              >
+                ver perfiles →
+              </Link>
             </div>
 
-            {resultado.noReconocidos.length > 0 ? (
-              <p className="mt-3 rounded-lg border border-amber-500/40 bg-amber-400/10 px-4 py-2 text-sm text-amber-200">
-                No reconocimos{" "}
-                <strong>{resultado.noReconocidos.join(", ")}</strong> en el
-                catálogo de habilidades — no se tomó en cuenta para el ranking.
-              </p>
-            ) : null}
+            <dl className="mt-3 grid grid-cols-2 gap-y-2 text-sm">
+              <dt className="text-slate-400">Colaboradores</dt>
+              <dd className="text-right font-bold tabular-nums">
+                {area.personas}
+              </dd>
+              <dt className="text-slate-400">Proyectos en ejecución</dt>
+              <dd className="text-right font-bold tabular-nums">
+                {area.proyectosEnEjecucion}
+              </dd>
+              <dt className="text-slate-400">Oportunidades</dt>
+              <dd className="text-right font-bold tabular-nums">
+                {area.oportunidades}
+              </dd>
+              <dt className="text-slate-400">Carga promedio</dt>
+              <dd className="text-right font-bold tabular-nums">
+                {area.cargaPromedio}%
+              </dd>
+              <dt className="text-slate-400">En banca</dt>
+              <dd className="text-right font-bold tabular-nums">
+                {area.enBanca}
+              </dd>
+            </dl>
 
-            {resultado.candidatos.length === 0 ? (
-              <p className="mt-6 rounded-lg border border-slate-700 bg-[#111a42] px-4 py-6 text-slate-300">
-                Nadie tiene registrado ninguno de esos requisitos. Eso también
-                es un dato: es una <strong>brecha de conocimiento</strong> que
-                RRHH debería ver.
-              </p>
-            ) : (
-              <form action="/reporte" className="mt-6">
-                <input type="hidden" name="q" value={consulta} />
-
-                <ul className="space-y-3">
-                  {resultado.candidatos.map((c, i) => (
-                    <li
-                      key={c.persona.id}
-                      className="rounded-xl border border-slate-700 bg-[#111a42] p-4 transition hover:border-slate-500"
-                    >
-                      <div className="flex items-start gap-4">
-                        <input
-                          type="checkbox"
-                          name="ids"
-                          value={c.persona.id}
-                          defaultChecked={i < 3}
-                          aria-label={`Incluir a ${c.persona.nombre} en la ficha`}
-                          className="mt-1.5 h-4 w-4 shrink-0 accent-cyan-400"
-                        />
-
-                        <div className="min-w-0 flex-1">
-                          <div className="flex flex-wrap items-baseline gap-x-3">
-                            <span className="text-sm font-bold text-slate-500">
-                              #{i + 1}
-                            </span>
-                            <Link
-                              href={`/persona/${c.persona.id}?q=${encodeURIComponent(consulta)}`}
-                              className="text-lg font-bold text-slate-50 underline-offset-4 hover:text-cyan-300 hover:underline"
-                            >
-                              {c.persona.nombre}
-                            </Link>
-                            <span className="text-sm text-slate-400">
-                              {c.persona.rol} · {c.persona.equipo}
-                            </span>
-                          </div>
-
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            {c.coberturas.map((cob) => (
-                              <NivelChip
-                                key={cob.requisito.etiqueta}
-                                etiqueta={cob.requisito.etiqueta}
-                                nivel={cob.nivel}
-                                descripcion={nivelCorto(
-                                  inventario.escala,
-                                  cob.nivel,
-                                )}
-                                certificacion={cob.certificacion?.nombre}
-                              />
-                            ))}
-                          </div>
-
-                          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-slate-400">
-                            <Disponibilidad pct={c.persona.disponibilidad} />
-                            <span>{c.persona.idiomas.join(" · ")}</span>
-                            <span>
-                              cubre {c.requisitosCubiertos}/
-                              {resultado.requisitos.length} requisitos
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="shrink-0 text-right">
-                          <div className="text-3xl font-bold leading-none text-cyan-300">
-                            {c.score}
-                          </div>
-                          <div className="text-[10px] uppercase tracking-widest text-slate-500">
-                            match
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="sticky bottom-4 mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-cyan-400/30 bg-[#0d1538]/95 p-4 backdrop-blur">
-                  <p className="text-sm text-slate-400">
-                    Los candidatos marcados entran en la ficha de capacidades.
-                  </p>
-                  <button
-                    type="submit"
-                    className="rounded-lg bg-cyan-400 px-5 py-2.5 font-bold text-[#0a1030] transition hover:bg-cyan-300"
-                  >
-                    Generar ficha de capacidades →
-                  </button>
-                </div>
-              </form>
-            )}
-
-            <Leyenda escala={inventario.escala} />
-          </section>
-        )}
-
-        <footer className="mt-14 border-t border-slate-800 pt-5 text-xs text-slate-500">
-          <p>
-            ProdigiES propone; la gente decide. El líder del equipo confirma la
-            disponibilidad real y Comercial valida el perfil antes de que la
-            ficha salga en una propuesta.
-          </p>
-          <p className="mt-2">
-            🔒 Datos de demostración — ninguna persona real de ES Consulting
-            aparece con sus datos. Seed generado el {inventario.generado}.
-          </p>
-        </footer>
-      </div>
-    </main>
-  );
-}
-
-function Leyenda({ escala }: { escala: EscalaNivel[] }) {
-  return (
-    <div className="mt-8 rounded-lg border border-slate-800 bg-[#0d1538] p-4 text-xs text-slate-400">
-      <p className="font-bold uppercase tracking-wider text-slate-300">
-        Escala de la matriz de habilidades
-      </p>
-      <ul className="mt-2 grid gap-1 sm:grid-cols-2">
-        {escala.map((e) => (
-          <li key={e.nivel}>
-            <span className="font-bold text-slate-200">{e.nivel}</span> —{" "}
-            {e.etiqueta}
-          </li>
+            <p className="mt-3 border-t border-slate-700 pt-3 text-xs text-slate-500">
+              Punteo —{" "}
+              {CATEGORIAS.map(
+                (c) => `${c.nombre.toLowerCase()} ${area.punteos[c.id]}`,
+              ).join(" · ")}
+            </p>
+          </Panel>
         ))}
-      </ul>
-      <p className="mt-3">
-        El orden se calcula contra los requisitos buscados: primero{" "}
-        <strong>cuántos cubre</strong>, luego <strong>con qué nivel</strong>,
-        luego si hay <strong>certificación vigente</strong>, y de último la{" "}
-        <strong>disponibilidad</strong> como desempate.
-      </p>
-    </div>
-  );
-}
+      </section>
 
-function SinBusqueda({ escala }: { escala: EscalaNivel[] }) {
-  return (
-    <section className="mt-10">
-      <div className="grid gap-4 sm:grid-cols-3">
-        {[
-          {
-            n: "1",
-            titulo: "Escribes el requisito",
-            detalle:
-              "Texto libre, como se lee en la licitación: “Infoblox”, “VAPT Web + inglés”.",
-          },
-          {
-            n: "2",
-            titulo: "ProdigiES cruza el catálogo",
-            detalle:
-              "Habilidades técnicas, soluciones y blandas, más idiomas y certificaciones vigentes.",
-          },
-          {
-            n: "3",
-            titulo: "Sale la ficha",
-            detalle:
-              "Candidatos ordenados por match y una ficha de capacidades imprimible para la propuesta.",
-          },
-        ].map((paso) => (
-          <div
-            key={paso.n}
-            className="rounded-xl border border-slate-700 bg-[#111a42] p-4"
+      <section className="mt-8 grid gap-4 lg:grid-cols-2">
+        <Panel>
+          <TituloSeccion nota="Cuántas personas tienen cada habilidad (nivel ≥ 1)">
+            Top 10 de habilidades
+          </TituloSeccion>
+          <ul className="mt-4 space-y-1">
+            {top10.map((c) => (
+              <BarraDato
+                key={c.skill.id}
+                etiqueta={c.skill.nombre}
+                valor={c.personas}
+                maximo={maxTop}
+                href={`/buscar?q=${encodeURIComponent(c.skill.nombre)}`}
+                detalle={
+                  <>
+                    {c.avanzados} avanzados · {c.certificados} certificados
+                  </>
+                }
+              />
+            ))}
+          </ul>
+          <p className="mt-3 text-xs text-slate-500">
+            Clic en una habilidad para ver quién la tiene y con qué nivel.
+          </p>
+        </Panel>
+
+        <Panel>
+          <TituloSeccion
+            nota={`Vencidas o por vencer en los próximos ${DIAS_POR_VENCER} días`}
+            accion={
+              <Link
+                href="/reportes"
+                className="text-xs text-cyan-400 hover:text-cyan-300"
+              >
+                reporte completo →
+              </Link>
+            }
           >
-            <span className="text-2xl font-bold text-cyan-400">{paso.n}</span>
-            <h2 className="mt-1 font-bold">{paso.titulo}</h2>
-            <p className="mt-1 text-sm text-slate-400">{paso.detalle}</p>
-          </div>
-        ))}
-      </div>
-      <Leyenda escala={escala} />
-    </section>
+            Certificaciones · aviso a RRHH
+          </TituloSeccion>
+
+          {avisos.length === 0 ? (
+            <p className="mt-4 text-sm text-slate-400">
+              Ninguna certificación vence en la ventana de planificación.
+            </p>
+          ) : (
+            <ul className="mt-4 divide-y divide-slate-800">
+              {avisos.slice(0, 8).map((aviso) => (
+                <li
+                  key={`${aviso.persona.id}-${aviso.certificacion.nombre}`}
+                  className="flex items-center gap-3 py-2.5"
+                >
+                  <Avatar
+                    nombre={aviso.persona.nombre}
+                    foto={aviso.persona.foto}
+                    tamano="sm"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <Link
+                      href={`/persona/${aviso.persona.id}`}
+                      className="text-sm font-semibold hover:text-cyan-300 hover:underline"
+                    >
+                      {aviso.persona.nombre}
+                    </Link>
+                    <p className="truncate text-xs text-slate-400">
+                      {aviso.certificacion.nombre}
+                    </p>
+                  </div>
+                  <Etiqueta
+                    tono={aviso.estado === "vencida" ? "alerta" : "aviso"}
+                    titulo={`Vence ${aviso.certificacion.vence}`}
+                  >
+                    {aviso.estado === "vencida"
+                      ? `vencida hace ${Math.abs(aviso.dias)} días`
+                      : `vence en ${aviso.dias} días`}
+                  </Etiqueta>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {avisos.length > 0 ? (
+            <div className="mt-4">
+              <Aviso tono="aviso">
+                RRHH tiene que contemplar estas renovaciones en la planificación
+                del trimestre: una certificación vencida es un requisito de
+                licitación que ya no se puede acreditar.
+              </Aviso>
+            </div>
+          ) : null}
+        </Panel>
+      </section>
+
+      <NotaDemo generado={inventario.generado} />
+    </main>
   );
 }

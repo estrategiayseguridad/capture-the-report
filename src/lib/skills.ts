@@ -46,6 +46,29 @@ export function estaVigente(cert: Certificacion, hoy = hoyISO()): boolean {
   return cert.vence >= hoy;
 }
 
+/** Días entre dos fechas ISO. Negativo si `iso` ya pasó. */
+export function diasHasta(iso: string, hoy = hoyISO()): number {
+  const ms = Date.parse(`${iso}T00:00:00Z`) - Date.parse(`${hoy}T00:00:00Z`);
+  return Math.round(ms / 86_400_000);
+}
+
+export type EstadoCertificacion = "vigente" | "por-vencer" | "vencida";
+
+/**
+ * Ventana con la que RRHH planifica una renovación. Es el "extra" del pitch:
+ * la certificación de Marvin entra aquí y se avisa antes de que venza.
+ */
+export const DIAS_POR_VENCER = 90;
+
+export function estadoCertificacion(
+  cert: Certificacion,
+  hoy = hoyISO(),
+): EstadoCertificacion {
+  const dias = diasHasta(cert.vence, hoy);
+  if (dias < 0) return "vencida";
+  return dias <= DIAS_POR_VENCER ? "por-vencer" : "vigente";
+}
+
 /** Certificaciones que no han vencido, de la que vence primero a la última. */
 export function certificacionesVigentes(
   persona: Persona,
@@ -168,4 +191,18 @@ export function skillsPorCategoria(
     );
   }
   return agrupado;
+}
+
+/** Nivel de la persona en un skill puntual. Lo que no está registrado es 0. */
+export function nivelEn(persona: Persona, skillId: string): number {
+  return persona.skills.find((s) => s.skillId === skillId)?.nivel ?? 0;
+}
+
+/** Iniciales para el avatar cuando el perfil no trae foto. */
+export function iniciales(nombre: string): string {
+  const partes = nombre.replace(/[^\p{L} ]/gu, "").split(" ").filter(Boolean);
+  if (partes.length === 0) return "?";
+  const primera = partes[0][0];
+  const segunda = partes.length > 1 ? partes[partes.length - 1][0] : "";
+  return (primera + segunda).toUpperCase();
 }

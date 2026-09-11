@@ -94,17 +94,18 @@ const ALIAS: Record<string, string> = {
   pm: "gestion-proyectos",
   "project management": "gestion-proyectos",
   teamwork: "gestion-proyectos",
+  english: "ingles",
+  "ingles tecnico": "ingles",
+  "ingles avanzado": "ingles",
+  bilingue: "ingles",
 };
 
 /**
- * Los idiomas no están en el catálogo de skills: viven en la persona. Se
- * resuelven aparte para que "VAPT Web + inglés" funcione como un requisito más.
+ * El inglés es un soft skill con nivel 0–3, como lo pide el pitch. Lo que
+ * queda aquí son los idiomas que solo se declaran en el perfil, sin escala,
+ * para que "GRC + español" siga funcionando como un requisito más.
  */
 const IDIOMAS: Record<string, string> = {
-  ingles: "Inglés técnico",
-  "ingles tecnico": "Inglés técnico",
-  "ingles avanzado": "Inglés técnico",
-  english: "Inglés técnico",
   espanol: "Español",
   castellano: "Español",
 };

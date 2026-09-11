@@ -1,8 +1,9 @@
 # Equipo 05 — ProdigiES
 
-> **ProdigiES** — el radar de talento de ES Consulting. Escribes el requisito de una licitación y
-> te dice **quién de la casa califica**, ordenado por mejor match, con la ficha lista para adjuntar
-> a la propuesta.
+> **ProdigiES** — la plataforma de gestión de habilidades y cargabilidad de ES Consulting. RRHH
+> mantiene la matriz de habilidades, Comercial pregunta **quién de la casa califica** para una
+> licitación, PM adjudica el proyecto y asigna el equipo, y Dirección lee las brechas del área. El
+> mismo dato para las tres áreas que hoy no se hablan.
 >
 > Planteamiento completo en [`docs/PLANTEAMIENTO.md`](docs/PLANTEAMIENTO.md) · guion de pitch y demo
 > en [`docs/PITCH.md`](docs/PITCH.md).
@@ -14,7 +15,9 @@ CSC, Ingeniería y Consulting quién califica — y esperar. Son **3 a 5 horas r
 días**, y el tiempo no se va buscando: se va **esperando respuestas**. Peor: la respuesta depende de
 a quién le preguntaste, así que se propone a quien alguien recordó, no a quien mejor califica.
 
-**Lo que hace ProdigiES:** escribes el requisito en lenguaje natural — `Infoblox`, `VAPT Web + inglés`,
+**Lo que hace ProdigiES:** cubre el ciclo completo — alta y calificación del colaborador, búsqueda de
+talento, adjudicación y asignación del proyecto, y reportes de planificación. El corazón es el
+buscador: escribes el requisito en lenguaje natural — `Infoblox`, `VAPT Web + inglés`,
 `ISO 27001 + redacción` — y devuelve las personas que califican **ordenadas por qué tan bien cubren
 esos requisitos**, mostrando:
 
@@ -36,11 +39,22 @@ conocimiento** que RRHH debería ver.
 
 ### Pantallas
 
+Los seis menús de la barra de navegación, más las pantallas de detalle:
+
 | Ruta | Qué es |
 |------|--------|
-| `/` | Buscador y ranking de candidatos, con casillas para armar la ficha |
-| `/persona/[id]` | Perfil de una persona: niveles por categoría, idiomas, certificaciones, disponibilidad |
-| `/reporte` | Ficha de capacidades **imprimible** (Ctrl+P) del personal seleccionado |
+| `/` | **Dashboard**: buscador, KPIs por área, oportunidades abiertas, top 10 de habilidades y el aviso a RRHH de certificaciones por vencer |
+| `/buscar` | **Buscar skills**: ranking de candidatos contra los requisitos, con casillas para armar la ficha |
+| `/perfiles` | **Perfiles** por área, con búsqueda y alta de colaborador |
+| `/perfiles/nuevo` | Alta de colaborador: posición, área, descripción, nivel de educación, idiomas, foto |
+| `/persona/[id]` | Perfil: punteos por categoría, habilidades, certificaciones y proyectos |
+| `/persona/[id]/editar` | Edición en tres pestañas: datos, **calificación 0–3 de cada habilidad**, certificaciones con adjunto y vigencia |
+| `/persona/[id]/cv` | **CV imprimible** de la persona |
+| `/carga` | **Carga laboral**: cartera de proyectos y cargabilidad de cada colaborador |
+| `/proyecto/[id]` | Adjudicar la oportunidad y **asignar recursos**; al asignar baja la disponibilidad en toda la plataforma |
+| `/reportes` | **Reportes** por área: fortalezas, deficiencias, comparativo mes a mes, dónde invertir y carga por ingeniero. Imprimible |
+| `/catalogo` | **Catálogo** de habilidades: agregar, editar y eliminar, por categoría |
+| `/reporte` | Ficha de capacidades **imprimible** (Ctrl+P) del personal seleccionado en el buscador |
 | `/api/buscar?q=…` | El mismo motor expuesto como JSON, para probar el ranking sin abrir el navegador |
 
 ## Cómo correrlo
@@ -66,28 +80,47 @@ Probar el motor sin navegador:
 curl "http://localhost:3000/api/buscar?q=Infoblox" | jq
 ```
 
+**Restaurar los datos de la demo** (la plataforma escribe de verdad en el JSON):
+
+```bash
+npm run seed
+```
+
+Deja el archivo como se ensaya la demo —Marvin al 50%, Pedrito al 90%, el proyecto de la
+municipalidad como oportunidad abierta— y **descarta las altas hechas durante la demo**. Se puede
+correr con el servidor levantado: el cache se invalida solo.
+
 ## Cómo se demuestra (guion corto)
 
 El guion completo de 4 actos está en [`docs/PITCH.md`](docs/PITCH.md). La ruta rápida:
 
-1. **Un colaborador nuevo** — abre `/persona/inge-marvin`: RRHH registró que Marvin trae Infoblox
-   intermedio, su certificación y liderazgo avanzado. Desde ese momento la organización *sabe* que
-   Marvin existe.
-2. **La oportunidad comercial** *(el corazón de la demo)* — en `/` escribe **`Infoblox`**. Sale
-   **Marvin primero**: intermedio, certificado, 50% disponible.
-3. **PM arma el equipo** — abajo aparece **Pedrito, nivel básico, 90% disponible**. PM lo suma para
-   que desarrolle experiencia: el buscador no solo encuentra al experto, **también encuentra a quién
+1. **Un colaborador nuevo** — `/perfiles/nuevo` es lo que llena RRHH en la incorporación, y
+   `/persona/inge-marvin/editar` cómo lo califica: Infoblox intermedio, certificación con vencimiento
+   y liderazgo avanzado. Desde ese momento la organización *sabe* que Marvin existe.
+2. **La oportunidad comercial** *(el corazón de la demo)* — en `/buscar` escribe **`Infoblox`**. Sale
+   **Marvin primero**: intermedio, certificado, 50% disponible. Abajo aparece **Pedrito, nivel
+   básico, 90% disponible** — el buscador no solo encuentra al experto, **también encuentra a quién
    hay que hacer crecer**.
-4. **La ficha** — deja marcados a Marvin y Pedrito, genera el reporte e imprímelo. Ese es el anexo
+3. **La ficha** — deja marcados a Marvin y Pedrito, genera el reporte e imprímelo. Ese es el anexo
    de la propuesta.
+4. **PM arma el equipo** — en `/proyecto/prj-infoblox-muni`: **Adjudicar y arrancar**, asignar a
+   Marvin al 40% y a Pedrito al 30%. Vuelve al buscador: **Marvin ya está al 10%**. La disponibilidad
+   no se captura a mano, sale de los proyectos.
+5. **La decisión estratégica** — `/reportes?area=Ingeniería`: fortalezas, deficiencias, comparativo
+   mes a mes, dónde invertir. Y el aviso de que **la certificación de Marvin vence en 65 días**.
 
 Cierre: *"Pasamos de conocimiento disperso a gestión integral de talento, capacidades y recursos."*
 
 ## Datos
 
 Todo vive en [`data/colaboradores.json`](data/colaboradores.json): **36 colaboradores** (20 de
-Ingeniería, 8 de CSC, 8 de Consulting), **60 habilidades** en 3 categorías —técnicas, soluciones y
-blandas— y la escala de niveles.
+Ingeniería, 8 de CSC, 8 de Consulting), **61 habilidades** en 3 categorías —técnicas, soluciones y
+blandas—, **15 proyectos** con sus asignaciones, **6 meses de histórico** de punteos y la escala de
+niveles. Lo regenera `scripts/generar-seed.mjs` (`npm run seed`), que es determinista.
+
+La **disponibilidad no está en el JSON**: se deriva de las asignaciones a los proyectos en ejecución
+(`100 − carga`). Por eso asignar a alguien a un proyecto cambia su disponibilidad en todas las
+pantallas.
 
 **Son datos de demostración. Ninguna persona real de ES Consulting aparece con sus datos.** Los
 perfiles de Ingeniería son sintéticos provisionales (`origen: "sintetico-pendiente-excel"`), en
@@ -108,10 +141,15 @@ repo y **este prototipo no los usa**.
 
 ## Stack
 
-- Next.js 15 (App Router) + TypeScript + Tailwind CSS — el boilerplate del repo, sin cambios de stack
-  y **sin dependencias nuevas**.
-- Interfaz en `src/app/`, motor de búsqueda en `src/lib/buscar.ts`, backend en `src/app/api/buscar/route.ts`.
-- Persistencia: un archivo JSON leído en el servidor. Sin base de datos.
+- Next.js 16 (App Router) + TypeScript + Tailwind CSS v4 — el boilerplate del repo, sin cambios de
+  stack y **sin dependencias nuevas**.
+- Lectura en Server Components (`src/app/`), escrituras en server actions (`src/lib/acciones.ts`),
+  motor de búsqueda en `src/lib/buscar.ts`, reportes en `src/lib/analitica.ts`, persistencia en
+  `src/lib/datos.ts`. La búsqueda también está expuesta en `src/app/api/buscar/route.ts`.
+- Persistencia: un archivo JSON en el repo, cacheado en memoria e invalidado por `mtime`. Sin base de
+  datos.
+- Gráficas: barras de una sola serie con el valor escrito al lado, y estados siempre con etiqueta de
+  texto además del color — nada depende solo del color.
 - La ficha imprimible es HTML con estilos `print:` — se exporta a PDF desde el diálogo de impresión
   del navegador.
 
@@ -119,15 +157,14 @@ repo y **este prototipo no los usa**.
 
 Lo honesto, para no prometer lo que no hay:
 
-- [ ] **No hay formulario de alta ni edición.** Los perfiles son de solo lectura; el alta la haría
-      RRHH. En la demo se dice así: *"el registro lo hace RRHH; hoy les muestro el perfil ya cargado"*.
+- [ ] **No hay autoevaluación ni roles.** Cualquiera puede editar cualquier perfil, porque no hay
+      login. En producción el alta y la calificación son de RRHH, y la autoevaluación del colaborador.
 - [ ] **Faltan los niveles reales** de la matriz de habilidades de Ingeniería (hoy sintéticos).
-- [ ] **El panel de brechas de conocimiento no está construido** — skills con un solo experto,
-      certificaciones por vencer, dónde ubicar practicantes. Sale del mismo dato, pero es Acto 4: se
-      cuenta, no se muestra.
-- [ ] **Cargabilidad real:** hoy la disponibilidad es un % en el JSON, no viene de la carga de
-      proyectos.
-- [ ] Sin autenticación ni control de acceso — es un prototipo local.
+- [ ] **Las certificaciones no suben el archivo:** se registra el *nombre* del adjunto, no el PDF.
+- [ ] **El histórico mes a mes es generado**, salvo el último mes, que sí es el punteo real calculado
+      del JSON. En producción se snapshotea el punteo en cada cierre de mes.
+- [ ] **Sin control de concurrencia:** un solo usuario contra un archivo. Dos personas guardando al
+      mismo tiempo se pisan.
 - [ ] Sin despliegue en línea.
 
 ## Agente de IA (Claude Code)

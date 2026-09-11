@@ -1,5 +1,5 @@
 {
-  "nota": "DATOS DE DEMO. Ninguna persona real de ES Consulting aparece con sus datos. Ingeniería: 18 perfiles sintéticos PROVISIONALES (origen 'sintetico-pendiente-excel'), en espera de los niveles reales de la matriz de habilidades; al cargarlos, los nombres van anonimizados y el mapeo real->ficticio queda fuera del repo (.gitignore). CSC y Consulting: sintéticos. Marvin Tercero Jr. y Pedrito son los personajes del pitch.",
+  "nota": "DATOS DE DEMO. Ninguna persona real de ES Consulting aparece con sus datos. Ingeniería: 18 perfiles sintéticos PROVISIONALES (origen 'sintetico-pendiente-excel'), en espera de los niveles reales de la matriz de habilidades; al cargarlos, los nombres van anonimizados y el mapeo real->ficticio queda fuera del repo (.gitignore). CSC y Consulting: sintéticos. Marvin Tercero Jr. y Pedrito son los personajes del pitch. La disponibilidad no se guarda: se deriva de las asignaciones a proyectos en ejecución. Regenerar con `npm run seed`.",
   "generado": "2026-09-11",
   "escala": [
     {
@@ -315,6 +315,11 @@
       "categoria": "soft"
     },
     {
+      "id": "ingles",
+      "nombre": "Inglés",
+      "categoria": "soft"
+    },
+    {
       "id": "gestion-proyectos",
       "nombre": "Gestión de proyectos",
       "categoria": "soft"
@@ -331,7 +336,6 @@
       "nombre": "Rodrigo Cifuentes",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Seguridad Sr.",
-      "disponibilidad": 95,
       "idiomas": [
         "Español"
       ],
@@ -373,20 +377,27 @@
       "certificaciones": [
         {
           "nombre": "CCNA",
-          "vence": "2026-12-31"
+          "emitida": "2024-12-31",
+          "vence": "2026-12-31",
+          "archivo": "inge-01-ccna.pdf"
         },
         {
           "nombre": "Checkpoint CCSA",
-          "vence": "2026-11-30"
+          "emitida": "2024-11-30",
+          "vence": "2026-11-30",
+          "archivo": "inge-01-checkpoint-ccsa.pdf"
         }
-      ]
+      ],
+      "descripcion": "Lidera evaluaciones técnicas y acompaña al cliente en la remediación. Referente interno en pruebas de penetración y endurecimiento de infraestructura.",
+      "educacion": "Ingeniería en Sistemas · Maestría en Ciberseguridad (en curso)",
+      "ingreso": "2025-11-11",
+      "foto": null
     },
     {
       "id": "inge-02",
       "nombre": "Diego Valladares",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Seguridad",
-      "disponibilidad": 30,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -400,6 +411,10 @@
         {
           "skillId": "elastic-search",
           "nivel": 2
+        },
+        {
+          "skillId": "ingles",
+          "nivel": 3
         },
         {
           "skillId": "presentacion-clientes",
@@ -434,14 +449,17 @@
           "nivel": 1
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Ejecuta evaluaciones técnicas y despliegues de plataformas de seguridad con acompañamiento del líder técnico.",
+      "educacion": "Ingeniería en Sistemas",
+      "ingreso": "2020-08-11",
+      "foto": null
     },
     {
       "id": "inge-03",
       "nombre": "Sofía Bermúdez",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Redes",
-      "disponibilidad": 10,
       "idiomas": [
         "Español"
       ],
@@ -483,20 +501,27 @@
       "certificaciones": [
         {
           "nombre": "Azure AZ-500",
-          "vence": "2027-05-31"
+          "emitida": "2025-05-31",
+          "vence": "2027-05-31",
+          "archivo": "inge-03-azure-az-500.pdf"
         },
         {
           "nombre": "AWS Security Specialty",
-          "vence": "2027-08-31"
+          "emitida": "2025-08-31",
+          "vence": "2027-08-31",
+          "archivo": "inge-03-aws-security-specialty.pdf"
         }
-      ]
+      ],
+      "descripcion": "Diseña y opera la capa de red: segmentación, ruteo, DNS/DHCP y perímetro.",
+      "educacion": "Ingeniería en Telecomunicaciones",
+      "ingreso": "2020-02-11",
+      "foto": null
     },
     {
       "id": "inge-04",
       "nombre": "Andrés Quiñónez",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Soluciones",
-      "disponibilidad": 90,
       "idiomas": [
         "Español"
       ],
@@ -554,16 +579,21 @@
       "certificaciones": [
         {
           "nombre": "Checkpoint CCSA",
-          "vence": "2026-11-30"
+          "emitida": "2024-11-30",
+          "vence": "2026-11-30",
+          "archivo": "inge-04-checkpoint-ccsa.pdf"
         }
-      ]
+      ],
+      "descripcion": "Traduce el requerimiento del cliente a una solución de fabricante: dimensiona, valida requisitos técnicos y define el alcance de implementación.",
+      "educacion": "Ingeniería en Sistemas",
+      "ingreso": "2018-09-11",
+      "foto": null
     },
     {
       "id": "inge-05",
       "nombre": "Gabriela Nájera",
       "equipo": "Ingeniería",
       "rol": "Ingeniero Cloud",
-      "disponibilidad": 5,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -599,6 +629,10 @@
           "nivel": 3
         },
         {
+          "skillId": "ingles",
+          "nivel": 2
+        },
+        {
           "skillId": "liderazgo",
           "nivel": 1
         },
@@ -614,20 +648,27 @@
       "certificaciones": [
         {
           "nombre": "AWS Security Specialty",
-          "vence": "2027-08-31"
+          "emitida": "2025-08-31",
+          "vence": "2027-08-31",
+          "archivo": "inge-05-aws-security-specialty.pdf"
         },
         {
           "nombre": "Checkpoint CCSA",
-          "vence": "2026-11-30"
+          "emitida": "2024-11-30",
+          "vence": "2026-11-30",
+          "archivo": "inge-05-checkpoint-ccsa.pdf"
         }
-      ]
+      ],
+      "descripcion": "Responsable de la postura de seguridad en nube y de las plataformas SaaS de protección.",
+      "educacion": "Ingeniería en Sistemas · Especialización en Cloud",
+      "ingreso": "2023-01-11",
+      "foto": null
     },
     {
       "id": "inge-06",
       "nombre": "Fernando Cabrera",
       "equipo": "Ingeniería",
       "rol": "Líder Técnico",
-      "disponibilidad": 45,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -637,6 +678,10 @@
         {
           "skillId": "elastic-search",
           "nivel": 1
+        },
+        {
+          "skillId": "ingles",
+          "nivel": 2
         },
         {
           "skillId": "liderazgo",
@@ -682,20 +727,27 @@
       "certificaciones": [
         {
           "nombre": "AWS Security Specialty",
-          "vence": "2027-08-31"
+          "emitida": "2025-08-31",
+          "vence": "2027-08-31",
+          "archivo": "inge-06-aws-security-specialty.pdf"
         },
         {
           "nombre": "CCNA",
-          "vence": "2026-12-31"
+          "emitida": "2024-12-31",
+          "vence": "2026-12-31",
+          "archivo": "inge-06-ccna.pdf"
         }
-      ]
+      ],
+      "descripcion": "Coordina al equipo de ingeniería en la ejecución de proyectos y valida la calidad técnica de los entregables.",
+      "educacion": "Ingeniería en Sistemas · Maestría en Gestión de TI",
+      "ingreso": "2020-06-11",
+      "foto": null
     },
     {
       "id": "inge-07",
       "nombre": "Karla Ixchel Ruano",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Seguridad Sr.",
-      "disponibilidad": 85,
       "idiomas": [
         "Español"
       ],
@@ -745,16 +797,21 @@
       "certificaciones": [
         {
           "nombre": "Checkpoint CCSA",
-          "vence": "2026-11-30"
+          "emitida": "2024-11-30",
+          "vence": "2026-11-30",
+          "archivo": "inge-07-checkpoint-ccsa.pdf"
         }
-      ]
+      ],
+      "descripcion": "Lidera evaluaciones técnicas y acompaña al cliente en la remediación. Referente interno en pruebas de penetración y endurecimiento de infraestructura.",
+      "educacion": "Ingeniería en Sistemas · Maestría en Ciberseguridad (en curso)",
+      "ingreso": "2025-04-11",
+      "foto": null
     },
     {
       "id": "inge-08",
       "nombre": "Josué Barrientos",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Seguridad",
-      "disponibilidad": 10,
       "idiomas": [
         "Español"
       ],
@@ -801,14 +858,17 @@
           "nivel": 1
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Ejecuta evaluaciones técnicas y despliegues de plataformas de seguridad con acompañamiento del líder técnico.",
+      "educacion": "Ingeniería en Sistemas",
+      "ingreso": "2018-11-11",
+      "foto": null
     },
     {
       "id": "inge-09",
       "nombre": "Melissa Ponce",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Redes",
-      "disponibilidad": 10,
       "idiomas": [
         "Español"
       ],
@@ -862,16 +922,21 @@
       "certificaciones": [
         {
           "nombre": "AWS Security Specialty",
-          "vence": "2027-08-31"
+          "emitida": "2025-08-31",
+          "vence": "2027-08-31",
+          "archivo": "inge-09-aws-security-specialty.pdf"
         }
-      ]
+      ],
+      "descripcion": "Diseña y opera la capa de red: segmentación, ruteo, DNS/DHCP y perímetro.",
+      "educacion": "Ingeniería en Telecomunicaciones",
+      "ingreso": "2024-11-11",
+      "foto": null
     },
     {
       "id": "inge-10",
       "nombre": "Emilio Sandoval",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Soluciones",
-      "disponibilidad": 55,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -892,6 +957,10 @@
         },
         {
           "skillId": "elastic-search",
+          "nivel": 3
+        },
+        {
+          "skillId": "ingles",
           "nivel": 3
         },
         {
@@ -942,20 +1011,27 @@
       "certificaciones": [
         {
           "nombre": "Cloudflare ACE",
-          "vence": "2027-03-31"
+          "emitida": "2025-03-31",
+          "vence": "2027-03-31",
+          "archivo": "inge-10-cloudflare-ace.pdf"
         },
         {
           "nombre": "Checkpoint CCSA",
-          "vence": "2026-11-30"
+          "emitida": "2024-11-30",
+          "vence": "2026-11-30",
+          "archivo": "inge-10-checkpoint-ccsa.pdf"
         }
-      ]
+      ],
+      "descripcion": "Traduce el requerimiento del cliente a una solución de fabricante: dimensiona, valida requisitos técnicos y define el alcance de implementación.",
+      "educacion": "Ingeniería en Sistemas",
+      "ingreso": "2019-02-11",
+      "foto": null
     },
     {
       "id": "inge-11",
       "nombre": "Natalia Girón",
       "equipo": "Ingeniería",
       "rol": "Ingeniero Cloud",
-      "disponibilidad": 80,
       "idiomas": [
         "Español"
       ],
@@ -1017,20 +1093,27 @@
       "certificaciones": [
         {
           "nombre": "CCNA",
-          "vence": "2026-12-31"
+          "emitida": "2024-12-31",
+          "vence": "2026-12-31",
+          "archivo": "inge-11-ccna.pdf"
         },
         {
           "nombre": "Azure AZ-500",
-          "vence": "2027-05-31"
+          "emitida": "2025-05-31",
+          "vence": "2027-05-31",
+          "archivo": "inge-11-azure-az-500.pdf"
         }
-      ]
+      ],
+      "descripcion": "Responsable de la postura de seguridad en nube y de las plataformas SaaS de protección.",
+      "educacion": "Ingeniería en Sistemas · Especialización en Cloud",
+      "ingreso": "2025-06-11",
+      "foto": null
     },
     {
       "id": "inge-12",
       "nombre": "Óscar Recinos",
       "equipo": "Ingeniería",
       "rol": "Líder Técnico",
-      "disponibilidad": 60,
       "idiomas": [
         "Español"
       ],
@@ -1089,14 +1172,17 @@
           "nivel": 3
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Coordina al equipo de ingeniería en la ejecución de proyectos y valida la calidad técnica de los entregables.",
+      "educacion": "Ingeniería en Sistemas · Maestría en Gestión de TI",
+      "ingreso": "2024-07-11",
+      "foto": null
     },
     {
       "id": "inge-13",
       "nombre": "Paola Zamora",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Seguridad Sr.",
-      "disponibilidad": 10,
       "idiomas": [
         "Español"
       ],
@@ -1150,16 +1236,21 @@
       "certificaciones": [
         {
           "nombre": "Azure AZ-500",
-          "vence": "2027-05-31"
+          "emitida": "2025-05-31",
+          "vence": "2027-05-31",
+          "archivo": "inge-13-azure-az-500.pdf"
         }
-      ]
+      ],
+      "descripcion": "Lidera evaluaciones técnicas y acompaña al cliente en la remediación. Referente interno en pruebas de penetración y endurecimiento de infraestructura.",
+      "educacion": "Ingeniería en Sistemas · Maestría en Ciberseguridad (en curso)",
+      "ingreso": "2022-10-11",
+      "foto": null
     },
     {
       "id": "inge-14",
       "nombre": "Iván Arévalo",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Seguridad",
-      "disponibilidad": 80,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -1180,6 +1271,10 @@
         },
         {
           "skillId": "eval-codigo",
+          "nivel": 2
+        },
+        {
+          "skillId": "ingles",
           "nivel": 2
         },
         {
@@ -1207,14 +1302,17 @@
           "nivel": 2
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Ejecuta evaluaciones técnicas y despliegues de plataformas de seguridad con acompañamiento del líder técnico.",
+      "educacion": "Ingeniería en Sistemas",
+      "ingreso": "2025-08-11",
+      "foto": null
     },
     {
       "id": "inge-15",
       "nombre": "Cecilia Mendizábal",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Redes",
-      "disponibilidad": 60,
       "idiomas": [
         "Español"
       ],
@@ -1264,16 +1362,21 @@
       "certificaciones": [
         {
           "nombre": "CCNA",
-          "vence": "2026-12-31"
+          "emitida": "2024-12-31",
+          "vence": "2026-12-31",
+          "archivo": "inge-15-ccna.pdf"
         }
-      ]
+      ],
+      "descripcion": "Diseña y opera la capa de red: segmentación, ruteo, DNS/DHCP y perímetro.",
+      "educacion": "Ingeniería en Telecomunicaciones",
+      "ingreso": "2022-03-11",
+      "foto": null
     },
     {
       "id": "inge-16",
       "nombre": "Bruno Escobar",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Soluciones",
-      "disponibilidad": 5,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -1290,6 +1393,10 @@
         },
         {
           "skillId": "immuniweb",
+          "nivel": 2
+        },
+        {
+          "skillId": "ingles",
           "nivel": 2
         },
         {
@@ -1332,16 +1439,21 @@
       "certificaciones": [
         {
           "nombre": "Checkpoint CCSA",
-          "vence": "2026-11-30"
+          "emitida": "2024-11-30",
+          "vence": "2026-11-30",
+          "archivo": "inge-16-checkpoint-ccsa.pdf"
         }
-      ]
+      ],
+      "descripcion": "Traduce el requerimiento del cliente a una solución de fabricante: dimensiona, valida requisitos técnicos y define el alcance de implementación.",
+      "educacion": "Ingeniería en Sistemas",
+      "ingreso": "2025-05-11",
+      "foto": null
     },
     {
       "id": "inge-17",
       "nombre": "Alejandra Cardona",
       "equipo": "Ingeniería",
       "rol": "Ingeniero Cloud",
-      "disponibilidad": 85,
       "idiomas": [
         "Español"
       ],
@@ -1388,14 +1500,17 @@
           "nivel": 3
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Responsable de la postura de seguridad en nube y de las plataformas SaaS de protección.",
+      "educacion": "Ingeniería en Sistemas · Especialización en Cloud",
+      "ingreso": "2025-04-11",
+      "foto": null
     },
     {
       "id": "inge-18",
       "nombre": "Héctor Pineda",
       "equipo": "Ingeniería",
       "rol": "Líder Técnico",
-      "disponibilidad": 50,
       "idiomas": [
         "Español"
       ],
@@ -1438,14 +1553,17 @@
           "nivel": 2
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Coordina al equipo de ingeniería en la ejecución de proyectos y valida la calidad técnica de los entregables.",
+      "educacion": "Ingeniería en Sistemas · Maestría en Gestión de TI",
+      "ingreso": "2018-12-11",
+      "foto": null
     },
     {
       "id": "inge-marvin",
       "nombre": "Marvin Tercero Jr.",
       "equipo": "Ingeniería",
       "rol": "Ingeniero de Soluciones",
-      "disponibilidad": 50,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -1465,6 +1583,10 @@
           "nivel": 2
         },
         {
+          "skillId": "ingles",
+          "nivel": 3
+        },
+        {
           "skillId": "liderazgo",
           "nivel": 3
         },
@@ -1476,16 +1598,21 @@
       "certificaciones": [
         {
           "nombre": "Infoblox Core DDI Associate",
-          "vence": "2027-06-30"
+          "emitida": "2024-11-15",
+          "vence": "2026-11-15",
+          "archivo": "inge-marvin-infoblox-core-ddi-associate.pdf"
         }
-      ]
+      ],
+      "descripcion": "Se incorporó a ES Consulting en 2026. Trae conocimiento intermedio en Infoblox con certificación de fabricante y habilidades de liderazgo. Es el punto de contacto para dimensionar soluciones de DDI y validar requerimientos técnicos en propuestas.",
+      "educacion": "Ingeniería en Sistemas · Certificación Infoblox",
+      "ingreso": "2026-07-01",
+      "foto": null
     },
     {
       "id": "inge-pedrito",
       "nombre": "Pedrito",
       "equipo": "Ingeniería",
       "rol": "Practicante de Ingeniería",
-      "disponibilidad": 90,
       "idiomas": [
         "Español"
       ],
@@ -1500,6 +1627,10 @@
           "nivel": 1
         },
         {
+          "skillId": "ingles",
+          "nivel": 1
+        },
+        {
           "skillId": "redaccion",
           "nivel": 1
         },
@@ -1508,14 +1639,17 @@
           "nivel": 2
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Practicante con nivel inicial en Infoblox. Se le asigna a proyectos junto a un especialista para que desarrolle experiencia de campo.",
+      "educacion": "Estudiante de Ingeniería en Sistemas (8.º semestre)",
+      "ingreso": "2026-08-04",
+      "foto": null
     },
     {
       "id": "csc-01",
       "nombre": "Ana Lucía Morales",
       "equipo": "CSC",
       "rol": "Analista SOC N1",
-      "disponibilidad": 35,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -1533,6 +1667,10 @@
         {
           "skillId": "gestion-proyectos",
           "nivel": 1
+        },
+        {
+          "skillId": "ingles",
+          "nivel": 2
         },
         {
           "skillId": "monitoreo-siem",
@@ -1562,16 +1700,21 @@
       "certificaciones": [
         {
           "nombre": "Splunk Core Certified User",
-          "vence": "2027-01-31"
+          "emitida": "2025-01-31",
+          "vence": "2027-01-31",
+          "archivo": "csc-01-splunk-core-certified-user.pdf"
         }
-      ]
+      ],
+      "descripcion": "Primera línea de monitoreo: triage de alertas y escalamiento según el playbook.",
+      "educacion": "Técnico en Redes y Seguridad",
+      "ingreso": "2021-11-11",
+      "foto": null
     },
     {
       "id": "csc-02",
       "nombre": "Mariana Estrada",
       "equipo": "CSC",
       "rol": "Analista SOC N2",
-      "disponibilidad": 55,
       "idiomas": [
         "Español"
       ],
@@ -1609,16 +1752,21 @@
       "certificaciones": [
         {
           "nombre": "Splunk Core Certified User",
-          "vence": "2027-01-31"
+          "emitida": "2025-01-31",
+          "vence": "2027-01-31",
+          "archivo": "csc-02-splunk-core-certified-user.pdf"
         }
-      ]
+      ],
+      "descripcion": "Investiga alertas escaladas, afina reglas de correlación y documenta hallazgos.",
+      "educacion": "Ingeniería en Sistemas",
+      "ingreso": "2019-10-11",
+      "foto": null
     },
     {
       "id": "csc-03",
       "nombre": "Luis Fernando Aguilar",
       "equipo": "CSC",
       "rol": "Analista SOC N3",
-      "disponibilidad": 10,
       "idiomas": [
         "Español"
       ],
@@ -1672,16 +1820,21 @@
       "certificaciones": [
         {
           "nombre": "CySA+",
-          "vence": "2027-09-30"
+          "emitida": "2025-09-30",
+          "vence": "2027-09-30",
+          "archivo": "csc-03-cysa.pdf"
         }
-      ]
+      ],
+      "descripcion": "Caza amenazas, lidera investigaciones complejas y desarrolla nuevos casos de uso del SIEM.",
+      "educacion": "Ingeniería en Sistemas · Especialización en Threat Intelligence",
+      "ingreso": "2018-07-11",
+      "foto": null
     },
     {
       "id": "csc-04",
       "nombre": "Ricardo Solórzano",
       "equipo": "CSC",
       "rol": "Líder de Turno",
-      "disponibilidad": 90,
       "idiomas": [
         "Español"
       ],
@@ -1728,14 +1881,17 @@
           "nivel": 2
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Coordina el turno del SOC, asegura los tiempos de respuesta y reporta al cliente.",
+      "educacion": "Ingeniería en Sistemas",
+      "ingreso": "2024-07-11",
+      "foto": null
     },
     {
       "id": "csc-05",
       "nombre": "Daniela Ochoa",
       "equipo": "CSC",
       "rol": "Especialista DFIR",
-      "disponibilidad": 40,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -1753,6 +1909,10 @@
         {
           "skillId": "dfir",
           "nivel": 1
+        },
+        {
+          "skillId": "ingles",
+          "nivel": 3
         },
         {
           "skillId": "liderazgo",
@@ -1779,14 +1939,17 @@
           "nivel": 1
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Contiene y analiza incidentes: adquisición forense, análisis de malware y reporte ejecutivo.",
+      "educacion": "Ingeniería en Sistemas · Certificaciones forenses",
+      "ingreso": "2019-07-11",
+      "foto": null
     },
     {
       "id": "csc-06",
       "nombre": "Kevin Alvarado",
       "equipo": "CSC",
       "rol": "Analista SOC N1",
-      "disponibilidad": 90,
       "idiomas": [
         "Español"
       ],
@@ -1825,6 +1988,10 @@
           "nivel": 3
         },
         {
+          "skillId": "ingles",
+          "nivel": 1
+        },
+        {
           "skillId": "liderazgo",
           "nivel": 3
         },
@@ -1856,16 +2023,21 @@
       "certificaciones": [
         {
           "nombre": "Splunk Core Certified User",
-          "vence": "2027-01-31"
+          "emitida": "2025-01-31",
+          "vence": "2027-01-31",
+          "archivo": "csc-06-splunk-core-certified-user.pdf"
         }
-      ]
+      ],
+      "descripcion": "Primera línea de monitoreo: triage de alertas y escalamiento según el playbook.",
+      "educacion": "Técnico en Redes y Seguridad",
+      "ingreso": "2019-03-11",
+      "foto": null
     },
     {
       "id": "csc-07",
       "nombre": "Jimena Castellanos",
       "equipo": "CSC",
       "rol": "Analista SOC N2",
-      "disponibilidad": 45,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -1889,6 +2061,10 @@
           "nivel": 2
         },
         {
+          "skillId": "ingles",
+          "nivel": 2
+        },
+        {
           "skillId": "redaccion",
           "nivel": 2
         },
@@ -1908,16 +2084,21 @@
       "certificaciones": [
         {
           "nombre": "CySA+",
-          "vence": "2027-09-30"
+          "emitida": "2025-09-30",
+          "vence": "2027-09-30",
+          "archivo": "csc-07-cysa.pdf"
         }
-      ]
+      ],
+      "descripcion": "Investiga alertas escaladas, afina reglas de correlación y documenta hallazgos.",
+      "educacion": "Ingeniería en Sistemas",
+      "ingreso": "2021-05-11",
+      "foto": null
     },
     {
       "id": "csc-08",
       "nombre": "Marco Tulio Reyes",
       "equipo": "CSC",
       "rol": "Analista SOC N3",
-      "disponibilidad": 5,
       "idiomas": [
         "Español"
       ],
@@ -1952,14 +2133,17 @@
           "nivel": 2
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Caza amenazas, lidera investigaciones complejas y desarrolla nuevos casos de uso del SIEM.",
+      "educacion": "Ingeniería en Sistemas · Especialización en Threat Intelligence",
+      "ingreso": "2022-03-11",
+      "foto": null
     },
     {
       "id": "cons-01",
       "nombre": "Silvia Gutiérrez",
       "equipo": "Consulting",
       "rol": "Consultor GRC",
-      "disponibilidad": 5,
       "idiomas": [
         "Español"
       ],
@@ -2002,14 +2186,17 @@
           "nivel": 3
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Levanta controles, redacta políticas y acompaña al cliente en la implementación del marco normativo.",
+      "educacion": "Licenciatura en Sistemas · Diplomado en Gestión de Riesgos",
+      "ingreso": "2020-06-11",
+      "foto": null
     },
     {
       "id": "cons-02",
       "nombre": "Pablo Contreras",
       "equipo": "Consulting",
       "rol": "Consultor GRC Sr.",
-      "disponibilidad": 0,
       "idiomas": [
         "Español"
       ],
@@ -2064,14 +2251,17 @@
           "nivel": 1
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Dirige proyectos de cumplimiento de punta a punta y presenta resultados a comités de dirección.",
+      "educacion": "Ingeniería Industrial · Maestría en Gestión de Riesgos",
+      "ingreso": "2025-12-11",
+      "foto": null
     },
     {
       "id": "cons-03",
       "nombre": "Regina Salazar",
       "equipo": "Consulting",
       "rol": "Auditor de Cumplimiento",
-      "disponibilidad": 55,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -2088,6 +2278,10 @@
         },
         {
           "skillId": "immuniweb",
+          "nivel": 2
+        },
+        {
+          "skillId": "ingles",
           "nivel": 2
         },
         {
@@ -2118,20 +2312,27 @@
       "certificaciones": [
         {
           "nombre": "CISA",
-          "vence": "2026-12-31"
+          "emitida": "2024-12-31",
+          "vence": "2026-12-31",
+          "archivo": "cons-03-cisa.pdf"
         },
         {
           "nombre": "OSCP",
-          "vence": "2027-07-31"
+          "emitida": "2025-07-31",
+          "vence": "2027-07-31",
+          "archivo": "cons-03-oscp.pdf"
         }
-      ]
+      ],
+      "descripcion": "Evalúa controles contra el estándar aplicable y sustenta la evidencia ante el auditor externo.",
+      "educacion": "Contaduría Pública y Auditoría · Certificaciones de auditoría TI",
+      "ingreso": "2018-12-11",
+      "foto": null
     },
     {
       "id": "cons-04",
       "nombre": "Mauricio Del Valle",
       "equipo": "Consulting",
       "rol": "Pentester",
-      "disponibilidad": 100,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -2155,6 +2356,10 @@
           "nivel": 1
         },
         {
+          "skillId": "ingles",
+          "nivel": 2
+        },
+        {
           "skillId": "redaccion",
           "nivel": 2
         },
@@ -2167,14 +2372,17 @@
           "nivel": 1
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Ejecuta pruebas de penetración sobre aplicaciones e infraestructura y redacta el informe técnico.",
+      "educacion": "Ingeniería en Sistemas · Formación ofensiva continua",
+      "ingreso": "2024-01-11",
+      "foto": null
     },
     {
       "id": "cons-05",
       "nombre": "Lucía Herrera",
       "equipo": "Consulting",
       "rol": "Gerente de Consultoría",
-      "disponibilidad": 30,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -2188,6 +2396,10 @@
         {
           "skillId": "immuniweb",
           "nivel": 1
+        },
+        {
+          "skillId": "ingles",
+          "nivel": 2
         },
         {
           "skillId": "iso-27001",
@@ -2238,14 +2450,17 @@
           "nivel": 1
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Responsable de la cartera de consultoría: propuestas, relación con el cliente y calidad de los entregables.",
+      "educacion": "Ingeniería en Sistemas · MBA",
+      "ingreso": "2021-03-11",
+      "foto": null
     },
     {
       "id": "cons-06",
       "nombre": "Estuardo Ramírez",
       "equipo": "Consulting",
       "rol": "Consultor GRC",
-      "disponibilidad": 40,
       "idiomas": [
         "Español"
       ],
@@ -2280,14 +2495,17 @@
           "nivel": 2
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Levanta controles, redacta políticas y acompaña al cliente en la implementación del marco normativo.",
+      "educacion": "Licenciatura en Sistemas · Diplomado en Gestión de Riesgos",
+      "ingreso": "2023-07-11",
+      "foto": null
     },
     {
       "id": "cons-07",
       "nombre": "Valeria Monzón",
       "equipo": "Consulting",
       "rol": "Consultor GRC Sr.",
-      "disponibilidad": 50,
       "idiomas": [
         "Español",
         "Inglés técnico"
@@ -2313,6 +2531,10 @@
         {
           "skillId": "immuniweb",
           "nivel": 2
+        },
+        {
+          "skillId": "ingles",
+          "nivel": 3
         },
         {
           "skillId": "knowbe4",
@@ -2346,16 +2568,21 @@
       "certificaciones": [
         {
           "nombre": "ISO 27001 Lead Auditor",
-          "vence": "2027-02-28"
+          "emitida": "2025-02-28",
+          "vence": "2027-02-28",
+          "archivo": "cons-07-iso-27001-lead-auditor.pdf"
         }
-      ]
+      ],
+      "descripcion": "Dirige proyectos de cumplimiento de punta a punta y presenta resultados a comités de dirección.",
+      "educacion": "Ingeniería Industrial · Maestría en Gestión de Riesgos",
+      "ingreso": "2024-09-11",
+      "foto": null
     },
     {
       "id": "cons-08",
       "nombre": "Alfonso Peláez",
       "equipo": "Consulting",
       "rol": "Auditor de Cumplimiento",
-      "disponibilidad": 95,
       "idiomas": [
         "Español"
       ],
@@ -2418,7 +2645,561 @@
           "nivel": 3
         }
       ],
-      "certificaciones": []
+      "certificaciones": [],
+      "descripcion": "Evalúa controles contra el estándar aplicable y sustenta la evidencia ante el auditor externo.",
+      "educacion": "Contaduría Pública y Auditoría · Certificaciones de auditoría TI",
+      "ingreso": "2025-08-11",
+      "foto": null
+    }
+  ],
+  "proyectos": [
+    {
+      "id": "prj-infoblox-muni",
+      "nombre": "Despliegue Infoblox DDI",
+      "cliente": "Municipalidad Demo",
+      "area": "Ingeniería",
+      "estado": "oportunidad",
+      "inicio": "2026-10-01",
+      "fin": "2027-01-31",
+      "descripcion": "Oportunidad del escenario del pitch: implementación de Infoblox DDI para una municipalidad. Requiere personal con nivel intermedio y certificación vigente de Infoblox para cumplir el requisito de la licitación.",
+      "requisitos": "Infoblox",
+      "asignaciones": []
+    },
+    {
+      "id": "prj-perimetro-banco",
+      "nombre": "Renovación de perímetro",
+      "cliente": "Banco Demo",
+      "area": "Ingeniería",
+      "estado": "en-ejecucion",
+      "inicio": "2026-06-01",
+      "fin": "2026-12-15",
+      "descripcion": "Reemplazo de firewalls y rediseño de reglas con TUFIN para un banco regional.",
+      "requisitos": "Seguridad Perimetral + TUFIN + Checkpoint",
+      "asignaciones": [
+        {
+          "personaId": "inge-09",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 90
+        },
+        {
+          "personaId": "inge-marvin",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 50
+        },
+        {
+          "personaId": "inge-16",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 40
+        },
+        {
+          "personaId": "inge-15",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 40
+        },
+        {
+          "personaId": "inge-02",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 40
+        },
+        {
+          "personaId": "inge-06",
+          "rolProyecto": "Líder de proyecto",
+          "dedicacion": 35
+        },
+        {
+          "personaId": "inge-03",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 30
+        }
+      ]
+    },
+    {
+      "id": "prj-ztna-acme",
+      "nombre": "Cloudflare ZTNA",
+      "cliente": "ACME Corp",
+      "area": "Ingeniería",
+      "estado": "en-ejecucion",
+      "inicio": "2026-07-15",
+      "fin": "2026-11-30",
+      "descripcion": "Migración de VPN tradicional a acceso Zero Trust para 800 usuarios.",
+      "requisitos": "Cloudflare ZTNA + Cloudflare WAF",
+      "asignaciones": [
+        {
+          "personaId": "inge-05",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 60
+        },
+        {
+          "personaId": "inge-16",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 55
+        },
+        {
+          "personaId": "inge-10",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 45
+        },
+        {
+          "personaId": "inge-02",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 30
+        },
+        {
+          "personaId": "inge-11",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 20
+        },
+        {
+          "personaId": "inge-07",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 15
+        }
+      ]
+    },
+    {
+      "id": "prj-segmentacion-ind",
+      "nombre": "Segmentación de red OT",
+      "cliente": "Industrias Demo",
+      "area": "Ingeniería",
+      "estado": "en-ejecucion",
+      "inicio": "2026-05-02",
+      "fin": "2026-10-31",
+      "descripcion": "Separación de red industrial y corporativa en dos plantas de producción.",
+      "requisitos": "VAPT OT + Seguridad Perimetral",
+      "asignaciones": [
+        {
+          "personaId": "inge-03",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 60
+        },
+        {
+          "personaId": "inge-18",
+          "rolProyecto": "Líder de proyecto",
+          "dedicacion": 50
+        },
+        {
+          "personaId": "inge-08",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 50
+        },
+        {
+          "personaId": "inge-13",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 40
+        },
+        {
+          "personaId": "inge-06",
+          "rolProyecto": "Líder de proyecto",
+          "dedicacion": 20
+        },
+        {
+          "personaId": "inge-14",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 20
+        },
+        {
+          "personaId": "inge-pedrito",
+          "rolProyecto": "Apoyo — en formación",
+          "dedicacion": 10
+        }
+      ]
+    },
+    {
+      "id": "prj-ndr-aseg",
+      "nombre": "Darktrace NDR",
+      "cliente": "Aseguradora Demo",
+      "area": "Ingeniería",
+      "estado": "en-ejecucion",
+      "inicio": "2026-08-01",
+      "fin": "2027-02-28",
+      "descripcion": "Implementación de detección de anomalías de red y correo.",
+      "requisitos": "Darktrace NDR + Darktrace Email",
+      "asignaciones": [
+        {
+          "personaId": "inge-13",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 50
+        },
+        {
+          "personaId": "inge-08",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 40
+        },
+        {
+          "personaId": "inge-12",
+          "rolProyecto": "Líder de proyecto",
+          "dedicacion": 40
+        },
+        {
+          "personaId": "inge-05",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 35
+        },
+        {
+          "personaId": "inge-17",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 15
+        },
+        {
+          "personaId": "inge-04",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 10
+        },
+        {
+          "personaId": "inge-01",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 5
+        }
+      ]
+    },
+    {
+      "id": "prj-checkpoint-retail",
+      "nombre": "Migración Checkpoint",
+      "cliente": "Retail Demo",
+      "area": "Ingeniería",
+      "estado": "cerrado",
+      "inicio": "2026-01-15",
+      "fin": "2026-05-30",
+      "descripcion": "Migración de 12 gateways a la plataforma Checkpoint.",
+      "requisitos": "Checkpoint + Seguridad Perimetral",
+      "asignaciones": []
+    },
+    {
+      "id": "prj-soc-acme",
+      "nombre": "SOC gestionado 24/7",
+      "cliente": "ACME Corp",
+      "area": "CSC",
+      "estado": "en-ejecucion",
+      "inicio": "2026-01-02",
+      "fin": "2026-12-31",
+      "descripcion": "Monitoreo continuo con turnos rotativos y reporte mensual.",
+      "requisitos": "Monitoreo SIEM + Correlación de logs",
+      "asignaciones": [
+        {
+          "personaId": "csc-01",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 65
+        },
+        {
+          "personaId": "csc-03",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 50
+        },
+        {
+          "personaId": "csc-08",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 40
+        },
+        {
+          "personaId": "csc-06",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 10
+        },
+        {
+          "personaId": "csc-04",
+          "rolProyecto": "Líder de proyecto",
+          "dedicacion": 10
+        }
+      ]
+    },
+    {
+      "id": "prj-siem-banco",
+      "nombre": "Monitoreo SIEM",
+      "cliente": "Banco Demo",
+      "area": "CSC",
+      "estado": "en-ejecucion",
+      "inicio": "2026-03-01",
+      "fin": "2027-02-28",
+      "descripcion": "Ingesta, correlación de logs y casos de uso regulatorios.",
+      "requisitos": "Monitoreo SIEM + Elastic Search",
+      "asignaciones": [
+        {
+          "personaId": "csc-07",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 55
+        },
+        {
+          "personaId": "csc-02",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 45
+        },
+        {
+          "personaId": "csc-03",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 40
+        }
+      ]
+    },
+    {
+      "id": "prj-dfir-retainer",
+      "nombre": "Retainer DFIR",
+      "cliente": "Empresa Demo",
+      "area": "CSC",
+      "estado": "en-ejecucion",
+      "inicio": "2026-04-01",
+      "fin": "2027-03-31",
+      "descripcion": "Horas reservadas de respuesta a incidentes y análisis forense.",
+      "requisitos": "Respuesta a Incidentes (DFIR) + Análisis de Malware",
+      "asignaciones": [
+        {
+          "personaId": "csc-05",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 60
+        },
+        {
+          "personaId": "csc-08",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 55
+        }
+      ]
+    },
+    {
+      "id": "prj-hunting-telecom",
+      "nombre": "Threat hunting trimestral",
+      "cliente": "Telecom Demo",
+      "area": "CSC",
+      "estado": "cerrado",
+      "inicio": "2026-02-01",
+      "fin": "2026-04-30",
+      "descripcion": "Campañas de búsqueda proactiva sobre la red del cliente.",
+      "requisitos": "Threat Hunting + Monitoreo SIEM",
+      "asignaciones": []
+    },
+    {
+      "id": "prj-iso-empresa",
+      "nombre": "Certificación ISO 27001",
+      "cliente": "Empresa Demo",
+      "area": "Consulting",
+      "estado": "en-ejecucion",
+      "inicio": "2026-02-15",
+      "fin": "2026-12-20",
+      "descripcion": "Acompañamiento completo hasta la auditoría de certificación del SGSI.",
+      "requisitos": "Auditoría ISO 27001 + Redacción",
+      "asignaciones": [
+        {
+          "personaId": "cons-01",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 60
+        },
+        {
+          "personaId": "cons-02",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 55
+        },
+        {
+          "personaId": "cons-05",
+          "rolProyecto": "Líder de proyecto",
+          "dedicacion": 40
+        }
+      ]
+    },
+    {
+      "id": "prj-pci-procesadora",
+      "nombre": "Auditoría PCI DSS",
+      "cliente": "Procesadora Demo",
+      "area": "Consulting",
+      "estado": "en-ejecucion",
+      "inicio": "2026-06-01",
+      "fin": "2026-11-15",
+      "descripcion": "Evaluación anual de cumplimiento del entorno de tarjetas.",
+      "requisitos": "PCI DSS + Auditoría ISO 27001",
+      "asignaciones": [
+        {
+          "personaId": "cons-02",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 45
+        },
+        {
+          "personaId": "cons-03",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 45
+        },
+        {
+          "personaId": "cons-01",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 35
+        }
+      ]
+    },
+    {
+      "id": "prj-awareness-acme",
+      "nombre": "Programa de concientización",
+      "cliente": "ACME Corp",
+      "area": "Consulting",
+      "estado": "en-ejecucion",
+      "inicio": "2026-05-01",
+      "fin": "2026-10-31",
+      "descripcion": "Campañas de phishing simulado y capacitación con KnowBe4.",
+      "requisitos": "KnowBe4 + Ingeniería Social / Phishing",
+      "asignaciones": [
+        {
+          "personaId": "cons-06",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 60
+        },
+        {
+          "personaId": "cons-05",
+          "rolProyecto": "Líder de proyecto",
+          "dedicacion": 30
+        },
+        {
+          "personaId": "cons-08",
+          "rolProyecto": "Consultor asignado",
+          "dedicacion": 5
+        }
+      ]
+    },
+    {
+      "id": "prj-vapt-fintech",
+      "nombre": "VAPT Web anual",
+      "cliente": "Fintech Demo",
+      "area": "Consulting",
+      "estado": "en-ejecucion",
+      "inicio": "2026-08-15",
+      "fin": "2026-10-15",
+      "descripcion": "Pruebas de penetración sobre la banca en línea y su API.",
+      "requisitos": "VAPT Web + Evaluación de código",
+      "asignaciones": [
+        {
+          "personaId": "cons-07",
+          "rolProyecto": "Especialista senior",
+          "dedicacion": 50
+        }
+      ]
+    },
+    {
+      "id": "prj-riesgos-muni",
+      "nombre": "Análisis de riesgos",
+      "cliente": "Municipalidad Demo",
+      "area": "Consulting",
+      "estado": "oportunidad",
+      "inicio": "2026-11-01",
+      "fin": "2027-01-31",
+      "descripcion": "Oportunidad abierta: levantamiento de riesgos y plan de tratamiento.",
+      "requisitos": "Análisis de Riesgos + Presentación a clientes",
+      "asignaciones": []
+    }
+  ],
+  "historial": [
+    {
+      "mes": "2026-04",
+      "punteos": {
+        "Ingeniería": {
+          "technical": 106,
+          "solutions": 123,
+          "soft": 118
+        },
+        "CSC": {
+          "technical": 38,
+          "solutions": 38,
+          "soft": 45
+        },
+        "Consulting": {
+          "technical": 38,
+          "solutions": 53,
+          "soft": 51
+        }
+      }
+    },
+    {
+      "mes": "2026-05",
+      "punteos": {
+        "Ingeniería": {
+          "technical": 108,
+          "solutions": 127,
+          "soft": 121
+        },
+        "CSC": {
+          "technical": 39,
+          "solutions": 39,
+          "soft": 46
+        },
+        "Consulting": {
+          "technical": 39,
+          "solutions": 54,
+          "soft": 52
+        }
+      }
+    },
+    {
+      "mes": "2026-06",
+      "punteos": {
+        "Ingeniería": {
+          "technical": 111,
+          "solutions": 130,
+          "soft": 124
+        },
+        "CSC": {
+          "technical": 40,
+          "solutions": 40,
+          "soft": 47
+        },
+        "Consulting": {
+          "technical": 40,
+          "solutions": 56,
+          "soft": 54
+        }
+      }
+    },
+    {
+      "mes": "2026-07",
+      "punteos": {
+        "Ingeniería": {
+          "technical": 114,
+          "solutions": 133,
+          "soft": 128
+        },
+        "CSC": {
+          "technical": 41,
+          "solutions": 41,
+          "soft": 49
+        },
+        "Consulting": {
+          "technical": 41,
+          "solutions": 57,
+          "soft": 55
+        }
+      }
+    },
+    {
+      "mes": "2026-08",
+      "punteos": {
+        "Ingeniería": {
+          "technical": 117,
+          "solutions": 137,
+          "soft": 131
+        },
+        "CSC": {
+          "technical": 42,
+          "solutions": 42,
+          "soft": 50
+        },
+        "Consulting": {
+          "technical": 42,
+          "solutions": 59,
+          "soft": 57
+        }
+      }
+    },
+    {
+      "mes": "2026-09",
+      "punteos": {
+        "Ingeniería": {
+          "technical": 120,
+          "solutions": 140,
+          "soft": 134
+        },
+        "CSC": {
+          "technical": 43,
+          "solutions": 43,
+          "soft": 51
+        },
+        "Consulting": {
+          "technical": 43,
+          "solutions": 60,
+          "soft": 58
+        }
+      }
     }
   ]
 }
