@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/playwright-report/
+/test-results/
 
 # next.js
 /.next/
@@ -32,6 +34,15 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# Local database and generated artifacts
+/prisma/*.db*
+/src/generated/prisma/
+/src/generated/charts/*
+!/src/generated/charts/.gitkeep
+/src/generated/reports/*
+!/src/generated/reports/.gitkeep
 
 # vercel
 .vercel

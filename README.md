@@ -1,5 +1,7 @@
 # 🏁 Capture The Report
 
+> **Equipo 10 — CSC Report Automation:** la aplicación y los comandos actuales están documentados en [README-EQUIPO.md](README-EQUIPO.md). El contenido siguiente conserva las instrucciones generales del evento.
+
 Hackathon interna de ES Consulting — el inicio de la **plataforma unificada de reportería**.
 
 Cada equipo construye un prototipo web que resuelva un dolor real de reportería: automatizar un reporte manual, convertir la salida de una herramienta en un documento presentable, asistentes de redacción, paneles de hallazgos… lo que su equipo elija.

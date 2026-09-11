@@ -1,4 +1,20 @@
-# 📐 Planteamiento — Equipo XX
+# 📐 Planteamiento — Equipo 10
+
+## Alcance acordado: CSC Report Automation, fase 1
+
+- **Nombre técnico:** `csc-report-automation`.
+- **Problema:** preparar y entregar mensualmente reportes del Cyber Shield Center. El tiempo actual y el ahorro esperado están pendientes de medir con el equipo.
+- **Usuarios:** equipo responsable de los reportes mensuales CSC; integrantes y roles por confirmar.
+- **Visión:** importar tickets XLSX, normalizar tiempos, mantener historial, calcular SLA y generar un reporte Word corporativo. La revisión y modalidad de entrega se definirán en las siguientes fases.
+- **Flujo futuro:** cliente y período → XLSX → tickets normalizados → indicadores y SLA → información complementaria → reporte corporativo.
+- **Esta fase:** arquitectura Next.js/TypeScript, layout responsive, cinco pantallas visuales, tipos, constantes SLA y Prisma con Client 1:N Report en SQLite.
+- **Fuera de esta fase:** lectura de Excel, conversiones, cálculos SLA, gráficas, Word/PDF, autenticación, IA, envío automático y lógica completa de negocio.
+- **Demostración actual:** navegación, estados vacíos y formulario sin procesamiento. Sin datos de prueba ni registros iniciales.
+- **Continuidad:** servicios separados por responsabilidad y documentación en `README-EQUIPO.md`; PostgreSQL será una migración posterior de infraestructura y datos.
+
+La plantilla original se conserva debajo para completar las decisiones de equipo y el alcance de la siguiente fase.
+
+---
 
 > ⛔ **Completar este documento ANTES de escribir código.** Es obligatorio, se evalúa (35% del puntaje), y es lo que hace que el agente de IA trabaje bien: un planteamiento claro = un prototipo que avanza solo.
 >
