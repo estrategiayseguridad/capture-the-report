@@ -54,15 +54,15 @@ export function ZonaDeCarga({ origen }: { origen: string }) {
           void subir(e.dataTransfer.files[0]);
         }}
         className={`flex flex-wrap items-center justify-between gap-3 rounded-xl border-2 border-dashed px-5 py-4 transition-colors ${
-          encima ? "border-blue-500 bg-blue-50" : "border-slate-300 bg-white"
+          encima ? "border-blue-500 bg-blue-50 dark:bg-blue-950" : "border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900"
         }`}
       >
         <div>
-          <p className="text-sm font-semibold text-slate-800">
+          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
             {ocupado ? "Procesando el archivo…" : "Arrastra aqui el Excel exportado de Halo"}
           </p>
-          <p className="mt-0.5 text-xs text-slate-500">
-            Se lee la pestana <code className="text-slate-700">DATOS</code> buscando las columnas
+          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+            Se lee la pestana <code className="text-slate-700 dark:text-slate-300">DATOS</code> buscando las columnas
             por nombre de encabezado. Ahora mismo se muestra: <strong>{origen}</strong>
           </p>
         </div>
@@ -78,7 +78,7 @@ export function ZonaDeCarga({ origen }: { origen: string }) {
           </label>
           <button
             onClick={() => void volverAlDemo()}
-            className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+            className="rounded-lg border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
           >
             Usar datos de demo
           </button>
@@ -86,7 +86,7 @@ export function ZonaDeCarga({ origen }: { origen: string }) {
       </div>
 
       {error && (
-        <p className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-800">
+        <p className="mt-2 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/40 px-3 py-2 text-xs text-red-800 dark:text-red-300">
           {error}
         </p>
       )}

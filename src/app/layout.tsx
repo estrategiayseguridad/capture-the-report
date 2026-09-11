@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { scriptDeTema } from "./tema";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Antes del primer pintado, para que recargar en oscuro no destelle blanco. */}
+        <script dangerouslySetInnerHTML={{ __html: scriptDeTema }} />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
