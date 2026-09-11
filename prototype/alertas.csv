@@ -1,0 +1,10 @@
+"@timestamp","kibana.alert.rule.name","kibana.alert.severity"
+"Sep 11, 2026 @ 13:13:30.274","Cisco ASA: AAA user authentication Rejected",low
+"Sep 11, 2026 @ 13:10:13.200","Cisco ASA: Configuration applied",medium
+"Sep 11, 2026 @ 07:27:45.260","Cisco ASA: SSH",low
+"Sep 11, 2026 @ 07:27:45.258","Cisco ASA: SSH",low
+"Sep 11, 2026 @ 07:26:36.161","Cisco ASA: user username passed authentication",medium
+"Sep 11, 2026 @ 04:51:38.100","OS: New service installed on system",high
+"Sep 11, 2026 @ 04:51:38.099","OS: New service installed on system",high
+"Sep 11, 2026 @ 04:16:37.585","OS: New service installed on system",high
+"Sep 11, 2026 @ 04:16:37.584","OS: New service installed on system",high
