@@ -1,6 +1,7 @@
 import "server-only";
 import Anthropic from "@anthropic-ai/sdk";
 import type { Bullet, GrupoDetalle, Narrativa, NarrativaInput, TicketResumen } from "./report";
+import { crearContextoSanitizacion, sanitizarTexto, desanitizarTexto, type ContextoSanitizacion } from "./sanitizar";
 
 const MODEL = "claude-opus-5";
 const MAX_TICKETS_EN_PROMPT = 400;
@@ -12,7 +13,7 @@ function formatearTickets(tickets: TicketResumen[]): string {
     .join("\n");
 }
 
-function construirPrompt(data: NarrativaInput): string {
+function construirPrompt(data: NarrativaInput, ticketsSanitizados: TicketResumen[]): string {
   return `Eres un analista de un SOC (Centro de Operaciones de Seguridad) redactando el reporte mensual de tickets para un cliente.
 
 Datos agregados del periodo:
@@ -26,7 +27,9 @@ Datos agregados del periodo:
 - SLA de solicitudes: ${JSON.stringify(data.slaSolicitudes)}
 
 Listado real de tickets del periodo (formato "[producto | tipo | estado] asunto"), úsalo como fuente principal para describir el trabajo realizado — NO inventes actividades que no puedan inferirse de estos asuntos:
-${formatearTickets(data.tickets)}
+${formatearTickets(ticketsSanitizados)}
+
+Nota: por privacidad, las IPs, dominios y nombres de host/sensor en los asuntos ya vienen reemplazados por marcadores como [IP-1], [DOMINIO-2] o [HOST-3]. Trátalos como identificadores reales y úsalos tal cual en tu redacción (ej. "el host [HOST-3]") — NO los reemplaces, no inventes un valor para ellos, ni digas que faltan datos.
 
 Redacta en español, tono profesional y ejecutivo, para un reporte que un consultor de SOC entrega a un cliente corporativo. Responde ÚNICAMENTE con un objeto JSON válido (sin texto adicional, sin bloques de código markdown) con esta forma exacta:
 
@@ -71,6 +74,25 @@ function validarGrupos(valor: unknown): GrupoDetalle[] {
   }));
 }
 
+function desanitizarBullets(bullets: Bullet[], ctx: ContextoSanitizacion): Bullet[] {
+  return bullets.map((b) => ({
+    titulo: desanitizarTexto(b.titulo, ctx),
+    detalle: desanitizarTexto(b.detalle, ctx),
+  }));
+}
+
+function desanitizarNarrativa(n: Narrativa, ctx: ContextoSanitizacion): Narrativa {
+  return {
+    introduccion: desanitizarTexto(n.introduccion, ctx),
+    tiposDetalle: n.tiposDetalle.map((g) => ({
+      grupo: desanitizarTexto(g.grupo, ctx),
+      puntos: desanitizarBullets(g.puntos, ctx),
+    })),
+    analisis: desanitizarBullets(n.analisis, ctx),
+    recomendacion: desanitizarBullets(n.recomendacion, ctx),
+  };
+}
+
 export async function generarNarrativaConIA(data: NarrativaInput): Promise<Narrativa> {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -79,13 +101,19 @@ export async function generarNarrativaConIA(data: NarrativaInput): Promise<Narra
     );
   }
 
+  // Las IPs, dominios y hostnames del asunto de cada ticket se reemplazan por marcadores antes de
+  // salir de esta máquina; el mapeo solo vive en memoria durante esta llamada y se usa al final
+  // para restaurar los valores reales en el texto que redactó la IA (nunca se le manda el dato real).
+  const ctx = crearContextoSanitizacion();
+  const ticketsSanitizados = data.tickets.map((t) => ({ ...t, asunto: sanitizarTexto(t.asunto, ctx) }));
+
   const client = new Anthropic({ apiKey });
 
   const response = await client.messages.create({
     model: MODEL,
     max_tokens: 8192,
     output_config: { effort: "high" },
-    messages: [{ role: "user", content: construirPrompt(data) }],
+    messages: [{ role: "user", content: construirPrompt(data, ticketsSanitizados) }],
   });
 
   const bloqueTexto = response.content.find((b) => b.type === "text");
@@ -98,10 +126,12 @@ export async function generarNarrativaConIA(data: NarrativaInput): Promise<Narra
     throw new Error("La respuesta de la IA no incluye la introducción.");
   }
 
-  return {
+  const narrativaSanitizada: Narrativa = {
     introduccion: String(json.introduccion),
     tiposDetalle: validarGrupos(json.tiposDetalle),
     analisis: validarBullets(json.analisis, "analisis"),
     recomendacion: validarBullets(json.recomendacion, "recomendacion"),
   };
+
+  return desanitizarNarrativa(narrativaSanitizada, ctx);
 }
