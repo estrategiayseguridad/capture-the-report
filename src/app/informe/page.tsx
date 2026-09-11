@@ -1,15 +1,16 @@
 import Link from "next/link";
-import datos from "../../../data/halo-demo-agosto.json";
-import historial from "../../../data/historial-mensual.json";
+import { cierreActivo } from "@/lib/cierre-activo";
 import { construirInforme } from "@/lib/informe";
-import type { Ticket } from "@/lib/metricas";
 import { BotonImprimir } from "./boton-imprimir";
 
+export const dynamic = "force-dynamic";
+
 export default function InformePage() {
-  const { titulo, cuerpo } = construirInforme(datos.tickets as Ticket[], {
-    cliente: datos.cliente,
-    periodo: datos.periodo,
-    historial: historial.meses.map((x) => [x.mes, x.tickets] as [string, number]),
+  const cierre = cierreActivo();
+  const { titulo, cuerpo } = construirInforme(cierre.tickets, {
+    cliente: cierre.cliente,
+    periodo: cierre.periodo,
+    historial: cierre.historial,
   });
 
   return (

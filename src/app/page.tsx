@@ -1,23 +1,25 @@
 import Link from "next/link";
-import datos from "../../data/halo-demo-agosto.json";
-import historial from "../../data/historial-mensual.json";
+import { cierreActivo } from "@/lib/cierre-activo";
 import {
   agruparPorHerramienta,
   calcularMetricas,
   formatearHoras,
   ticketsPerdidosEnProcesoManual,
-  type Ticket,
 } from "@/lib/metricas";
 import { Barras, BarrasApiladas, PALETA, Panel, Pastel } from "./graficas";
 import { TicketsPerdidos, VistasPorHerramienta } from "./vistas";
+import { ZonaDeCarga } from "./zona-de-carga";
 
-const tickets = datos.tickets as Ticket[];
+// El cierre vive en memoria del servidor: la pagina no puede quedar cacheada.
+export const dynamic = "force-dynamic";
 
 export default function Dashboard() {
+  const cierre = cierreActivo();
+  const tickets = cierre.tickets;
   const m = calcularMetricas(tickets);
   const grupos = agruparPorHerramienta(tickets);
   const perdidos = ticketsPerdidosEnProcesoManual(tickets);
-  const meses: [string, number][] = historial.meses.map((x) => [x.mes, x.tickets]);
+  const meses = cierre.historial;
 
   return (
     <main className="mx-auto w-full max-w-6xl px-6 py-8">
@@ -25,10 +27,10 @@ export default function Dashboard() {
         <div>
           <p className="text-xs font-bold tracking-widest text-blue-600 uppercase">Reportero CSC</p>
           <h1 className="mt-1 text-2xl font-bold text-slate-900">
-            Cierre mensual de tickets — {datos.periodo}
+            Cierre mensual de tickets — {cierre.periodo}
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            {datos.cliente} · {m.total} tickets del {m.desde} al {m.hasta} · fuente: pestana{" "}
+            {cierre.cliente} · {m.total} tickets del {m.desde} al {m.hasta} · fuente: pestana{" "}
             <code className="text-slate-700">DATOS</code> del export de Halo
           </p>
         </div>
@@ -39,6 +41,10 @@ export default function Dashboard() {
           Generar informe →
         </Link>
       </header>
+
+      <div className="mt-5">
+        <ZonaDeCarga origen={cierre.origen} />
+      </div>
 
       <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <Indicador etiqueta="Tickets" valor={m.total} destacado />
