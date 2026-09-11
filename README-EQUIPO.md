@@ -38,7 +38,17 @@ El dashboard tiene un panel que lista los **16 tickets que el proceso manual pie
 
 Queda documentado como **pregunta abierta** para CSC (ver `docs/PLANTEAMIENTO.md` §7), no como afirmación de bug: puede ser una regla de negocio no escrita.
 
-## Verificación — por qué se puede confiar en los números
+## Verificación
+
+Con el server corriendo, en otra terminal:
+
+```bash
+python scripts/verificar-prototipo.py
+```
+
+Recorre el circuito completo —subir el `.xlsx`, dashboard, informe, descarga, volver al demo— y comprueba **35 cosas**, incluidas las cifras de control por los dos caminos de entrada. Si el motor de métricas se rompe, esto lo detecta.
+
+### Por qué se puede confiar en los números
 
 El dataset preserva las distribuciones del cierre real, así que **el dashboard tiene que reproducir exactamente las cifras del informe ya entregado al cliente**. Eso es el criterio de correctitud del motor:
 
