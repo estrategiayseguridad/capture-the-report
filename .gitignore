@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# configuracion local del agente
+.claude/
+
+# reportes generados por el prototipo
+*.docx
