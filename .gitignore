@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# datos reales de clientes (nunca se suben al repo)
+/data/local/*
+!/data/local/.gitkeep
+!/data/local/README.md
