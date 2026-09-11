@@ -6,11 +6,11 @@ Automatiza el reporte mensual de tickets del SOC que hoy se arma a mano a partir
 
 1. Se sube el CSV exportado de Halo ITSM (trae todos los clientes mezclados, del rango de fechas que se haya elegido en Halo).
 2. Se filtra por cliente.
-3. La web calcula las métricas y genera los gráficos: historial de tickets, tipos de ticket, tickets por producto/herramienta, estado de los tickets, y SLA de incidentes / SLA de solicitudes.
-4. Redacta automáticamente la introducción, el análisis de resultados y la recomendación a partir de esas métricas.
-5. Descarga el reporte como documento **Word (.docx)** siguiendo la estructura estándar del equipo: Portada, Introducción, Historial de tickets, Tipos de Tickets, Tickets por herramienta o producto, Estado de los tickets, SLA (Incidentes / Solicitudes), Análisis de Resultados, Recomendación, Anexo.
+3. La web calcula las métricas y genera los gráficos: tipos de ticket, tickets por producto/herramienta, estado de los tickets, y SLA de incidentes / SLA de solicitudes.
+4. Al cargar los datos, se redacta automáticamente con IA (API de Anthropic) la introducción, el desglose de tipos de ticket por herramienta y el análisis/recomendación — usando como fuente principal el **asunto real de cada ticket** (columna `Summary` del CSV), no solo los conteos agregados.
+5. Descarga el reporte como documento **Word (.docx)** con la estructura acordada con el equipo: Portada, Índice (tabla de contenido nativa de Word), Introducción, Historial de tickets (tabla + gráfica), Tipos de Tickets en el Periodo (gráfica + análisis por herramienta), Tickets por Herramienta (gráfica), Estado de los Tickets (texto + gráfica + definiciones + tabla de pendientes), SLA (texto + tablas de Incidentes/Solicitudes), Análisis de Resultados, Recomendaciones, Anexo. Las gráficas se incrustan como imagen con las etiquetas de dato visibles (en la web se ven al pasar el mouse; en un Word estático no hay hover, así que quedan fijas).
 
-Todo corre en local, sin base de datos: el CSV se procesa en memoria en cada generación.
+Todo corre en local, sin base de datos: el CSV se procesa en memoria en cada generación. Lo único que sale de la máquina es la llamada a la API de Anthropic para redactar el texto (ver más abajo qué datos se le envían).
 
 ## Cómo correrlo
 
@@ -49,13 +49,18 @@ Ticket ID, Status, Date Created, Category, ITIL Type, Ticket Type, Client, SLA, 
 
 Los umbrales de SLA por defecto son: Incidente Alta 4h / Media 8h / Baja 24h, Requerimiento Alta 24h / Media 48h / Baja 72h — son un valor de referencia inicial y se ajustan por cliente desde la propia web si el contrato real es distinto.
 
+## Redacción con IA — qué datos se envían
+
+El botón se dispara solo (no hay que darle click) al cargar el CSV o cambiar de cliente. Requiere una API key de Anthropic en `.env.local` (copiar `.env.example`); sin ella, el reporte sigue funcionando con un texto de respaldo generado por reglas fijas.
+
+A la API de Anthropic se le envía, **por cliente**: el nombre del cliente, las métricas agregadas (conteos por tipo/producto/estado, % de SLA) y el **asunto (`Summary`) de cada ticket de ese cliente** — es la fuente que le permite a la IA describir actividades reales (ej. "bloqueo de IP en WAF", "revisión de certificados mTLS") en vez de un texto genérico. Si el CSV trae asuntos con detalles internos del cliente (hosts, IPs, nombres de proyectos), esos detalles pueden aparecer redactados en el reporte final — igual que en el reporte que arma un analista humano hoy. El resultado se guarda en memoria durante la sesión (por cliente + umbrales de SLA) para no volver a llamar a la IA si ya se había redactado.
+
 ## Qué quedó pendiente
 
-- La redacción (introducción, análisis, recomendación) es generada con reglas a partir de las métricas, no con una llamada a un LLM real — es el punto donde se conectaría un modelo de IA más adelante.
-- El Word incluye las secciones con tablas de datos, no imágenes de los gráficos (los gráficos interactivos solo se ven en la web).
 - Sin login, sin historial de reportes generados, sin envío automático por correo, sin exportación a PDF — queda para una siguiente iteración (ver `docs/PLANTEAMIENTO.md`).
-- Falta soportar más de un archivo/periodo a la vez (comparar mes contra mes).
+- Falta soportar más de un archivo/periodo a la vez (comparar mes contra mes); "Historial de tickets" hoy es la distribución por tipo del mes cargado, no una tendencia entre meses.
 - Los umbrales de SLA por defecto (sección "Cómo correrlo") son un punto de partida razonable, no los tiempos contractuales reales por cliente — hay que confirmarlos y ajustarlos desde el panel de configuración antes de enviar un reporte real.
+- El dashboard web y el Word muestran la sección "Historial de tickets" de forma distinta (el web mantiene un gráfico de tendencia mensual, el Word usa la tabla/gráfica por tipo) — pendiente de unificar si hace falta.
 
 ## Nota de entorno
 
