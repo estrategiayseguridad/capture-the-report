@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Papa from "papaparse";
 import {
   ResponsiveContainer,
@@ -82,12 +82,10 @@ function ConfiguracionSla({
   cliente,
   thresholds,
   onChange,
-  onGuardado,
 }: {
   cliente: string;
   thresholds: SlaThresholds;
   onChange: (t: SlaThresholds) => void;
-  onGuardado: (t: SlaThresholds) => void;
 }) {
   const [abierto, setAbierto] = useState(false);
   const [guardado, setGuardado] = useState(false);
@@ -100,7 +98,6 @@ function ConfiguracionSla({
   function handleGuardar() {
     guardarThresholds(cliente, thresholds);
     setGuardado(true);
-    onGuardado(thresholds);
   }
 
   function handleRestaurar() {
@@ -201,8 +198,7 @@ export default function Home() {
   const [error, setError] = useState<string>("");
   const [descargando, setDescargando] = useState(false);
   const [thresholds, setThresholds] = useState<SlaThresholds>(SLA_THRESHOLDS_DEFAULT);
-  const [narrativaIA, setNarrativaIA] = useState<Narrativa | null>(null);
-  const [estadoIA, setEstadoIA] = useState<"idle" | "cargando" | "listo" | "error">("idle");
+  const [analizando, setAnalizando] = useState(false);
   const [errorIA, setErrorIA] = useState<string>("");
   const [cacheIA, setCacheIA] = useState<Record<string, Narrativa>>({});
   const [rangoDisponible, setRangoDisponible] = useState<RangoFechas | null>(null);
@@ -227,10 +223,23 @@ export default function Home() {
     return computeReport(rows, clienteSeleccionado, thresholds, rangoSeleccionado ?? undefined);
   }, [rows, clienteSeleccionado, thresholds, rangoSeleccionado]);
 
+  // El analisis con IA solo se dispara al pulsar "Analizar con IA" (evita gastar llamadas a la API
+  // solo por ajustar cliente/fechas/umbrales). Si ya se genero antes para esta combinacion exacta en
+  // esta sesion, se muestra al instante desde la cache, sin volver a llamar a la IA.
+  const claveActual = clienteSeleccionado && rangoSeleccionado ? claveCacheIA(clienteSeleccionado, thresholds, rangoSeleccionado) : null;
+  const narrativaCacheada = claveActual ? (cacheIA[claveActual] ?? null) : null;
+  const estadoIA: "idle" | "cargando" | "listo" | "error" = analizando
+    ? "cargando"
+    : errorIA
+      ? "error"
+      : narrativaCacheada
+        ? "listo"
+        : "idle";
+
   const reportFinal: ReportData | null = useMemo(() => {
     if (!report) return null;
-    return narrativaIA ? { ...report, narrativa: narrativaIA } : report;
-  }, [report, narrativaIA]);
+    return narrativaCacheada ? { ...report, narrativa: narrativaCacheada } : report;
+  }, [report, narrativaCacheada]);
 
   function ticketsDelCliente(cliente: string, rango: RangoFechas | null): TicketResumen[] {
     return rows
@@ -240,8 +249,7 @@ export default function Home() {
   }
 
   async function analizarConIA(base: ReportData, tickets: TicketResumen[], clave: string) {
-    setNarrativaIA(null);
-    setEstadoIA("cargando");
+    setAnalizando(true);
     setErrorIA("");
     try {
       const res = await fetch("/api/reporte/analisis", {
@@ -264,33 +272,18 @@ export default function Home() {
         throw new Error(data.error || "No se pudo generar el análisis con IA.");
       }
       const narrativa: Narrativa = await res.json();
-      setNarrativaIA(narrativa);
-      setEstadoIA("listo");
       setCacheIA((prev) => ({ ...prev, [clave]: narrativa }));
     } catch (e) {
       setErrorIA(e instanceof Error ? e.message : "No se pudo generar el análisis con IA.");
-      setEstadoIA("error");
+    } finally {
+      setAnalizando(false);
     }
   }
 
-  // Al cargar datos, cambiar de cliente o de rango de fechas: si ya se redacto antes para esa
-  // combinacion en esta sesion, se reutiliza de la cache; si no, se redacta con IA automaticamente.
-  useEffect(() => {
-    if (!clienteSeleccionado || rows.length === 0 || !rangoSeleccionado) return;
-    const thresholdsCliente = obtenerThresholds(clienteSeleccionado);
-    const clave = claveCacheIA(clienteSeleccionado, thresholdsCliente, rangoSeleccionado);
-    const enCache = cacheIA[clave];
-    if (enCache) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- reutiliza el analisis ya generado, sin llamar de nuevo a la IA
-      setNarrativaIA(enCache);
-      setEstadoIA("listo");
-      setErrorIA("");
-      return;
-    }
-    const base = computeReport(rows, clienteSeleccionado, thresholdsCliente, rangoSeleccionado);
-    analizarConIA(base, ticketsDelCliente(clienteSeleccionado, rangoSeleccionado), clave);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clienteSeleccionado, rows, cacheIA, rangoSeleccionado]);
+  function handleAnalizarClick() {
+    if (!report || !clienteSeleccionado || !claveActual) return;
+    analizarConIA(report, ticketsDelCliente(clienteSeleccionado, rangoSeleccionado), claveActual);
+  }
 
   function cargarCsv(texto: string, nombreArchivo: string) {
     const parsed = Papa.parse<Record<string, string>>(texto, {
@@ -445,15 +438,31 @@ export default function Home() {
                   Periodo: {reportFinal.periodo.desde} a {reportFinal.periodo.hasta} · {reportFinal.totalTickets} tickets
                 </p>
               </div>
-              <button
-                onClick={handleDescargarWord}
-                disabled={descargando}
-                className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-60"
-              >
-                {descargando ? "Generando Word..." : "Descargar reporte Word"}
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleAnalizarClick}
+                  disabled={analizando}
+                  className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 disabled:opacity-60"
+                >
+                  {analizando ? "Analizando con IA..." : narrativaCacheada ? "Volver a analizar con IA" : "Analizar con IA"}
+                </button>
+                <button
+                  onClick={handleDescargarWord}
+                  disabled={descargando}
+                  className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-60"
+                >
+                  {descargando ? "Generando Word..." : "Descargar reporte Word"}
+                </button>
+              </div>
             </div>
 
+            {estadoIA === "idle" && (
+              <p className="text-sm text-slate-500">
+                Mostrando texto por reglas (sin IA). Ajusta el cliente, el periodo y los umbrales de SLA que quieras y
+                pulsa <strong>&quot;Analizar con IA&quot;</strong> cuando estés listo — cada click hace una llamada real a
+                Anthropic.
+              </p>
+            )}
             {estadoIA === "cargando" && (
               <p className="flex items-center gap-2 text-sm text-blue-600">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-blue-600" />
@@ -465,18 +474,7 @@ export default function Home() {
               <p className="text-sm text-red-600">{errorIA} (se muestra el texto por reglas mientras tanto)</p>
             )}
 
-            <ConfiguracionSla
-              cliente={reportFinal.cliente}
-              thresholds={thresholds}
-              onChange={setThresholds}
-              onGuardado={(t) =>
-                analizarConIA(
-                  computeReport(rows, clienteSeleccionado, t, rangoSeleccionado ?? undefined),
-                  ticketsDelCliente(clienteSeleccionado, rangoSeleccionado),
-                  claveCacheIA(clienteSeleccionado, t, rangoSeleccionado)
-                )
-              }
-            />
+            <ConfiguracionSla cliente={reportFinal.cliente} thresholds={thresholds} onChange={setThresholds} />
 
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               <StatCard label="Total tickets" value={reportFinal.totalTickets} />
