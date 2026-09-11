@@ -20,10 +20,11 @@ Abrir **http://localhost:3000**. No hay base de datos, ni variables de entorno, 
 | `/` | Dashboard del cierre: indicadores, las 4 gráficas, vistas por herramienta y el panel de tickets perdidos |
 | `/informe` | El informe completo con las cifras insertadas. Botón para descargar e imprimir a PDF (Ctrl+P) |
 | `/api/informe` | Descarga el informe como documento que Word abre respetando el formato |
+| `/api/cargar` | `POST` del `.xlsx` (lo usa la zona de arrastre) · `DELETE` vuelve al dataset de demo |
 
 ## Qué hace
 
-1. **Lee los tickets** del cierre (63 tickets de Agosto 2026, `data/halo-demo-agosto.json`).
+1. **Lee los tickets** del cierre. Se arrastra el `.xlsx` exportado de Halo a la página, o se usa el dataset de demo del repo si no se sube nada.
 2. **Calcula las métricas** del informe: por tipo, por estado, por herramienta, por línea de soporte, por agente, cerrados vs. pendientes, TPA y TMR.
 3. **Genera las vistas por herramienta** partiendo la columna `Category` en el `>` — equivalen a las pestañas `CLOUDFLARE` / `BEYONTRUST` / `THINKSCANARY` del Excel, pero se construyen solas.
 4. **Dibuja las 4 gráficas** del informe sin ninguna librería: barras con CSS, pastel con `conic-gradient`.
@@ -64,11 +65,18 @@ Los archivos fuente del cliente viven en `assets/`, que **está en `.gitignore` 
 
 ## Stack
 
-Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4. **Cero dependencias añadidas** al boilerplate — las gráficas son CSS y el documento de Word es HTML con estilos en línea.
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4. **Una sola dependencia añadida** (`xlsx`, para leer el export de Halo) — las gráficas son CSS y el documento de Word es HTML con estilos en línea, sin librerías.
+
+### El parser
+
+`src/lib/parsear-xlsx.ts` busca las columnas **por nombre de encabezado, nunca por letra**, y acepta alias en español e inglés. Esto no es un detalle: en la pestaña `DATOS` la columna `A` es un índice sin encabezado, así que `Category` cae en `G` — pero en las pestañas por herramienta del mismo archivo cae en `F`. Si Halo reordena columnas, sigue funcionando; si falta una obligatoria, **la app dice cuál falta en lugar de devolver un número mal**.
+
+Subir el `.xlsx` sanitizado reproduce las mismas 7 cifras de control que el JSON, lo cual es la prueba de que el parser y el motor coinciden.
 
 ## Qué quedó pendiente
 
-- **Subir el `.xlsx` desde el navegador.** Hoy el dataset se lee del JSON del repo. El parser de Excel es el siguiente paso y está diseñado para buscar las columnas **por nombre de encabezado**, nunca por letra — en el export `Category` cae en `G`, pero en las pestañas por herramienta cae en `F`.
+- **Persistir el cierre.** El `.xlsx` que se sube vive en memoria del servidor (`src/lib/almacen.ts`) y se pierde al reiniciar. Para un solo analista trabajando un cierre a la vez alcanza, pero guardar los cierres es lo que haría que el historial mensual se construyera solo.
+- **Auditar `xlsx@0.18.5`.** La versión de npm tiene advisories abiertos. Acá solo parsea archivos que el propio analista abre en su máquina, así que el riesgo es bajo — pero antes de exponer esto a subidas de terceros hay que migrar a la build oficial de SheetJS o cambiar de parser.
 - **`.docx` nativo** fiel a la plantilla corporativa (portada, encabezados, índice, fuentes embebidas). Hoy se entrega un documento que Word abre y respeta en formato básico.
 - **Redacción asistida** de *Análisis de resultados* y *Recomendaciones*. Van marcados en amarillo como bloques del analista, con un borrador de arranque. **Es deliberado**: el criterio de seguridad lo firma una persona.
 - **Historial multi-mes real.** Los 8 meses se leen de `data/historial-mensual.json`; en el Excel original también están escritos a mano.
