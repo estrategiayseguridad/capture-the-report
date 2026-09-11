@@ -20,10 +20,12 @@ import {
 import {
   computeReport,
   getClientes,
+  getRangoFechas,
   normalizeRows,
   SLA_THRESHOLDS_DEFAULT,
   type Bullet,
   type Narrativa,
+  type RangoFechas,
   type ReportData,
   type SlaThresholds,
   type TicketResumen,
@@ -203,10 +205,12 @@ export default function Home() {
   const [estadoIA, setEstadoIA] = useState<"idle" | "cargando" | "listo" | "error">("idle");
   const [errorIA, setErrorIA] = useState<string>("");
   const [cacheIA, setCacheIA] = useState<Record<string, Narrativa>>({});
+  const [rangoDisponible, setRangoDisponible] = useState<RangoFechas | null>(null);
+  const [rangoSeleccionado, setRangoSeleccionado] = useState<RangoFechas | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  function claveCacheIA(cliente: string, t: SlaThresholds): string {
-    return `${cliente}::${JSON.stringify(t)}`;
+  function claveCacheIA(cliente: string, t: SlaThresholds, rango: RangoFechas | null): string {
+    return `${cliente}::${JSON.stringify(t)}::${rango?.desde ?? ""}::${rango?.hasta ?? ""}`;
   }
 
   function handleClienteChange(cliente: string) {
@@ -214,19 +218,24 @@ export default function Home() {
     setThresholds(obtenerThresholds(cliente));
   }
 
+  function handleRangoChange(campo: "desde" | "hasta", valor: string) {
+    setRangoSeleccionado((prev) => (prev ? { ...prev, [campo]: valor } : prev));
+  }
+
   const report: ReportData | null = useMemo(() => {
     if (!clienteSeleccionado || rows.length === 0) return null;
-    return computeReport(rows, clienteSeleccionado, thresholds);
-  }, [rows, clienteSeleccionado, thresholds]);
+    return computeReport(rows, clienteSeleccionado, thresholds, rangoSeleccionado ?? undefined);
+  }, [rows, clienteSeleccionado, thresholds, rangoSeleccionado]);
 
   const reportFinal: ReportData | null = useMemo(() => {
     if (!report) return null;
     return narrativaIA ? { ...report, narrativa: narrativaIA } : report;
   }, [report, narrativaIA]);
 
-  function ticketsDelCliente(cliente: string): TicketResumen[] {
+  function ticketsDelCliente(cliente: string, rango: RangoFechas | null): TicketResumen[] {
     return rows
       .filter((r) => r.cliente === cliente)
+      .filter((r) => !rango || (r.fechaCreacion >= rango.desde && r.fechaCreacion <= rango.hasta))
       .map((r) => ({ producto: r.producto, tipo: r.tipo, estado: r.estado, asunto: r.asunto }));
   }
 
@@ -264,12 +273,12 @@ export default function Home() {
     }
   }
 
-  // Al cargar datos o cambiar de cliente: si ya se redacto antes para este cliente y estos
-  // umbrales en esta sesion, se reutiliza de la cache; si no, se redacta con IA automaticamente.
+  // Al cargar datos, cambiar de cliente o de rango de fechas: si ya se redacto antes para esa
+  // combinacion en esta sesion, se reutiliza de la cache; si no, se redacta con IA automaticamente.
   useEffect(() => {
-    if (!clienteSeleccionado || rows.length === 0) return;
+    if (!clienteSeleccionado || rows.length === 0 || !rangoSeleccionado) return;
     const thresholdsCliente = obtenerThresholds(clienteSeleccionado);
-    const clave = claveCacheIA(clienteSeleccionado, thresholdsCliente);
+    const clave = claveCacheIA(clienteSeleccionado, thresholdsCliente, rangoSeleccionado);
     const enCache = cacheIA[clave];
     if (enCache) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- reutiliza el analisis ya generado, sin llamar de nuevo a la IA
@@ -278,10 +287,10 @@ export default function Home() {
       setErrorIA("");
       return;
     }
-    const base = computeReport(rows, clienteSeleccionado, thresholdsCliente);
-    analizarConIA(base, ticketsDelCliente(clienteSeleccionado), clave);
+    const base = computeReport(rows, clienteSeleccionado, thresholdsCliente, rangoSeleccionado);
+    analizarConIA(base, ticketsDelCliente(clienteSeleccionado, rangoSeleccionado), clave);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clienteSeleccionado, rows, cacheIA]);
+  }, [clienteSeleccionado, rows, cacheIA, rangoSeleccionado]);
 
   function cargarCsv(texto: string, nombreArchivo: string) {
     const parsed = Papa.parse<Record<string, string>>(texto, {
@@ -298,9 +307,12 @@ export default function Home() {
       return;
     }
     const listaClientes = getClientes(normalizadas);
+    const rango = getRangoFechas(normalizadas);
     setRows(normalizadas);
     setClientes(listaClientes);
     setCacheIA({});
+    setRangoDisponible(rango);
+    setRangoSeleccionado(rango);
     handleClienteChange(listaClientes[0] ?? "");
     setFuenteArchivo(nombreArchivo);
     setError("");
@@ -388,6 +400,32 @@ export default function Home() {
             )}
           </div>
 
+          {rangoDisponible && rangoSeleccionado && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <label className="text-sm text-slate-600">Periodo a analizar:</label>
+              <input
+                type="date"
+                value={rangoSeleccionado.desde}
+                min={rangoDisponible.desde}
+                max={rangoSeleccionado.hasta}
+                onChange={(e) => handleRangoChange("desde", e.target.value)}
+                className="rounded-md border border-slate-300 px-3 py-2 text-sm"
+              />
+              <span className="text-sm text-slate-500">a</span>
+              <input
+                type="date"
+                value={rangoSeleccionado.hasta}
+                min={rangoSeleccionado.desde}
+                max={rangoDisponible.hasta}
+                onChange={(e) => handleRangoChange("hasta", e.target.value)}
+                className="rounded-md border border-slate-300 px-3 py-2 text-sm"
+              />
+              <span className="text-xs text-slate-400">
+                (datos disponibles del {rangoDisponible.desde} al {rangoDisponible.hasta})
+              </span>
+            </div>
+          )}
+
           {fuenteArchivo && <p className="mt-3 text-xs text-slate-500">Archivo cargado: {fuenteArchivo}</p>}
           {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
         </section>
@@ -433,9 +471,9 @@ export default function Home() {
               onChange={setThresholds}
               onGuardado={(t) =>
                 analizarConIA(
-                  computeReport(rows, clienteSeleccionado, t),
-                  ticketsDelCliente(clienteSeleccionado),
-                  claveCacheIA(clienteSeleccionado, t)
+                  computeReport(rows, clienteSeleccionado, t, rangoSeleccionado ?? undefined),
+                  ticketsDelCliente(clienteSeleccionado, rangoSeleccionado),
+                  claveCacheIA(clienteSeleccionado, t, rangoSeleccionado)
                 )
               }
             />

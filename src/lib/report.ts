@@ -92,6 +92,23 @@ export function getClientes(rows: TicketRow[]): string[] {
   return Array.from(new Set(rows.map((r) => r.cliente))).sort();
 }
 
+export interface RangoFechas {
+  desde: string;
+  hasta: string;
+}
+
+/** Fecha más antigua y más reciente ("YYYY-MM-DD") presentes en las filas, o null si no hay fechas. */
+export function getRangoFechas(rows: TicketRow[]): RangoFechas | null {
+  const fechas = rows.map((r) => r.fechaCreacion).filter(Boolean).sort();
+  if (fechas.length === 0) return null;
+  return { desde: fechas[0], hasta: fechas[fechas.length - 1] };
+}
+
+function filtrarPorRango(rows: TicketRow[], rango?: RangoFechas): TicketRow[] {
+  if (!rango) return rows;
+  return rows.filter((r) => r.fechaCreacion && r.fechaCreacion >= rango.desde && r.fechaCreacion <= rango.hasta);
+}
+
 export interface CountItem {
   label: string;
   total: number;
@@ -339,9 +356,13 @@ export function generarNarrativaReglas(data: NarrativaInput): Narrativa {
 export function computeReport(
   rows: TicketRow[],
   cliente: string,
-  thresholds: SlaThresholds = SLA_THRESHOLDS_DEFAULT
+  thresholds: SlaThresholds = SLA_THRESHOLDS_DEFAULT,
+  rango?: RangoFechas
 ): ReportData {
-  const filtradas = rows.filter((r) => r.cliente === cliente);
+  const filtradas = filtrarPorRango(
+    rows.filter((r) => r.cliente === cliente),
+    rango
+  );
   const fechas = filtradas.map((r) => r.fechaCreacion).filter(Boolean).sort();
   const periodo = {
     desde: fechas[0] ?? "N/D",
