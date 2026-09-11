@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
+/* Tema claro fijo: la demo va a proyector y el modo oscuro automatico
+   arruina el contraste de las graficas. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
 @theme inline {
@@ -12,15 +14,32 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* El informe se imprime a PDF con Ctrl+P: fuera lo que no es documento. */
+@media print {
+  .no-imprimir {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .hoja {
+    box-shadow: none !important;
+    margin: 0 !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+  table,
+  figure {
+    break-inside: avoid;
+  }
 }
