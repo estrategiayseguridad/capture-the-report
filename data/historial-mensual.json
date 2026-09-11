@@ -1,0 +1,38 @@
+{
+  "nota": "Escrito a mano en la pestana GRAFICAS del archivo original (A17:B24). No se deriva de DATOS.",
+  "anio": 2026,
+  "meses": [
+    {
+      "mes": "Enero",
+      "tickets": 73
+    },
+    {
+      "mes": "Febrero",
+      "tickets": 47
+    },
+    {
+      "mes": "Marzo",
+      "tickets": 61
+    },
+    {
+      "mes": "Abril",
+      "tickets": 65
+    },
+    {
+      "mes": "Mayo",
+      "tickets": 53
+    },
+    {
+      "mes": "Junio",
+      "tickets": 52
+    },
+    {
+      "mes": "Julio",
+      "tickets": 62
+    },
+    {
+      "mes": "Agosto",
+      "tickets": 63
+    }
+  ]
+}

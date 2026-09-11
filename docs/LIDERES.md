@@ -75,3 +75,102 @@ claude
 ---
 
 ¿Dudas? Tomás o Mei. 🏁
+
+---
+---
+
+# 🟦 Equipo 08 — Plan del líder · REPORTERO CSC
+
+> Todo lo de arriba es la guía general del evento (no la modifiquen). De aquí para abajo es el plan de nuestro equipo.
+
+**Líder:** Oscar Gonzalez
+**Equipo:** Oscar Gonzalez, Katherine Felipe, Juan Pascual, Katherine Morales
+**Rama:** `equipo-08`
+**Prototipo:** **REPORTERO CSC** — el cierre mensual de tickets de Banco Demo, automatizado de punta a punta.
+**Planteamiento:** [`PLANTEAMIENTO.md`](PLANTEAMIENTO.md) · **Pitch y demo:** [`PITCH.md`](PITCH.md)
+
+## ✅ Checklist del líder — estado
+
+- [x] Rama `equipo-08` creada (verificado con `git branch --show-current`).
+- [ ] Rama pusheada: `git push -u origin equipo-08`.
+- [x] `npm install` y `npm run dev` verificados (Node v24.10.0, npm 11.6.1).
+- [x] `docs/PLANTEAMIENTO.md` completo.
+- [x] `docs/PITCH.md` completo.
+- [ ] **Commit del planteamiento ANTES de las 3:15 PM** ← lo que más pesa (35%), se mide con el timestamp de git.
+- [ ] Dataset sanitizado en `data/`.
+- [ ] `README-EQUIPO.md` en la raíz.
+- [ ] Último push antes de las 6:00 PM.
+
+## 👥 Reparto
+
+| Persona | Rol | Responsabilidad concreta |
+|---------|-----|--------------------------|
+| **Oscar Gonzalez** | Líder · agente/código | Maneja Claude Code, hace los commits, presenta la demo (6:00 PM). |
+| **Katherine Felipe** | Pitch · narrativa | Presenta el pitch (2:45 PM), redacta los textos de plantilla del informe. |
+| **Juan Pascual** | Datos | Sanitiza el dataset y arma el JSON del historial mensual. |
+| **Katherine Morales** | QA de cifras | **Verifica cada número del dashboard contra el informe de Agosto ya entregado.** |
+
+> El rol de Katherine Morales es el más importante del equipo y el más fácil de subestimar: si las cifras no cuadran contra el informe real, no tenemos prototipo — tenemos una página bonita. **Que empiece a verificar en cuanto exista el primer dashboard, no al final.**
+
+## ⏱ Plan del bloque de desarrollo (3:15 – 6:00 PM)
+
+| Hora | Objetivo | Cómo sabemos que se logró |
+|------|----------|---------------------------|
+| **3:15 – 3:30** | Sanitizar el dataset y dejarlo en `data/`. Instalar `xlsx` (SheetJS) y `recharts`. | `npm run dev` sigue corriendo. |
+| **3:30 – 4:15** | 🎯 **Camino feliz feo.** Subir el `.xlsx` → API route lo parsea → los 63 tickets salen en una tabla en pantalla. **Sin estilo.** | Se ve la tabla con 63 filas. → **Avisar al árbitro: candidato a *First blood* (+25).** |
+| **4:15 – 4:45** | Métricas + agrupación por herramienta (`Category.split('>')[0]`). Las 3 vistas por herramienta. | Cloudflare 55 · BeyondTrust 5 · Thinkst Canary 3, y suman 63. |
+| **4:45 – 5:15** | Las 4 gráficas con Recharts. | Las 4 gráficas en pantalla cuadran con el informe de Agosto. |
+| **5:15 – 5:40** | El informe: plantilla con cifras inyectadas + descarga abrible en Word. | El archivo descargado abre en Word con las cifras correctas. |
+| **5:40 – 5:50** | `README-EQUIPO.md` y prueba desde cero. | Otro integrante clona la rama y la corre **sin ayuda**. → **Candidato a *Manual de vuelo* (+50).** |
+| **5:50 – 6:00** | Último commit y push. Ensayo de la demo con cronómetro. | Code freeze cumplido, demo ensayada una vez completa. |
+
+> 🚨 **Regla del líder:** si a las **4:15** no hay 63 filas en pantalla, se recorta. Se sacrifican las gráficas antes que el informe, y el informe antes que el camino feliz. **Un flujo completo y feo gana a tres piezas bonitas desconectadas.**
+
+## 🤖 Cómo arrancar con el agente
+
+Primer prompt del bloque de desarrollo — pegarle el planteamiento completo:
+
+```
+Lee docs/PLANTEAMIENTO.md completo, incluido el anexo técnico de la sección 7.
+Estamos en la rama equipo-08.
+
+Construye el camino feliz mínimo, sin estilo todavía:
+1. Una página con un input de archivo para subir el .xlsx de Halo.
+2. Una API route que parsee la pestaña DATOS con SheetJS, buscando las
+   columnas POR NOMBRE DE ENCABEZADO (no por letra) y convirtiendo
+   Date Created de serial de Excel a fecha.
+3. Que devuelva los 63 tickets y se pinten en una tabla en pantalla.
+
+Nada más por ahora. Cuando lo vea funcionando seguimos.
+```
+
+Después, un paso por prompt, probando en el navegador y haciendo commit entre cada uno:
+
+1. Agrupar por herramienta y sacar las 3 vistas.
+2. Las 5 métricas del informe.
+3. Las 4 gráficas.
+4. La plantilla del informe con las cifras inyectadas.
+5. La descarga.
+
+> **Consejo que ya nos costó tiempo:** este repo usa **Next.js 16**, no 15 (lo dice `package.json`; el README dice 15 y está desactualizado). Si el agente escribe algo de Next 15 que no compila, recuérdenle que lea `node_modules/next/dist/docs/` — está avisado en `AGENTS.md`.
+
+## 🔒 Nota de datos — leer antes de proyectar
+
+Los archivos de `assets/` son **datos reales de un cliente**: nombre del banco, correos corporativos, nombres de 12 agentes y de usuarios del cliente, subdominios de producción e IPs públicas de terceros.
+
+- **Sirven para desarrollar y para verificar** que las cifras dan bien. Ese es su valor y por eso los tenemos.
+- **Lo que se proyecta en la demo debe ser el dataset sanitizado.** La sala tiene gente de otros equipos y las demos se ven en pantalla grande.
+- Antes del code freeze, decidir si `assets/` se queda en la rama o solo el dataset sanitizado. **Es decisión del líder** — pero conviene decidirlo a propósito y no por olvido.
+
+## 🏆 Retos bonus al alcance
+
+| Reto | Puntos | Nuestra jugada |
+|------|--------|----------------|
+| *First blood* | +25 | Meta de las 4:15 PM. Es el reto más fácil de ganar: **avisar al árbitro en el momento**, no después. |
+| *Manual de vuelo* | +50 | El `README-EQUIPO.md` de las 5:40. Que otro equipo corra nuestra rama solo con el README. |
+| *Prompt maestro* | +50 | El anexo técnico de la sección 7 del planteamiento **es** el argumento: le dimos al agente las columnas, los valores reales y las reglas de negocio antes de pedir código. |
+| *Rescate* | +50 | Si terminamos temprano, ofrecerse a destrabar a otro equipo. |
+| 🌐 *Deploy* | +100 | Solo si el camino feliz ya está cerrado y hay tiempo de sobra. **No sacrificar la demo local por esto.** |
+
+Recordar: **sin registro del árbitro no hay puntos.** Screenshot o link al commit, en el momento.
+
