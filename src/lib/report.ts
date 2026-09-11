@@ -5,6 +5,7 @@ export type Prioridad = "Alta" | "Media" | "Baja";
 export interface TicketRow {
   cliente: string;
   ticketId: string;
+  asunto: string;
   fechaCreacion: string;
   fechaCierre: string;
   categoria: Categoria;
@@ -19,6 +20,7 @@ export interface TicketRow {
 /** Fila cruda tal como la exporta Halo ITSM (encabezados en inglés, todos los clientes mezclados). */
 interface RawHaloRow {
   "Ticket ID"?: string;
+  Summary?: string;
   Status?: string;
   "Date Created"?: string;
   Category?: string;
@@ -73,6 +75,7 @@ export function normalizeRows(raw: RawHaloRow[]): TicketRow[] {
       return {
         cliente: (r.Client ?? "").trim(),
         ticketId: (r["Ticket ID"] ?? "").trim(),
+        asunto: (r.Summary ?? "").trim(),
         fechaCreacion: extraerFecha(r["Date Created"] ?? ""),
         fechaCierre: extraerFecha(r["Date Closed"] ?? ""),
         categoria: mapCategoria(r.SLA ?? "", r["ITIL Type"] ?? ""),
@@ -112,6 +115,12 @@ export const SLA_THRESHOLDS_DEFAULT: SlaThresholds = {
   requerimiento: { alta: 24, media: 48, baja: 72 },
 };
 
+export interface TicketPendiente {
+  ticketId: string;
+  estado: Estado;
+  asunto: string;
+}
+
 export interface ReportData {
   cliente: string;
   periodo: { desde: string; hasta: string };
@@ -120,6 +129,7 @@ export interface ReportData {
   porTipo: CountItem[];
   porProducto: CountItem[];
   porEstado: CountItem[];
+  pendientes: TicketPendiente[];
   slaIncidentes: SlaResumen;
   slaSolicitudes: SlaResumen;
   thresholds: SlaThresholds;
@@ -163,6 +173,12 @@ function historialMensual(rows: TicketRow[]): CountItem[] {
     });
 }
 
+function ticketsPendientes(rows: TicketRow[]): TicketPendiente[] {
+  return rows
+    .filter((r) => r.estado !== "Resuelto")
+    .map((r) => ({ ticketId: r.ticketId, estado: r.estado, asunto: r.asunto || "Sin asunto" }));
+}
+
 function umbralHoras(thresholds: SlaThresholds, categoria: Categoria, prioridad: Prioridad): number {
   const grupo = categoria === "Incidente" ? thresholds.incidente : thresholds.requerimiento;
   const key = prioridad.toLowerCase() as "alta" | "media" | "baja";
@@ -189,10 +205,31 @@ function calcularSla(rows: TicketRow[], thresholds: SlaThresholds): SlaResumen {
   return { cumplidos, incumplidos, sinCierre, porcentaje };
 }
 
+/** Un punto de análisis/recomendación con un título corto (se muestra en negrita) y su detalle. */
+export interface Bullet {
+  titulo: string;
+  detalle: string;
+}
+
+/** Desglose de "Tipos de tickets" agrupado por herramienta/producto, con puntos redactados a partir del asunto real de los tickets. */
+export interface GrupoDetalle {
+  grupo: string;
+  puntos: Bullet[];
+}
+
 export interface Narrativa {
   introduccion: string;
-  analisis: string;
-  recomendacion: string;
+  tiposDetalle: GrupoDetalle[];
+  analisis: Bullet[];
+  recomendacion: Bullet[];
+}
+
+/** Resumen de un ticket (sin datos de fecha/SLA) usado como insumo para que la IA redacte con datos reales. */
+export interface TicketResumen {
+  producto: string;
+  tipo: string;
+  estado: Estado;
+  asunto: string;
 }
 
 export interface NarrativaInput {
@@ -204,6 +241,8 @@ export interface NarrativaInput {
   porEstado: CountItem[];
   slaIncidentes: SlaResumen;
   slaSolicitudes: SlaResumen;
+  /** Asunto real de cada ticket del cliente, para que la IA redacte con datos reales en vez de solo agregados. */
+  tickets: TicketResumen[];
 }
 
 export function generarNarrativaReglas(data: NarrativaInput): Narrativa {
@@ -222,45 +261,79 @@ export function generarNarrativaReglas(data: NarrativaInput): Narrativa {
   const conUsuario = porEstado.find((e) => e.label === "Con el usuario")?.total ?? 0;
   const pendientes = abiertos + enEspera + conUsuario;
 
-  const analisis =
-    `Durante el periodo analizado, el tipo de ticket más recurrente fue "${tipoTop?.label ?? "N/D"}" ` +
-    `con ${tipoTop?.total ?? 0} casos, y el producto/herramienta con mayor volumen de tickets fue ` +
-    `"${productoTop?.label ?? "N/D"}" (${productoTop?.total ?? 0} casos). ` +
-    `Del total de tickets, ${pendientes} permanecen pendientes de cierre (abiertos, en espera o con el usuario), ` +
-    `mientras que el resto fue resuelto dentro del periodo. ` +
-    `En cuanto al cumplimiento de SLA, los incidentes registraron un cumplimiento de ${slaIncidentes.porcentaje}% ` +
-    `(${slaIncidentes.cumplidos} cumplidos / ${slaIncidentes.incumplidos} incumplidos), ` +
-    `y los requerimientos un cumplimiento de ${slaSolicitudes.porcentaje}% ` +
-    `(${slaSolicitudes.cumplidos} cumplidos / ${slaSolicitudes.incumplidos} incumplidos).`;
+  const tiposDetalle: GrupoDetalle[] = Object.entries(
+    data.tickets.reduce<Record<string, TicketResumen[]>>((acc, t) => {
+      const grupo = t.producto.split(">")[0] || "General";
+      (acc[grupo] ??= []).push(t);
+      return acc;
+    }, {})
+  ).map(([grupo, tickets]) => ({
+    grupo,
+    puntos: [
+      {
+        titulo: `${tickets.length} ticket${tickets.length === 1 ? "" : "s"}`,
+        detalle: tickets
+          .slice(0, 5)
+          .map((t) => t.asunto)
+          .filter(Boolean)
+          .join("; ") || "Sin detalle disponible en el asunto de los tickets.",
+      },
+    ],
+  }));
 
-  const puntosRecomendacion: string[] = [];
+  const analisis: Bullet[] = [
+    {
+      titulo: "Volumen y distribución",
+      detalle:
+        `El tipo de ticket más recurrente fue "${tipoTop?.label ?? "N/D"}" con ${tipoTop?.total ?? 0} casos, ` +
+        `y el producto/herramienta con mayor volumen fue "${productoTop?.label ?? "N/D"}" (${productoTop?.total ?? 0} casos).`,
+    },
+    {
+      titulo: "Cierre de tickets",
+      detalle: `${pendientes} tickets permanecen pendientes de cierre (abiertos, en espera o con el usuario) de un total de ${totalTickets}.`,
+    },
+    {
+      titulo: "Cumplimiento de SLA",
+      detalle:
+        `Los incidentes registraron un cumplimiento de ${slaIncidentes.porcentaje}% ` +
+        `(${slaIncidentes.cumplidos} cumplidos / ${slaIncidentes.incumplidos} incumplidos), y los requerimientos ` +
+        `un cumplimiento de ${slaSolicitudes.porcentaje}% (${slaSolicitudes.cumplidos} cumplidos / ${slaSolicitudes.incumplidos} incumplidos).`,
+    },
+  ];
+
+  const recomendacion: Bullet[] = [];
   if (slaIncidentes.porcentaje < 90) {
-    puntosRecomendacion.push(
-      "Reforzar los tiempos de atención de incidentes, priorizando los de severidad alta para mejorar el cumplimiento de SLA."
-    );
+    recomendacion.push({
+      titulo: "Reforzar atención de incidentes",
+      detalle: "Priorizar los incidentes de severidad alta para mejorar el cumplimiento de SLA.",
+    });
   }
   if (slaSolicitudes.porcentaje < 90) {
-    puntosRecomendacion.push(
-      "Revisar la capacidad de atención de requerimientos para reducir el porcentaje de solicitudes fuera de SLA."
-    );
+    recomendacion.push({
+      titulo: "Revisar capacidad de atención de requerimientos",
+      detalle: "Reducir el porcentaje de solicitudes fuera de SLA.",
+    });
   }
   if (productoTop) {
-    puntosRecomendacion.push(
-      `Evaluar acciones preventivas sobre "${productoTop.label}", dado que concentra el mayor número de tickets del periodo.`
-    );
+    recomendacion.push({
+      titulo: "Acciones preventivas",
+      detalle: `Evaluar acciones preventivas sobre "${productoTop.label}", dado que concentra el mayor número de tickets del periodo.`,
+    });
   }
   if (pendientes > 0) {
-    puntosRecomendacion.push(
-      `Dar seguimiento a los ${pendientes} tickets aún pendientes de cierre para evitar acumulación en el próximo periodo.`
-    );
+    recomendacion.push({
+      titulo: "Seguimiento a pendientes",
+      detalle: `Dar seguimiento a los ${pendientes} tickets aún pendientes de cierre para evitar acumulación en el próximo periodo.`,
+    });
   }
-  if (puntosRecomendacion.length === 0) {
-    puntosRecomendacion.push("Mantener las prácticas actuales de gestión, dado el buen desempeño observado en el periodo.");
+  if (recomendacion.length === 0) {
+    recomendacion.push({
+      titulo: "Mantener prácticas actuales",
+      detalle: "El desempeño observado en el periodo es adecuado; se recomienda mantener las prácticas actuales de gestión.",
+    });
   }
 
-  const recomendacion = puntosRecomendacion.map((p, i) => `${i + 1}. ${p}`).join("\n");
-
-  return { introduccion, analisis, recomendacion };
+  return { introduccion, tiposDetalle, analisis, recomendacion };
 }
 
 export function computeReport(
@@ -293,6 +366,7 @@ export function computeReport(
     porEstado,
     slaIncidentes,
     slaSolicitudes,
+    tickets: filtradas.map((r) => ({ producto: r.producto, tipo: r.tipo, estado: r.estado, asunto: r.asunto })),
   });
 
   return {
@@ -303,6 +377,7 @@ export function computeReport(
     porTipo,
     porProducto,
     porEstado,
+    pendientes: ticketsPendientes(filtradas),
     slaIncidentes,
     slaSolicitudes,
     thresholds,

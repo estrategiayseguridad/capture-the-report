@@ -22,9 +22,11 @@ import {
   getClientes,
   normalizeRows,
   SLA_THRESHOLDS_DEFAULT,
+  type Bullet,
   type Narrativa,
   type ReportData,
   type SlaThresholds,
+  type TicketResumen,
   type TicketRow,
 } from "@/lib/report";
 import { guardarThresholds, obtenerThresholds } from "@/lib/slaStorage";
@@ -158,6 +160,18 @@ function ConfiguracionSla({
   );
 }
 
+function BulletList({ items }: { items: Bullet[] }) {
+  return (
+    <ul className="list-disc space-y-1.5 pl-5">
+      {items.map((b, i) => (
+        <li key={i} className="text-sm leading-relaxed text-slate-700">
+          <span className="font-semibold text-slate-900">{b.titulo}:</span> {b.detalle}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function SlaPie({ cumplidos, incumplidos }: { cumplidos: number; incumplidos: number }) {
   const data = [
     { name: "Cumplidos", value: cumplidos },
@@ -210,7 +224,13 @@ export default function Home() {
     return narrativaIA ? { ...report, narrativa: narrativaIA } : report;
   }, [report, narrativaIA]);
 
-  async function analizarConIA(base: ReportData, clave: string) {
+  function ticketsDelCliente(cliente: string): TicketResumen[] {
+    return rows
+      .filter((r) => r.cliente === cliente)
+      .map((r) => ({ producto: r.producto, tipo: r.tipo, estado: r.estado, asunto: r.asunto }));
+  }
+
+  async function analizarConIA(base: ReportData, tickets: TicketResumen[], clave: string) {
     setNarrativaIA(null);
     setEstadoIA("cargando");
     setErrorIA("");
@@ -227,6 +247,7 @@ export default function Home() {
           porEstado: base.porEstado,
           slaIncidentes: base.slaIncidentes,
           slaSolicitudes: base.slaSolicitudes,
+          tickets,
         }),
       });
       if (!res.ok) {
@@ -258,7 +279,8 @@ export default function Home() {
       return;
     }
     const base = computeReport(rows, clienteSeleccionado, thresholdsCliente);
-    analizarConIA(base, clave);
+    analizarConIA(base, ticketsDelCliente(clienteSeleccionado), clave);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clienteSeleccionado, rows, cacheIA]);
 
   function cargarCsv(texto: string, nombreArchivo: string) {
@@ -410,7 +432,11 @@ export default function Home() {
               thresholds={thresholds}
               onChange={setThresholds}
               onGuardado={(t) =>
-                analizarConIA(computeReport(rows, clienteSeleccionado, t), claveCacheIA(clienteSeleccionado, t))
+                analizarConIA(
+                  computeReport(rows, clienteSeleccionado, t),
+                  ticketsDelCliente(clienteSeleccionado),
+                  claveCacheIA(clienteSeleccionado, t)
+                )
               }
             />
 
@@ -496,16 +522,56 @@ export default function Home() {
               </ChartCard>
             </div>
 
+            {reportFinal.narrativa.tiposDetalle.length > 0 && (
+              <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                <h3 className="mb-3 text-sm font-semibold text-slate-700">Tipos de tickets — detalle por herramienta</h3>
+                <div className="space-y-4">
+                  {reportFinal.narrativa.tiposDetalle.map((g) => (
+                    <div key={g.grupo}>
+                      <p className="text-sm font-semibold text-slate-800">{g.grupo}</p>
+                      <BulletList items={g.puntos} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {reportFinal.pendientes.length > 0 && (
+              <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                <h3 className="mb-3 text-sm font-semibold text-slate-700">
+                  Tickets pendientes de cierre ({reportFinal.pendientes.length})
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm">
+                    <thead>
+                      <tr className="text-slate-500">
+                        <th className="pb-2 pr-4 font-medium">ID</th>
+                        <th className="pb-2 pr-4 font-medium">Estado</th>
+                        <th className="pb-2 font-medium">Asunto</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {reportFinal.pendientes.map((p) => (
+                        <tr key={p.ticketId} className="border-t border-slate-100">
+                          <td className="py-1.5 pr-4 text-slate-700">{p.ticketId}</td>
+                          <td className="py-1.5 pr-4 text-slate-700">{p.estado}</td>
+                          <td className="py-1.5 text-slate-700">{p.asunto}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
             <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
               <h3 className="mb-2 text-sm font-semibold text-slate-700">Análisis de resultados</h3>
-              <p className="text-sm leading-relaxed text-slate-700">{reportFinal.narrativa.analisis}</p>
+              <BulletList items={reportFinal.narrativa.analisis} />
             </div>
 
             <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="mb-2 text-sm font-semibold text-slate-700">Recomendación</h3>
-              <p className="whitespace-pre-line text-sm leading-relaxed text-slate-700">
-                {reportFinal.narrativa.recomendacion}
-              </p>
+              <h3 className="mb-2 text-sm font-semibold text-slate-700">Recomendaciones</h3>
+              <BulletList items={reportFinal.narrativa.recomendacion} />
             </div>
           </div>
         )}
