@@ -1,74 +1,59 @@
-# 📐 Planteamiento — Equipo XX
-
-> ⛔ **Completar este documento ANTES de escribir código.** Es obligatorio, se evalúa (35% del puntaje), y es lo que hace que el agente de IA trabaje bien: un planteamiento claro = un prototipo que avanza solo.
->
-> Tiempo sugerido: 30–40 minutos entre todo el equipo. Sean concretos — frases cortas valen más que párrafos.
+# 📐 Planteamiento — Equipo 02
 
 ## 1. Equipo
 
-- **Número de equipo:**
-- **Integrantes:**
-- **Nombre del prototipo:** (pónganle nombre, es más divertido)
+- **Número de equipo:** 02
+- **Integrantes:** Franklin (dev/código), Victor Hugo (dueño del proceso, datos y pitch), Lizz (ideas), Charlie II (ideas)
+- **Nombre del prototipo:** Reporte Mensual SOC
 
 ## 2. El problema
 
-_¿Qué reporte o proceso duele hoy? Sean específicos._
-
-- **¿Qué reporte/proceso es?** (ej. "el reporte semanal de escaneos que se arma a mano en Word")
-- **¿Quién lo sufre y con qué frecuencia?** (ej. "los consultores de VAPT, cada lunes")
-- **¿Cuánto tiempo toma hoy y por qué?** (ej. "2 horas: copiar datos del escáner, dar formato, revisar")
-- **¿Qué es lo peor del proceso actual?**
+- **¿Qué reporte/proceso es?** El reporte mensual del SOC para cada cliente. Ya existe una plantilla Word estandarizada, pero se arma a mano.
+- **¿Quién lo sufre y con qué frecuencia?** Victor Hugo (y quien cubra el proceso), una vez al mes por cada cliente.
+- **¿Cuánto tiempo toma hoy y por qué?**
+  1. Se exporta manualmente desde Halo ITSM un CSV con un rango de fechas — trae los tickets de **todos** los clientes mezclados.
+  2. Se filtra y separa el CSV por cliente.
+  3. Se crea un Excel nuevo por cliente para generar los gráficos: historial de tickets, tickets por tipo, tickets por producto/herramienta, estado (abierto, en espera, resuelto, con el usuario) y SLA (incidentes y requerimientos por separado).
+  4. Con esos Excels se redacta a mano el Word final siguiendo la plantilla estándar.
+- **¿Qué es lo peor del proceso actual?** Es 100% manual y repetitivo: separar por cliente, rehacer los mismos gráficos y volver a redactar las mismas secciones cada mes, para cada cliente.
 
 ## 3. La solución
 
-_En 2–3 frases: ¿qué va a hacer el prototipo?_
-
-- **¿Qué hace?**
-- **¿Qué deja de hacer el humano gracias a esto?**
-- **¿Dónde encajaría en la futura plataforma unificada de reportería?** (¿es un generador? ¿un conector? ¿un validador? ¿un panel?)
+- **¿Qué hace?** Una web donde se sube el CSV exportado de Halo ITSM (todos los clientes, rango de fechas ya elegido en Halo), se selecciona un cliente, y el sistema calcula las métricas, genera los gráficos y redacta el reporte siguiendo la estructura estándar — mostrándolo en pantalla y generando el Word descargable.
+- **¿Qué deja de hacer el humano gracias a esto?** Filtrar el CSV a mano, armar los Excels intermedios de gráficos, y redactar manualmente cada sección del Word.
+- **¿Dónde encajaría en la futura plataforma unificada de reportería?** Es un **generador**: toma una exportación cruda de una herramienta (Halo ITSM) y produce el documento final listo para revisión humana.
 
 ## 4. El flujo
 
-_El camino de punta a punta. Complétenlo como una lista de pasos:_
-
-1. **Entrada:** ¿qué recibe el prototipo? (ej. "un CSV exportado del escáner" — usen los datos de `data/`)
-2. **Proceso:** ¿qué hace con eso? (ej. "agrupa por severidad, redacta resumen con IA")
-3. **Salida:** ¿qué produce? (ej. "un reporte HTML con branding listo para imprimir")
-4. **¿Quién valida antes de que se use/envíe?**
+1. **Entrada:** CSV exportado de Halo ITSM (rango de fechas seleccionado por el usuario en Halo, incluye todos los clientes).
+2. **Proceso:**
+   - Parsear el CSV.
+   - Filtrar/separar por el cliente elegido.
+   - Calcular métricas y armar gráficos: historial de tickets, tipos de ticket, tickets por producto/herramienta, estado de tickets, SLA de incidentes, SLA de solicitudes.
+   - Redactar con IA las secciones de texto (introducción, análisis de resultados, recomendación) a partir de esas métricas.
+3. **Salida:** Reporte visible en la web (gráficos + texto) siguiendo la estructura: Portada, Introducción, Historial de tickets, Tipos de Tickets, Tickets por herramienta/producto, Estado de los tickets, SLA (Incidentes, Solicitudes), Análisis de resultados, Recomendación, Anexo — y el mismo reporte generado como documento Word descargable.
+4. **¿Quién valida antes de que se use/envíe?** Victor Hugo (dueño del proceso), antes de enviarlo al cliente.
 
 ```
-[Entrada] ──▶ [Paso 1] ──▶ [Paso 2] ──▶ [Salida]
+[CSV Halo ITSM (todos los clientes)] ──▶ [Filtrar por cliente] ──▶ [Métricas + gráficos + redacción IA] ──▶ [Reporte en web + Word descargable]
 ```
-_(Opcional: dibujen el flujo con más detalle)_
 
 ## 5. Alcance del prototipo de HOY
 
-_Con ~3 horas de desarrollo, sean brutalmente realistas:_
-
-- **Hoy SÍ se demuestra:** (máximo 3 cosas — el camino feliz)
-  1.
-  2.
-  3.
+- **Hoy SÍ se demuestra:**
+  1. Subir el CSV de Halo ITSM y filtrar por cliente.
+  2. Ver el reporte en la web con gráficos (historial, tipos, producto, estado, SLA incidentes/solicitudes) y el texto redactado.
+  3. Generar/descargar el documento Word con la estructura estándar completa.
 - **Hoy NO (queda para después):**
-  -
-- **Datos de entrada para la demo:** (¿cuál archivo de `data/` o qué dato sintético?)
+  - Login / autenticación.
+  - Historial guardado de reportes generados.
+  - Envío automático por correo.
+  - PDF (se prioriza Word; PDF queda para después si da tiempo).
+- **Datos de entrada para la demo:** CSV sintético con columnas al estilo Halo ITSM (cliente, id de ticket, fecha de creación, fecha de cierre, tipo de ticket, producto/herramienta, estado, categoría incidente/solicitud, cumplimiento de SLA).
 
 ## 6. Reparto rápido
 
-- ¿Quién maneja el agente / código?
-- ¿Quién prepara datos y prueba el flujo?
-- ¿Quién arma el pitch y la demo?
-
----
-
-### Ejemplo express
-
-_Así se ve un planteamiento bien llenado (no lo copien, es solo la referencia del nivel de detalle):_
-
-- **Problema:** el resumen semanal de escaneos se arma a mano en Word — 2 horas cada lunes, copiando y pegando del escáner.
-- **Quién lo sufre:** los consultores de VAPT, todas las semanas.
-- **Solución:** una web donde subes el CSV del escáner y te devuelve el resumen ya redactado, listo para revisar.
-- **Flujo:** subir CSV → parsear filas → agrupar por severidad → redactar el resumen con IA → mostrar un HTML imprimible.
-- **Alcance de HOY:** (1) subir el CSV de `data/`, (2) ver el reporte generado en pantalla.
-- **Hoy NO:** login, guardar histórico, exportar a PDF.
-- **Dato de demo:** `data/escaneo-ejemplo.csv`.
+- **Agente / código:** Franklin.
+- **Datos y prueba del flujo:** Victor Hugo (es su proceso el que se automatiza).
+- **Pitch y demo:** Victor Hugo.
+- **Ideas / apoyo:** Lizz, Charlie II.

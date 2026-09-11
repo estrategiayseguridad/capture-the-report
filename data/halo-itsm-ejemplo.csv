@@ -1,0 +1,261 @@
+Cliente,TicketID,FechaCreacion,FechaCierre,Categoria,Tipo,Producto,Estado,Prioridad,SLA_Cumplido
+Umbrella Ltda,HT-10170,2026-04-01,2026-04-04,Requerimiento,Cambio de Permisos,VPN,Resuelto,Baja,Si
+Initech,HT-10205,2026-04-01,,Incidente,Falla de Servidor,Antivirus / EDR,Abierto,Alta,
+Initech,HT-10248,2026-04-04,2026-04-04,Incidente,Caida de Servicio,VPN,Resuelto,Alta,Si
+Initech,HT-10256,2026-04-04,,Requerimiento,Alta de Usuario,SIEM,Abierto,Media,
+Globex S.A.,HT-10067,2026-04-05,,Requerimiento,Solicitud de Reporte,Correo Corporativo,Con el usuario,Media,
+Initech,HT-10207,2026-04-06,,Requerimiento,Instalacion de Software,Active Directory,Abierto,Baja,
+Initech,HT-10235,2026-04-06,,Incidente,Falla de Aplicacion,Backup,Con el usuario,Media,
+Globex S.A.,HT-10047,2026-04-09,,Requerimiento,Solicitud de Reporte,Firewall,Con el usuario,Media,
+Globex S.A.,HT-10073,2026-04-09,,Incidente,Malware / Virus,VPN,Con el usuario,Baja,
+Umbrella Ltda,HT-10132,2026-04-09,,Incidente,Falla de Hardware,Active Directory,Con el usuario,Alta,
+Umbrella Ltda,HT-10189,2026-04-09,2026-04-10,Requerimiento,Cambio de Permisos,SIEM,Resuelto,Media,Si
+ACME Corp,HT-10025,2026-04-10,,Requerimiento,Instalacion de Software,SIEM,En espera,Media,
+Globex S.A.,HT-10052,2026-04-10,2026-04-10,Incidente,Falla de Aplicacion,Correo Corporativo,Resuelto,Media,No
+ACME Corp,HT-10013,2026-04-13,,Incidente,Falla de Aplicacion,Correo Corporativo,Con el usuario,Media,
+ACME Corp,HT-10024,2026-04-13,,Requerimiento,Solicitud de Reporte,VPN,Con el usuario,Alta,
+Umbrella Ltda,HT-10120,2026-04-13,,Incidente,Falla de Hardware,Antivirus / EDR,Con el usuario,Baja,
+Globex S.A.,HT-10068,2026-04-14,,Requerimiento,Instalacion de Software,VPN,En espera,Media,
+Initech,HT-10221,2026-04-16,,Requerimiento,Solicitud de Acceso,Correo Corporativo,Con el usuario,Baja,
+ACME Corp,HT-10004,2026-04-17,2026-04-17,Incidente,Falla de Aplicacion,Servidor Web,Resuelto,Alta,Si
+Umbrella Ltda,HT-10128,2026-04-17,,Requerimiento,Instalacion de Software,Correo Corporativo,Abierto,Alta,
+Initech,HT-10194,2026-04-18,,Requerimiento,Solicitud de Reporte,Backup,Con el usuario,Baja,
+Initech,HT-10224,2026-04-18,,Incidente,Falla de Aplicacion,Active Directory,En espera,Media,
+Umbrella Ltda,HT-10148,2026-04-19,,Requerimiento,Solicitud de Acceso,SIEM,En espera,Media,
+Globex S.A.,HT-10097,2026-04-21,,Incidente,Caida de Servicio,Estacion de Trabajo,Abierto,Baja,
+Initech,HT-10241,2026-04-22,2026-04-22,Incidente,Caida de Servicio,VPN,Resuelto,Alta,Si
+Initech,HT-10246,2026-04-22,,Requerimiento,Cambio de Permisos,VPN,Con el usuario,Baja,
+Umbrella Ltda,HT-10113,2026-04-23,,Requerimiento,Alta de Usuario,Firewall,Con el usuario,Alta,
+Umbrella Ltda,HT-10161,2026-04-23,,Requerimiento,Solicitud de Reporte,Estacion de Trabajo,Abierto,Baja,
+Umbrella Ltda,HT-10180,2026-04-24,,Incidente,Caida de Servicio,Active Directory,En espera,Alta,
+ACME Corp,HT-10034,2026-04-25,,Incidente,Falla de Red,Base de Datos,Abierto,Media,
+ACME Corp,HT-10040,2026-04-25,2026-04-25,Incidente,Falla de Hardware,Backup,Resuelto,Baja,Si
+Globex S.A.,HT-10106,2026-04-26,,Incidente,Falla de Hardware,Base de Datos,Con el usuario,Baja,
+ACME Corp,HT-10007,2026-04-27,,Incidente,Falla de Aplicacion,Antivirus / EDR,Con el usuario,Media,
+Umbrella Ltda,HT-10133,2026-04-27,2026-04-28,Requerimiento,Reseteo de Contrasena,Active Directory,Resuelto,Media,Si
+Initech,HT-10198,2026-04-27,,Requerimiento,Solicitud de Acceso,SIEM,En espera,Media,
+Umbrella Ltda,HT-10188,2026-04-29,2026-04-29,Incidente,Falla de Aplicacion,Active Directory,Resuelto,Media,Si
+Umbrella Ltda,HT-10124,2026-04-30,2026-05-01,Requerimiento,Reseteo de Contrasena,Firewall,Resuelto,Alta,Si
+Globex S.A.,HT-10096,2026-05-01,,Requerimiento,Reseteo de Contrasena,Correo Corporativo,Abierto,Baja,
+ACME Corp,HT-10032,2026-05-03,,Incidente,Falla de Servidor,Active Directory,Abierto,Media,
+ACME Corp,HT-10036,2026-05-03,,Requerimiento,Solicitud de Reporte,Active Directory,Con el usuario,Media,
+Globex S.A.,HT-10077,2026-05-03,2026-05-03,Incidente,Malware / Virus,VPN,Resuelto,Media,Si
+Globex S.A.,HT-10094,2026-05-04,,Requerimiento,Solicitud de Reporte,Estacion de Trabajo,En espera,Media,
+ACME Corp,HT-10012,2026-05-05,,Requerimiento,Alta de Usuario,Active Directory,Abierto,Baja,
+Umbrella Ltda,HT-10190,2026-05-05,2026-05-06,Incidente,Falla de Aplicacion,SIEM,Resuelto,Media,No
+Globex S.A.,HT-10086,2026-05-06,,Requerimiento,Alta de Usuario,Firewall,Con el usuario,Media,
+Initech,HT-10253,2026-05-06,,Incidente,Falla de Red,Correo Corporativo,Abierto,Baja,
+ACME Corp,HT-10008,2026-05-07,,Requerimiento,Solicitud de Acceso,VPN,Abierto,Baja,
+Globex S.A.,HT-10074,2026-05-09,,Requerimiento,Solicitud de Reporte,Servidor Web,Con el usuario,Baja,
+Umbrella Ltda,HT-10165,2026-05-09,,Requerimiento,Alta de Usuario,Firewall,Con el usuario,Media,
+Globex S.A.,HT-10084,2026-05-11,,Requerimiento,Solicitud de Reporte,Firewall,En espera,Media,
+Umbrella Ltda,HT-10183,2026-05-11,,Incidente,Malware / Virus,Base de Datos,Con el usuario,Alta,
+Initech,HT-10239,2026-05-11,,Incidente,Falla de Aplicacion,VPN,Abierto,Media,
+Globex S.A.,HT-10105,2026-05-12,2026-05-15,Requerimiento,Alta de Usuario,Servidor Web,Resuelto,Media,No
+Umbrella Ltda,HT-10149,2026-05-12,,Requerimiento,Alta de Usuario,Antivirus / EDR,Con el usuario,Baja,
+ACME Corp,HT-10019,2026-05-13,2026-05-13,Requerimiento,Solicitud de Reporte,SIEM,Resuelto,Alta,Si
+Umbrella Ltda,HT-10125,2026-05-13,,Incidente,Malware / Virus,SIEM,En espera,Baja,
+Initech,HT-10203,2026-05-14,,Incidente,Falla de Hardware,Backup,Abierto,Alta,
+Initech,HT-10208,2026-05-14,,Requerimiento,Alta de Usuario,Servidor Web,Con el usuario,Baja,
+Umbrella Ltda,HT-10114,2026-05-15,,Incidente,Falla de Red,Backup,En espera,Media,
+ACME Corp,HT-10037,2026-05-16,,Requerimiento,Instalacion de Software,Backup,En espera,Media,
+Initech,HT-10242,2026-05-16,,Incidente,Caida de Servicio,Antivirus / EDR,Con el usuario,Alta,
+Umbrella Ltda,HT-10168,2026-05-18,,Requerimiento,Alta de Usuario,Active Directory,En espera,Media,
+Initech,HT-10204,2026-05-18,,Incidente,Caida de Servicio,Correo Corporativo,Con el usuario,Baja,
+Globex S.A.,HT-10075,2026-05-19,2026-05-19,Requerimiento,Cambio de Permisos,Servidor Web,Resuelto,Alta,Si
+Umbrella Ltda,HT-10174,2026-05-19,,Incidente,Malware / Virus,Antivirus / EDR,En espera,Media,
+Globex S.A.,HT-10048,2026-05-21,2026-05-22,Incidente,Falla de Hardware,Estacion de Trabajo,Resuelto,Media,Si
+Globex S.A.,HT-10069,2026-05-21,2026-05-21,Incidente,Falla de Servidor,Base de Datos,Resuelto,Media,Si
+Globex S.A.,HT-10092,2026-05-21,,Incidente,Falla de Servidor,Servidor Web,Abierto,Alta,
+Umbrella Ltda,HT-10111,2026-05-21,,Incidente,Falla de Servidor,Firewall,En espera,Alta,
+Initech,HT-10210,2026-05-21,,Incidente,Falla de Servidor,Correo Corporativo,Abierto,Baja,
+Initech,HT-10213,2026-05-21,,Incidente,Caida de Servicio,Firewall,Abierto,Alta,
+Globex S.A.,HT-10071,2026-05-22,,Requerimiento,Solicitud de Reporte,Active Directory,Abierto,Media,
+ACME Corp,HT-10043,2026-05-23,2026-05-25,Requerimiento,Instalacion de Software,Estacion de Trabajo,Resuelto,Baja,Si
+Globex S.A.,HT-10087,2026-05-23,,Incidente,Caida de Servicio,Firewall,Con el usuario,Media,
+ACME Corp,HT-10010,2026-05-24,2026-05-24,Requerimiento,Cambio de Permisos,SIEM,Resuelto,Alta,Si
+Initech,HT-10199,2026-05-24,,Incidente,Falla de Red,Active Directory,Abierto,Media,
+Initech,HT-10258,2026-05-24,2026-05-25,Requerimiento,Reseteo de Contrasena,Estacion de Trabajo,Resuelto,Media,Si
+ACME Corp,HT-10016,2026-05-25,,Incidente,Falla de Servidor,Antivirus / EDR,Abierto,Media,
+Umbrella Ltda,HT-10116,2026-05-25,2026-05-27,Requerimiento,Instalacion de Software,SIEM,Resuelto,Baja,Si
+Umbrella Ltda,HT-10152,2026-05-25,2026-05-27,Requerimiento,Solicitud de Reporte,VPN,Resuelto,Baja,Si
+Umbrella Ltda,HT-10141,2026-05-26,,Requerimiento,Solicitud de Acceso,VPN,Abierto,Alta,
+Globex S.A.,HT-10098,2026-05-27,2026-05-28,Requerimiento,Solicitud de Acceso,Backup,Resuelto,Media,Si
+Globex S.A.,HT-10085,2026-05-28,,Requerimiento,Solicitud de Reporte,Antivirus / EDR,Con el usuario,Media,
+Umbrella Ltda,HT-10162,2026-05-28,,Requerimiento,Reseteo de Contrasena,Antivirus / EDR,Abierto,Media,
+Umbrella Ltda,HT-10193,2026-05-28,2026-05-29,Incidente,Caida de Servicio,SIEM,Resuelto,Media,Si
+Globex S.A.,HT-10058,2026-05-29,,Incidente,Falla de Servidor,SIEM,Con el usuario,Media,
+Globex S.A.,HT-10103,2026-05-29,,Requerimiento,Reseteo de Contrasena,Base de Datos,Con el usuario,Baja,
+ACME Corp,HT-10017,2026-06-01,,Incidente,Falla de Aplicacion,Active Directory,Abierto,Baja,
+Umbrella Ltda,HT-10178,2026-06-01,,Incidente,Caida de Servicio,SIEM,Abierto,Media,
+Umbrella Ltda,HT-10185,2026-06-01,,Incidente,Falla de Hardware,Base de Datos,Con el usuario,Baja,
+Initech,HT-10233,2026-06-01,,Requerimiento,Reseteo de Contrasena,Active Directory,En espera,Media,
+Initech,HT-10245,2026-06-01,,Requerimiento,Cambio de Permisos,Firewall,En espera,Media,
+Globex S.A.,HT-10078,2026-06-02,,Requerimiento,Solicitud de Acceso,Correo Corporativo,Con el usuario,Media,
+Umbrella Ltda,HT-10115,2026-06-02,,Requerimiento,Cambio de Permisos,Backup,En espera,Baja,
+Initech,HT-10260,2026-06-02,,Incidente,Falla de Red,Backup,Con el usuario,Alta,
+ACME Corp,HT-10023,2026-06-03,,Incidente,Falla de Aplicacion,Base de Datos,Con el usuario,Media,
+Initech,HT-10196,2026-06-04,,Requerimiento,Cambio de Permisos,Correo Corporativo,En espera,Alta,
+ACME Corp,HT-10030,2026-06-05,,Requerimiento,Solicitud de Acceso,Antivirus / EDR,Abierto,Alta,
+ACME Corp,HT-10039,2026-06-06,,Incidente,Falla de Red,VPN,Abierto,Alta,
+Umbrella Ltda,HT-10126,2026-06-06,,Requerimiento,Cambio de Permisos,Base de Datos,Con el usuario,Media,
+Initech,HT-10215,2026-06-06,,Incidente,Falla de Hardware,Backup,Abierto,Baja,
+Initech,HT-10220,2026-06-06,,Incidente,Caida de Servicio,Active Directory,En espera,Alta,
+ACME Corp,HT-10021,2026-06-07,,Incidente,Falla de Hardware,Active Directory,Con el usuario,Alta,
+Umbrella Ltda,HT-10127,2026-06-07,,Requerimiento,Reseteo de Contrasena,Correo Corporativo,Con el usuario,Alta,
+Umbrella Ltda,HT-10191,2026-06-07,,Incidente,Falla de Red,Correo Corporativo,En espera,Alta,
+Initech,HT-10217,2026-06-07,,Requerimiento,Solicitud de Acceso,Antivirus / EDR,Abierto,Media,
+Initech,HT-10231,2026-06-08,,Incidente,Falla de Aplicacion,Estacion de Trabajo,En espera,Media,
+Umbrella Ltda,HT-10137,2026-06-09,,Incidente,Caida de Servicio,SIEM,Abierto,Media,
+Globex S.A.,HT-10051,2026-06-10,,Incidente,Falla de Red,Servidor Web,Con el usuario,Alta,
+Umbrella Ltda,HT-10143,2026-06-10,2026-06-10,Incidente,Caida de Servicio,Firewall,Resuelto,Baja,Si
+Initech,HT-10244,2026-06-11,,Requerimiento,Solicitud de Reporte,Correo Corporativo,Con el usuario,Alta,
+Globex S.A.,HT-10070,2026-06-12,,Requerimiento,Alta de Usuario,Active Directory,Abierto,Baja,
+Globex S.A.,HT-10099,2026-06-12,,Requerimiento,Instalacion de Software,Active Directory,En espera,Baja,
+Umbrella Ltda,HT-10142,2026-06-17,2026-06-18,Requerimiento,Reseteo de Contrasena,VPN,Resuelto,Alta,No
+Initech,HT-10219,2026-06-17,2026-06-19,Requerimiento,Solicitud de Reporte,Estacion de Trabajo,Resuelto,Media,No
+Initech,HT-10234,2026-06-17,2026-06-17,Incidente,Falla de Red,Correo Corporativo,Resuelto,Media,Si
+Initech,HT-10214,2026-06-18,,Incidente,Falla de Servidor,SIEM,En espera,Alta,
+Initech,HT-10216,2026-06-18,,Incidente,Malware / Virus,Estacion de Trabajo,Con el usuario,Baja,
+Initech,HT-10251,2026-06-18,,Requerimiento,Alta de Usuario,Servidor Web,Abierto,Media,
+ACME Corp,HT-10020,2026-06-19,2026-06-19,Incidente,Caida de Servicio,Firewall,Resuelto,Media,Si
+Globex S.A.,HT-10056,2026-06-19,,Requerimiento,Reseteo de Contrasena,SIEM,En espera,Media,
+Umbrella Ltda,HT-10140,2026-06-19,,Incidente,Caida de Servicio,Base de Datos,Abierto,Alta,
+Umbrella Ltda,HT-10182,2026-06-19,,Incidente,Falla de Servidor,VPN,En espera,Media,
+Umbrella Ltda,HT-10108,2026-06-20,,Requerimiento,Reseteo de Contrasena,Estacion de Trabajo,Abierto,Baja,
+Initech,HT-10237,2026-06-21,2026-06-21,Incidente,Malware / Virus,Backup,Resuelto,Media,Si
+ACME Corp,HT-10002,2026-06-23,,Incidente,Falla de Red,VPN,Abierto,Alta,
+ACME Corp,HT-10003,2026-06-24,,Requerimiento,Solicitud de Acceso,VPN,Abierto,Alta,
+Initech,HT-10209,2026-06-24,,Requerimiento,Cambio de Permisos,Active Directory,En espera,Baja,
+Globex S.A.,HT-10066,2026-06-25,,Requerimiento,Solicitud de Reporte,Backup,Con el usuario,Media,
+Umbrella Ltda,HT-10144,2026-06-25,,Incidente,Caida de Servicio,Backup,Con el usuario,Media,
+Initech,HT-10195,2026-06-25,,Requerimiento,Reseteo de Contrasena,Base de Datos,En espera,Baja,
+Globex S.A.,HT-10100,2026-06-26,,Requerimiento,Instalacion de Software,Antivirus / EDR,En espera,Baja,
+Initech,HT-10225,2026-06-26,2026-06-27,Incidente,Malware / Virus,Servidor Web,Resuelto,Media,No
+ACME Corp,HT-10031,2026-06-27,,Incidente,Malware / Virus,Correo Corporativo,Con el usuario,Media,
+Initech,HT-10230,2026-06-27,,Requerimiento,Cambio de Permisos,Base de Datos,En espera,Baja,
+Umbrella Ltda,HT-10110,2026-06-28,2026-06-28,Incidente,Falla de Aplicacion,Base de Datos,Resuelto,Media,Si
+Initech,HT-10223,2026-06-29,,Incidente,Caida de Servicio,Active Directory,Con el usuario,Media,
+ACME Corp,HT-10009,2026-06-30,,Requerimiento,Solicitud de Reporte,Antivirus / EDR,Con el usuario,Baja,
+Initech,HT-10238,2026-06-30,2026-06-30,Incidente,Malware / Virus,Estacion de Trabajo,Resuelto,Alta,No
+Globex S.A.,HT-10088,2026-07-02,,Requerimiento,Alta de Usuario,Estacion de Trabajo,Con el usuario,Alta,
+Initech,HT-10226,2026-07-02,,Incidente,Malware / Virus,Correo Corporativo,Abierto,Media,
+ACME Corp,HT-10011,2026-07-03,2026-07-04,Incidente,Malware / Virus,Servidor Web,Resuelto,Baja,Si
+Globex S.A.,HT-10089,2026-07-03,,Incidente,Falla de Red,Antivirus / EDR,En espera,Media,
+Umbrella Ltda,HT-10109,2026-07-03,,Incidente,Falla de Red,Servidor Web,Abierto,Media,
+Umbrella Ltda,HT-10134,2026-07-03,2026-07-06,Requerimiento,Alta de Usuario,VPN,Resuelto,Baja,Si
+Umbrella Ltda,HT-10159,2026-07-03,,Requerimiento,Instalacion de Software,Antivirus / EDR,En espera,Media,
+ACME Corp,HT-10028,2026-07-04,2026-07-04,Incidente,Falla de Red,Antivirus / EDR,Resuelto,Alta,No
+Umbrella Ltda,HT-10136,2026-07-04,,Requerimiento,Solicitud de Reporte,Estacion de Trabajo,Con el usuario,Baja,
+ACME Corp,HT-10027,2026-07-06,,Requerimiento,Reseteo de Contrasena,Correo Corporativo,Con el usuario,Baja,
+Globex S.A.,HT-10055,2026-07-07,,Incidente,Malware / Virus,Servidor Web,En espera,Media,
+Globex S.A.,HT-10061,2026-07-07,2026-07-10,Requerimiento,Cambio de Permisos,VPN,Resuelto,Media,No
+Umbrella Ltda,HT-10151,2026-07-07,,Incidente,Malware / Virus,Firewall,Con el usuario,Media,
+Umbrella Ltda,HT-10154,2026-07-09,2026-07-09,Incidente,Caida de Servicio,Antivirus / EDR,Resuelto,Alta,Si
+Umbrella Ltda,HT-10166,2026-07-09,,Requerimiento,Cambio de Permisos,Base de Datos,Con el usuario,Media,
+Initech,HT-10259,2026-07-11,,Incidente,Caida de Servicio,Firewall,En espera,Baja,
+Globex S.A.,HT-10053,2026-07-13,2026-07-15,Requerimiento,Cambio de Permisos,Servidor Web,Resuelto,Baja,Si
+Umbrella Ltda,HT-10172,2026-07-13,,Incidente,Falla de Hardware,Firewall,Con el usuario,Alta,
+Initech,HT-10206,2026-07-13,2026-07-13,Incidente,Falla de Hardware,Active Directory,Resuelto,Media,Si
+Umbrella Ltda,HT-10139,2026-07-14,,Incidente,Malware / Virus,Active Directory,Abierto,Media,
+Initech,HT-10247,2026-07-14,2026-07-15,Requerimiento,Instalacion de Software,Active Directory,Resuelto,Media,Si
+Globex S.A.,HT-10076,2026-07-15,,Incidente,Falla de Aplicacion,Servidor Web,Con el usuario,Baja,
+Globex S.A.,HT-10081,2026-07-15,,Requerimiento,Alta de Usuario,Backup,Abierto,Baja,
+Initech,HT-10257,2026-07-17,,Requerimiento,Solicitud de Reporte,Base de Datos,Con el usuario,Media,
+Initech,HT-10228,2026-07-18,,Requerimiento,Instalacion de Software,Base de Datos,Abierto,Alta,
+ACME Corp,HT-10015,2026-07-19,2026-07-20,Requerimiento,Alta de Usuario,Base de Datos,Resuelto,Baja,Si
+ACME Corp,HT-10018,2026-07-19,,Incidente,Falla de Red,Backup,Abierto,Media,
+Umbrella Ltda,HT-10155,2026-07-19,,Requerimiento,Alta de Usuario,Base de Datos,Abierto,Media,
+Initech,HT-10197,2026-07-20,2026-07-20,Incidente,Falla de Red,Firewall,Resuelto,Alta,No
+Globex S.A.,HT-10062,2026-07-21,2026-07-22,Requerimiento,Instalacion de Software,SIEM,Resuelto,Alta,No
+Globex S.A.,HT-10095,2026-07-22,,Requerimiento,Reseteo de Contrasena,Antivirus / EDR,En espera,Media,
+ACME Corp,HT-10001,2026-07-23,2026-07-23,Incidente,Falla de Aplicacion,Base de Datos,Resuelto,Alta,Si
+ACME Corp,HT-10026,2026-07-23,,Incidente,Falla de Servidor,SIEM,Abierto,Alta,
+ACME Corp,HT-10006,2026-07-24,,Requerimiento,Solicitud de Reporte,Correo Corporativo,Con el usuario,Media,
+Umbrella Ltda,HT-10187,2026-07-24,,Incidente,Falla de Hardware,Firewall,Abierto,Alta,
+Initech,HT-10243,2026-07-25,,Incidente,Malware / Virus,Antivirus / EDR,Abierto,Media,
+Umbrella Ltda,HT-10179,2026-07-26,,Requerimiento,Alta de Usuario,Servidor Web,Con el usuario,Media,
+Initech,HT-10202,2026-07-26,,Incidente,Caida de Servicio,Correo Corporativo,Abierto,Baja,
+Umbrella Ltda,HT-10131,2026-07-27,2026-07-28,Incidente,Malware / Virus,Backup,Resuelto,Baja,Si
+Umbrella Ltda,HT-10147,2026-07-27,,Incidente,Falla de Red,Estacion de Trabajo,En espera,Media,
+Initech,HT-10254,2026-07-28,,Requerimiento,Alta de Usuario,SIEM,Con el usuario,Baja,
+Umbrella Ltda,HT-10119,2026-07-30,,Requerimiento,Reseteo de Contrasena,Base de Datos,En espera,Media,
+Umbrella Ltda,HT-10138,2026-07-30,2026-07-30,Incidente,Falla de Red,VPN,Resuelto,Media,No
+ACME Corp,HT-10038,2026-07-31,,Incidente,Caida de Servicio,Antivirus / EDR,Con el usuario,Baja,
+Globex S.A.,HT-10060,2026-07-31,,Incidente,Malware / Virus,Correo Corporativo,Abierto,Alta,
+ACME Corp,HT-10014,2026-08-01,2026-08-01,Incidente,Malware / Virus,Backup,Resuelto,Alta,Si
+Globex S.A.,HT-10090,2026-08-01,,Incidente,Falla de Servidor,SIEM,Con el usuario,Media,
+ACME Corp,HT-10045,2026-08-02,,Incidente,Caida de Servicio,SIEM,Con el usuario,Baja,
+Globex S.A.,HT-10104,2026-08-02,2026-08-03,Requerimiento,Instalacion de Software,Active Directory,Resuelto,Baja,Si
+Umbrella Ltda,HT-10146,2026-08-02,,Requerimiento,Solicitud de Reporte,Antivirus / EDR,En espera,Media,
+Globex S.A.,HT-10079,2026-08-03,2026-08-03,Incidente,Falla de Hardware,SIEM,Resuelto,Media,Si
+Globex S.A.,HT-10080,2026-08-03,,Incidente,Malware / Virus,Estacion de Trabajo,En espera,Media,
+Globex S.A.,HT-10093,2026-08-03,,Incidente,Malware / Virus,SIEM,En espera,Baja,
+Umbrella Ltda,HT-10192,2026-08-03,2026-08-03,Requerimiento,Instalacion de Software,Base de Datos,Resuelto,Media,Si
+Umbrella Ltda,HT-10164,2026-08-04,,Incidente,Falla de Servidor,Base de Datos,Con el usuario,Baja,
+Umbrella Ltda,HT-10173,2026-08-04,2026-08-04,Incidente,Malware / Virus,Antivirus / EDR,Resuelto,Baja,Si
+Umbrella Ltda,HT-10123,2026-08-05,,Incidente,Caida de Servicio,Estacion de Trabajo,Abierto,Alta,
+Umbrella Ltda,HT-10153,2026-08-05,,Incidente,Falla de Red,Correo Corporativo,Abierto,Media,
+Initech,HT-10252,2026-08-05,,Requerimiento,Solicitud de Reporte,Active Directory,Con el usuario,Media,
+Globex S.A.,HT-10057,2026-08-06,,Requerimiento,Reseteo de Contrasena,Antivirus / EDR,Abierto,Media,
+Umbrella Ltda,HT-10156,2026-08-06,,Incidente,Malware / Virus,SIEM,En espera,Media,
+Umbrella Ltda,HT-10186,2026-08-06,,Incidente,Falla de Red,SIEM,Abierto,Alta,
+ACME Corp,HT-10022,2026-08-07,,Requerimiento,Instalacion de Software,Active Directory,Con el usuario,Baja,
+ACME Corp,HT-10044,2026-08-08,,Requerimiento,Instalacion de Software,Correo Corporativo,En espera,Alta,
+Globex S.A.,HT-10072,2026-08-08,2026-08-10,Requerimiento,Solicitud de Reporte,Servidor Web,Resuelto,Baja,Si
+Umbrella Ltda,HT-10176,2026-08-08,,Requerimiento,Instalacion de Software,Antivirus / EDR,En espera,Media,
+Initech,HT-10218,2026-08-08,,Requerimiento,Solicitud de Reporte,Active Directory,Abierto,Baja,
+Umbrella Ltda,HT-10121,2026-08-09,,Requerimiento,Solicitud de Acceso,Antivirus / EDR,En espera,Media,
+Umbrella Ltda,HT-10184,2026-08-09,,Requerimiento,Cambio de Permisos,Servidor Web,Con el usuario,Media,
+ACME Corp,HT-10041,2026-08-11,,Incidente,Falla de Red,SIEM,En espera,Baja,
+Umbrella Ltda,HT-10129,2026-08-11,,Requerimiento,Reseteo de Contrasena,Servidor Web,Abierto,Baja,
+Umbrella Ltda,HT-10177,2026-08-11,2026-08-11,Incidente,Falla de Servidor,Correo Corporativo,Resuelto,Alta,Si
+Initech,HT-10229,2026-08-12,,Requerimiento,Reseteo de Contrasena,VPN,Abierto,Baja,
+Initech,HT-10222,2026-08-13,,Requerimiento,Alta de Usuario,Estacion de Trabajo,Abierto,Baja,
+Umbrella Ltda,HT-10145,2026-08-14,,Incidente,Falla de Red,Estacion de Trabajo,En espera,Media,
+Umbrella Ltda,HT-10171,2026-08-14,,Incidente,Caida de Servicio,Base de Datos,Abierto,Alta,
+ACME Corp,HT-10042,2026-08-15,,Incidente,Falla de Red,Correo Corporativo,Con el usuario,Alta,
+Umbrella Ltda,HT-10117,2026-08-15,,Incidente,Falla de Servidor,Active Directory,Abierto,Baja,
+Globex S.A.,HT-10082,2026-08-16,,Requerimiento,Solicitud de Acceso,VPN,En espera,Alta,
+Umbrella Ltda,HT-10150,2026-08-16,,Incidente,Falla de Aplicacion,Antivirus / EDR,Abierto,Media,
+Umbrella Ltda,HT-10181,2026-08-16,,Incidente,Caida de Servicio,Active Directory,Con el usuario,Baja,
+Initech,HT-10250,2026-08-16,,Requerimiento,Cambio de Permisos,Servidor Web,Con el usuario,Media,
+Initech,HT-10212,2026-08-19,2026-08-19,Requerimiento,Instalacion de Software,VPN,Resuelto,Alta,Si
+Initech,HT-10249,2026-08-19,2026-08-19,Incidente,Falla de Servidor,Base de Datos,Resuelto,Media,Si
+Globex S.A.,HT-10064,2026-08-20,,Incidente,Falla de Hardware,Base de Datos,Con el usuario,Alta,
+Umbrella Ltda,HT-10112,2026-08-21,,Incidente,Falla de Aplicacion,Antivirus / EDR,En espera,Media,
+Globex S.A.,HT-10059,2026-08-22,2026-08-25,Requerimiento,Solicitud de Acceso,Antivirus / EDR,Resuelto,Baja,No
+Initech,HT-10236,2026-08-22,2026-08-22,Incidente,Malware / Virus,Base de Datos,Resuelto,Alta,Si
+Globex S.A.,HT-10046,2026-08-23,,Requerimiento,Solicitud de Acceso,VPN,Abierto,Baja,
+Globex S.A.,HT-10091,2026-08-24,,Incidente,Falla de Aplicacion,Correo Corporativo,Abierto,Alta,
+Initech,HT-10227,2026-08-24,2026-08-26,Requerimiento,Reseteo de Contrasena,Correo Corporativo,Resuelto,Media,Si
+ACME Corp,HT-10035,2026-08-25,,Incidente,Falla de Hardware,Correo Corporativo,Abierto,Baja,
+Globex S.A.,HT-10054,2026-08-25,,Incidente,Falla de Red,Firewall,En espera,Baja,
+Globex S.A.,HT-10083,2026-08-25,,Requerimiento,Reseteo de Contrasena,Correo Corporativo,Abierto,Media,
+Umbrella Ltda,HT-10167,2026-08-25,2026-08-25,Incidente,Malware / Virus,Firewall,Resuelto,Alta,Si
+Initech,HT-10240,2026-08-25,,Requerimiento,Cambio de Permisos,Backup,Abierto,Baja,
+ACME Corp,HT-10005,2026-08-26,,Requerimiento,Solicitud de Acceso,Servidor Web,Abierto,Media,
+Umbrella Ltda,HT-10122,2026-08-26,,Requerimiento,Solicitud de Reporte,Servidor Web,En espera,Alta,
+Umbrella Ltda,HT-10118,2026-08-28,2026-08-28,Incidente,Falla de Aplicacion,Active Directory,Resuelto,Alta,Si
+Initech,HT-10211,2026-08-28,2026-08-28,Requerimiento,Alta de Usuario,SIEM,Resuelto,Alta,Si
+ACME Corp,HT-10029,2026-08-29,,Requerimiento,Instalacion de Software,Base de Datos,Abierto,Baja,
+Globex S.A.,HT-10065,2026-08-29,,Incidente,Caida de Servicio,Estacion de Trabajo,Abierto,Alta,
+Umbrella Ltda,HT-10135,2026-08-29,2026-08-31,Incidente,Caida de Servicio,Servidor Web,Resuelto,Baja,No
+Initech,HT-10200,2026-08-29,2026-08-29,Incidente,Caida de Servicio,Active Directory,Resuelto,Alta,Si
+Initech,HT-10255,2026-08-30,,Incidente,Falla de Hardware,Backup,En espera,Media,
+Globex S.A.,HT-10107,2026-08-31,,Requerimiento,Solicitud de Acceso,Correo Corporativo,Con el usuario,Media,
+Initech,HT-10232,2026-08-31,,Incidente,Falla de Hardware,Backup,Abierto,Alta,
+Globex S.A.,HT-10049,2026-09-01,,Incidente,Falla de Hardware,Firewall,En espera,Alta,
+Umbrella Ltda,HT-10158,2026-09-01,,Requerimiento,Cambio de Permisos,Estacion de Trabajo,En espera,Baja,
+Umbrella Ltda,HT-10169,2026-09-01,,Incidente,Falla de Hardware,Estacion de Trabajo,En espera,Alta,
+Globex S.A.,HT-10050,2026-09-02,2026-09-02,Requerimiento,Instalacion de Software,Estacion de Trabajo,Resuelto,Alta,Si
+Umbrella Ltda,HT-10130,2026-09-02,2026-09-02,Incidente,Falla de Aplicacion,VPN,Resuelto,Alta,No
+Globex S.A.,HT-10063,2026-09-03,2026-09-04,Requerimiento,Reseteo de Contrasena,Base de Datos,Resuelto,Baja,Si
+Umbrella Ltda,HT-10160,2026-09-03,2026-09-04,Incidente,Caida de Servicio,SIEM,Resuelto,Baja,Si
+Globex S.A.,HT-10101,2026-09-05,,Requerimiento,Alta de Usuario,Servidor Web,Abierto,Media,
+Initech,HT-10201,2026-09-06,,Requerimiento,Cambio de Permisos,Antivirus / EDR,En espera,Media,
+Umbrella Ltda,HT-10163,2026-09-08,,Incidente,Falla de Red,Estacion de Trabajo,En espera,Alta,
+ACME Corp,HT-10033,2026-09-09,,Requerimiento,Alta de Usuario,Backup,Resuelto,Baja,
+Globex S.A.,HT-10102,2026-09-09,,Incidente,Falla de Aplicacion,Backup,Abierto,Baja,
+Umbrella Ltda,HT-10157,2026-09-09,,Incidente,Falla de Aplicacion,Backup,Con el usuario,Media,
+Umbrella Ltda,HT-10175,2026-09-09,,Requerimiento,Cambio de Permisos,SIEM,En espera,Media,
