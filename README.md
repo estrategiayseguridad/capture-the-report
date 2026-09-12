@@ -2,6 +2,23 @@
 
 Hackathon interna de ES Consulting — el inicio de la **plataforma unificada de reportería**.
 
+## Equipo 01 — Rinde
+
+Prototipo de **gastos y reembolsos** en esta rama (`equipo-01`).
+
+```bash
+git checkout equipo-01
+npm install
+npm run seed
+npm run dev
+```
+
+Demo: `employee@example.local` / `admin@example.local` — contraseña `Demo123!`.
+
+Instrucciones completas, OCR, LAN y limitaciones: [`README-EQUIPO.md`](README-EQUIPO.md).
+
+---
+
 Cada equipo construye un prototipo web que resuelva un dolor real de reportería: automatizar un reporte manual, convertir la salida de una herramienta en un documento presentable, asistentes de redacción, paneles de hallazgos… lo que su equipo elija.
 
 ## 🚀 Cómo empezar (5 minutos)

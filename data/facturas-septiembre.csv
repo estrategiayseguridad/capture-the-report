@@ -1,0 +1,4 @@
+numero,fecha,proveedor,monto,motivo,cliente,proyecto,departamento
+F-2026-1190,2026-09-05,Hotel Demo Plaza,1875,Hospedaje on-site de 2 consultores,Clínica Andes,Endurecimiento perimetral Q3,Consultoría
+F-2026-1191,2026-09-05,SIM Demo Mobile,390,Datos móviles para trabajo en campo,NorteLogística,SOC gestionado 2026,Operaciones
+F-2026-1192,2026-09-05,Courier Seguro,210,Envío de evidencia impresa al cliente,ACME Corp,VAPT aplicativo web,Consultoría
