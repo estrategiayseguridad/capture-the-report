@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
+/*
+ * Tokens de EventPulse 360.
+ * Tema oscuro seleccionado (no es un flip automatico del claro): los pasos de
+ * color estan elegidos y validados contra la superficie oscura #1a1a19.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --plane: #0d0d0d;
+  --surface-1: #1a1a19;
+  --surface-2: #232322;
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+  --gridline: #2c2c2a;
+  --baseline: #383835;
+  --hairline: rgba(255, 255, 255, 0.1);
+
+  /* Categorico: perfiles de asistente (slots 1-3, validados all-pairs en oscuro) */
+  --perfil-decisor: #3987e5;
+  --perfil-gerencial: #d95926;
+  --perfil-tecnico: #199e70;
+
+  /* Ordinal: prioridad del lead (un solo hue, L monotona) */
+  --prioridad-alta: #86b6ef;
+  --prioridad-media: #3987e5;
+  --prioridad-baja: #1c5cab;
+
+  /* Estado (reservado, siempre con icono + etiqueta) */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-plane: var(--plane);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--text-primary);
+  --color-ink-soft: var(--text-secondary);
+  --color-ink-muted: var(--text-muted);
+  --color-hairline: var(--hairline);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+body {
+  background: var(--plane);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Columnas numericas alineadas verticalmente */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Vista de impresion: solo el reporte del sponsor sale en papel */
+@media print {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --plane: #ffffff;
+    --surface-1: #ffffff;
+    --surface-2: #ffffff;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --hairline: rgba(11, 11, 11, 0.18);
+  }
+
+  body {
+    background: #ffffff;
+    color: #0b0b0b;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-page {
+    box-shadow: none !important;
+    border: none !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Campos de formulario del panel de carga */
+.entrada {
+  border-radius: 0.5rem;
+  border: 1px solid var(--hairline);
+  background: var(--plane);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.entrada:focus {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.entrada::placeholder {
+  color: var(--text-muted);
 }

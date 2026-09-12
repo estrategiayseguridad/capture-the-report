@@ -1,0 +1,46 @@
+nombre,email,empresa,cargo,industria,telefono,canal_registro,fecha_registro,check_in,interes
+Ana Lucía Herrera,aherrera@bancodemo.com,Banco Demo,CISO,Banca,+502 5511-0101,Invitacion directa,2026-07-02,Si,Deteccion de amenazas
+Mario Estuardo Colop,mcolop@bancodemo.com,Banco Demo,Analista de Seguridad,Banca,+502 5511-0102,Formulario web,2026-07-03,Si,SOC gestionado
+Karla Sofía Ixchop,kixchop@segurosacme.com,Seguros ACME,Gerente de TI,Seguros,+502 5511-0103,Invitacion directa,2026-07-03,Si,Cumplimiento normativo
+Rodrigo Alejandro Paz,rpaz@segurosacme.com,Seguros ACME,Ingeniero de Redes,Seguros,+502 5511-0104,Formulario web,2026-07-05,No,Segmentacion de red
+Diana Carolina Batres,dbatres@retailejemplo.com,Retail Ejemplo,Directora de TI,Retail,+502 5511-0105,Referido ventas,2026-07-05,Si,Proteccion de datos
+Luis Fernando Arriaga,larriaga@retailejemplo.com,Retail Ejemplo,Administrador de Servidores,Retail,+502 5511-0106,Formulario web,2026-07-06,Si,Respaldo y recuperacion
+Gabriela Mishell Tzoc,gtzoc@telcodemo.com,Telco Demo,Gerente de Riesgos,Telecom,+502 5511-0107,Invitacion directa,2026-07-06,Si,Gestion de riesgo
+Erick Josué Ramírez,eramirez@telcodemo.com,Telco Demo,Analista de Infraestructura,Telecom,+502 5511-0108,Formulario web,2026-07-07,No,Monitoreo
+Silvia Patricia Menchú,smenchu@industriademo.com,Industria Demo,Gerente General,Industria,+502 5511-0109,Invitacion directa,2026-07-07,Si,Continuidad del negocio
+Jorge Antonio Sical,jsical@industriademo.com,Industria Demo,Jefe de Infraestructura,Industria,+502 5511-0110,Referido ventas,2026-07-08,Si,Segmentacion de red
+Andrea Beatriz Cifuentes,acifuentes@saluddemo.com,Salud Demo,CIO,Salud,+502 5511-0111,Invitacion directa,2026-07-08,Si,Proteccion de datos
+Byron Alexander Chun,bchun@saluddemo.com,Salud Demo,Soporte TI,Salud,+502 5511-0112,Formulario web,2026-07-09,No,Capacitacion
+Marta Elena Xicay,mxicay@gobiernodemo.gob,Entidad Publica Demo,Director de Tecnologia,Gobierno,+502 5511-0113,Invitacion directa,2026-07-09,Si,Cumplimiento normativo
+Pablo Ernesto Guzmán,pguzman@gobiernodemo.gob,Entidad Publica Demo,Auditor de Sistemas,Gobierno,+502 5511-0114,Formulario web,2026-07-10,Si,Auditoria interna
+Claudia Verónica Sipac,csipac@energiademo.com,Energia Demo,CTO,Energia,+502 5511-0115,Referido ventas,2026-07-10,Si,Seguridad OT
+Oscar Rene Morales,omorales@energiademo.com,Energia Demo,Ingeniero de Automatizacion,Energia,+502 5511-0116,Formulario web,2026-07-11,Si,Seguridad OT
+Ligia Maribel Cotí,lcoti@educaciondemo.edu,Educacion Demo,Coordinadora de TI,Educacion,+502 5511-0117,Formulario web,2026-07-11,No,Capacitacion
+Hugo Leonel Marroquín,hmarroquin@educaciondemo.edu,Educacion Demo,Tecnico de Soporte,Educacion,+502 5511-0118,Formulario web,2026-07-12,No,Capacitacion
+Wendy Azucena Pérez,wperez@fintechdemo.com,Fintech Demo,VP de Operaciones,Fintech,+502 5511-0119,Invitacion directa,2026-07-12,Si,Fraude digital
+Kevin Estuardo Ajpop,kajpop@fintechdemo.com,Fintech Demo,DevOps Engineer,Fintech,+502 5511-0120,Formulario web,2026-07-13,Si,Seguridad en la nube
+Rosa María Quiñónez,rquinonez@logisticademo.com,Logistica Demo,Subgerente de TI,Logistica,+502 5511-0121,Referido ventas,2026-07-13,Si,Monitoreo
+Allan David Cabrera,acabrera@logisticademo.com,Logistica Demo,Analista de Sistemas,Logistica,+502 5511-0122,Formulario web,2026-07-14,No,Monitoreo
+Cristina Isabel Rax,crax@bancosegundodemo.com,Banco Segundo Demo,Gerente de Seguridad,Banca,+502 5511-0123,Invitacion directa,2026-07-14,Si,SOC gestionado
+Douglas Fernando Set,dset@bancosegundodemo.com,Banco Segundo Demo,Especialista en Ciberseguridad,Banca,+502 5511-0124,Formulario web,2026-07-15,Si,Deteccion de amenazas
+Mónica Alejandra Yoc,myoc@bancosegundodemo.com,Banco Segundo Demo,Analista de Cumplimiento,Banca,+502 5511-0125,Formulario web,2026-07-15,Si,Cumplimiento normativo
+Julio Cesar Panjoj,jpanjoj@manufacturademo.com,Manufactura Demo,Gerente de Planta,Industria,+502 5511-0126,Referido ventas,2026-07-16,No,Seguridad OT
+Astrid Yohana Cua,acua@manufacturademo.com,Manufactura Demo,Jefe de Sistemas,Industria,+502 5511-0127,Invitacion directa,2026-07-16,Si,Continuidad del negocio
+Sergio Armando Chávez,schavez@consultoriademo.com,Consultoria Demo,Socio Director,Servicios,+502 5511-0128,Invitacion directa,2026-07-17,Si,Alianza comercial
+Nancy Eugenia Tut,ntut@consultoriademo.com,Consultoria Demo,Consultora Senior,Servicios,+502 5511-0129,Formulario web,2026-07-17,Si,Alianza comercial
+Fredy Estuardo Lem,flem@aseguradorademo.com,Aseguradora Demo,Gerente de Tecnologia,Seguros,+502 5511-0130,Formulario web,2026-07-18,Si,Proteccion de datos
+Ingrid Marisol Chan,ichan@aseguradorademo.com,Aseguradora Demo,Administradora de Base de Datos,Seguros,+502 5511-0131,Formulario web,2026-07-18,No,Proteccion de datos
+Walter Estuardo Poz,wpoz@telcosegundodemo.com,Telco Segundo Demo,Director de Operaciones,Telecom,+502 5511-0132,Referido ventas,2026-07-19,Si,Continuidad del negocio
+Lourdes Fabiola Sam,lsam@telcosegundodemo.com,Telco Segundo Demo,Ingeniera de Seguridad,Telecom,+502 5511-0133,Formulario web,2026-07-19,Si,Deteccion de amenazas
+Rafael Antonio Ich,rich@constructorademo.com,Constructora Demo,Gerente Administrativo,Construccion,+502 5511-0134,Formulario web,2026-07-20,No,Proteccion de datos
+Michelle Andrea Coy,mcoy@constructorademo.com,Constructora Demo,Encargada de TI,Construccion,+502 5511-0135,Formulario web,2026-07-20,Si,Respaldo y recuperacion
+Estuardo Josue Balan,ebalan@agroindustriademo.com,Agroindustria Demo,Gerente de TI,Agroindustria,+502 5511-0136,Invitacion directa,2026-07-20,Si,Monitoreo
+Paola Alejandra Quej,pquej@agroindustriademo.com,Agroindustria Demo,Analista de Redes,Agroindustria,+502 5511-0137,Formulario web,2026-07-21,Si,Segmentacion de red
+Victor Hugo Tzunun,vtzunun@cooperativademo.com,Cooperativa Demo,Gerente de Riesgos,Banca,+502 5511-0138,Referido ventas,2026-07-21,Si,Gestion de riesgo
+Brenda Lorena Us,bus@cooperativademo.com,Cooperativa Demo,Oficial de Seguridad de la Informacion,Banca,+502 5511-0139,Invitacion directa,2026-07-21,Si,Cumplimiento normativo
+Marvin Alexander Sol,msol@cooperativademo.com,Cooperativa Demo,Tecnico en Redes,Banca,+502 5511-0140,Formulario web,2026-07-21,No,Segmentacion de red
+Sandra Liliana Mux,smux@hoteleriademo.com,Hoteleria Demo,Gerente de Sistemas,Turismo,+502 5511-0141,Formulario web,2026-07-21,Si,Proteccion de datos
+Carlos Eduardo Bal,cbal@hoteleriademo.com,Hoteleria Demo,Auxiliar de TI,Turismo,+502 5511-0142,Formulario web,2026-07-21,No,Capacitacion
+Alba Nydia Chocoj,achocoj@navierademo.com,Naviera Demo,Gerente Pais,Logistica,+502 5511-0143,Invitacion directa,2026-07-21,Si,Continuidad del negocio
+Josue Daniel Perén,jperen@navierademo.com,Naviera Demo,Arquitecto de Soluciones,Logistica,+502 5511-0144,Referido ventas,2026-07-21,Si,Seguridad en la nube
+Melany Rocío Guarcas,mguarcas@ecommercedemo.com,Ecommerce Demo,Product Owner,Retail,+502 5511-0145,Formulario web,2026-07-21,Si,Seguridad en la nube

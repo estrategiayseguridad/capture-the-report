@@ -1,0 +1,116 @@
+{
+  "_fuente": "Derivado de data/DETALLES POR EVENTOS 2026-ejemplo.xlsx (hoja 'REPORTE DE EVENTOS'). Nombres y lugares ya venian genericos en el archivo original.",
+  "_uso": "El motor calcula la tasa de asistencia historica (asistentes / invitados) agrupada por franja horaria y la usa para proyectar la asistencia del proximo evento.",
+  "eventos": [
+    {
+      "id": "hist-01",
+      "nombre": "Evento historico 1",
+      "trimestre": 1,
+      "horario": "19:00 - 00:00",
+      "franja": "nocturno",
+      "tipo": "Propio",
+      "invitados": 35,
+      "asistentes": 23,
+      "montoQ": 18500
+    },
+    {
+      "id": "hist-02",
+      "nombre": "Evento historico 4",
+      "trimestre": 1,
+      "horario": "18:00 - 22:00",
+      "franja": "nocturno",
+      "tipo": "Propio",
+      "invitados": 25,
+      "asistentes": 22,
+      "montoQ": 14200
+    },
+    {
+      "id": "hist-03",
+      "nombre": "Evento historico 5",
+      "trimestre": 1,
+      "horario": "7:00 - 13:00",
+      "franja": "matutino",
+      "tipo": "Sponsor",
+      "invitados": 100,
+      "asistentes": 86,
+      "montoQ": 42000
+    },
+    {
+      "id": "hist-04",
+      "nombre": "Evento historico 8",
+      "trimestre": 2,
+      "horario": "8:00 - 12:00",
+      "franja": "matutino",
+      "tipo": "Sponsor",
+      "invitados": 250,
+      "asistentes": 222,
+      "montoQ": 96000
+    },
+    {
+      "id": "hist-05",
+      "nombre": "Evento historico 13",
+      "trimestre": 2,
+      "horario": "18:00 - 23:00",
+      "franja": "nocturno",
+      "tipo": "Propio",
+      "invitados": 28,
+      "asistentes": 19,
+      "montoQ": 16800
+    },
+    {
+      "id": "hist-06",
+      "nombre": "Evento historico 10",
+      "trimestre": 2,
+      "horario": "8:00 - 18:00",
+      "franja": "jornada",
+      "tipo": "Propio",
+      "invitados": 140,
+      "asistentes": 120,
+      "montoQ": 58000
+    },
+    {
+      "id": "hist-07",
+      "nombre": "Evento historico 12",
+      "trimestre": 2,
+      "horario": "8:00 - 18:00",
+      "franja": "jornada",
+      "tipo": "Sponsor",
+      "invitados": 240,
+      "asistentes": 196,
+      "montoQ": 88000
+    },
+    {
+      "id": "hist-08",
+      "nombre": "Evento historico 15",
+      "trimestre": 2,
+      "horario": "13:00 - 16:00",
+      "franja": "vespertino",
+      "tipo": "Propio",
+      "invitados": 26,
+      "asistentes": 19,
+      "montoQ": 9800
+    },
+    {
+      "id": "hist-09",
+      "nombre": "Evento historico 16",
+      "trimestre": 2,
+      "horario": "18:00 - 23:00",
+      "franja": "nocturno",
+      "tipo": "Propio",
+      "invitados": 30,
+      "asistentes": 20,
+      "montoQ": 15400
+    },
+    {
+      "id": "hist-10",
+      "nombre": "Evento historico 9",
+      "trimestre": 2,
+      "horario": "8:00 - 12:00",
+      "franja": "matutino",
+      "tipo": "Propio",
+      "invitados": 90,
+      "asistentes": 76,
+      "montoQ": 31000
+    }
+  ]
+}
