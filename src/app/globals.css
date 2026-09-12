@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Modo oscuro controlado por la clase "dark" en <html> (ver ThemeToggle), no solo por
+   preferencia del sistema — así el switch manual manda sobre el prefers-color-scheme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -12,11 +16,9 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #020617;
+  --foreground: #f1f5f9;
 }
 
 body {
