@@ -98,6 +98,23 @@ def main() -> int:
         revisar(cifra in visible, f"cifra de control: {cifra}")
     revisar("16" in visible and "proceso manual pierde" in visible, "panel de tickets perdidos")
 
+    # Trazabilidad. El desglose se abre en el cliente, asi que no esta en el texto
+    # visible: se comprueba sobre el HTML crudo, donde React serializa las props.
+    print("\n[1b] Trazabilidad de los indicadores")
+    revisar(html.count("aria-expanded") == 6, "los 6 indicadores son abribles", f"{html.count('aria-expanded')} botones")
+    revisar("Toca cualquier indicador" in visible, "el dashboard invita a abrirlos")
+    for criterio, prueba in [
+        ("calcularMetricas().total", "Tickets: cita su fuente en el codigo"),
+        ("Solicitud de Reporte", "Alertas/Solicitudes: aclara que Reporte va aparte"),
+        ("esCerrado()", "Cerrados: cita el predicado compartido"),
+        ("hundiria el promedio", "TPA/TMR: explica por que se omiten los nulos"),
+    ]:
+        revisar(criterio in html, prueba)
+    # La invariante desglose == informe no se comprueba aparte a proposito:
+    # `indicadoresTrazables()` lanza si los dos conteos no cuadran y corre en cada
+    # render, asi que el "GET / -> 200" de arriba ya la prueba, con estos datos y
+    # con los del .xlsx que se sube en [3].
+
     print("\n[2] Subir el .xlsx exportado de Halo")
     cuerpo, tipo = multipart(XLSX_DEMO.name, XLSX_DEMO.read_bytes())
     estado, respuesta, _ = pedir("/api/cargar", "POST", cuerpo, tipo)

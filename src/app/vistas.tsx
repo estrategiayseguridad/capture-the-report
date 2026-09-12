@@ -94,7 +94,7 @@ export function VistasPorHerramienta({ grupos }: { grupos: Grupo[] }) {
   );
 }
 
-function EtiquetaEstado({ estado }: { estado: string }) {
+export function EtiquetaEstado({ estado }: { estado: string }) {
   const colores: Record<string, string> = {
     Closed: "bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200",
     Resuelto: "bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200",

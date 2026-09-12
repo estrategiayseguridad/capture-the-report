@@ -17,7 +17,7 @@ Abrir **http://localhost:3000**. No hay base de datos, ni variables de entorno, 
 
 | Ruta | Qué es |
 |---|---|
-| `/` | Dashboard del cierre: indicadores, las 4 gráficas, vistas por herramienta y el panel de tickets perdidos |
+| `/` | Dashboard del cierre: indicadores abribles, las 4 gráficas, vistas por herramienta y el panel de tickets perdidos |
 | `/informe` | El informe completo con las cifras insertadas. Botón para descargar e imprimir a PDF (Ctrl+P) |
 | `/api/informe` | Descarga el informe como documento que Word abre respetando el formato |
 | `/api/cargar` | `POST` del `.xlsx` (lo usa la zona de arrastre) · `DELETE` vuelve al dataset de demo |
@@ -29,6 +29,7 @@ Abrir **http://localhost:3000**. No hay base de datos, ni variables de entorno, 
 3. **Genera las vistas por herramienta** partiendo la columna `Category` en el `>` — equivalen a las pestañas `CLOUDFLARE` / `BEYONTRUST` / `THINKSCANARY` del Excel, pero se construyen solas.
 4. **Dibuja las 4 gráficas** del informe sin ninguna librería: barras con CSS, pastel con `conic-gradient`.
 5. **Arma el informe** en 8 secciones + anexo con el detalle de los 63 tickets, con cada número inyectado desde los datos.
+6. **Explica cada indicador.** Se toca cualquiera de los 6 y se abre el desglose: el criterio de cálculo en palabras, dónde vive en el código y **la lista de los tickets que componen el número**, con un botón para copiar los IDs y verificarlos en Halo.
 
 ### El hallazgo
 
@@ -46,9 +47,11 @@ Con el server corriendo, en otra terminal:
 python scripts/verificar-prototipo.py
 ```
 
-Recorre el circuito completo —subir el `.xlsx`, dashboard, informe, descarga, volver al demo— y comprueba **35 cosas**, incluidas las cifras de control por los dos caminos de entrada. Si el motor de métricas se rompe, esto lo detecta.
+Recorre el circuito completo —subir el `.xlsx`, dashboard, informe, descarga, volver al demo— y comprueba **41 cosas**, incluidas las cifras de control por los dos caminos de entrada. Si el motor de métricas se rompe, esto lo detecta.
 
 ### Por qué se puede confiar en los números
+
+Cada indicador se puede abrir y muestra los tickets que lo componen, así que el número no hay que creérselo: se verifica. Y para que el desglose no pueda contradecir al informe, `indicadoresTrazables()` calcula sus listas por su cuenta y al final **las compara contra `calcularMetricas()`**, que es el que alimenta el documento. Si los dos criterios dejan de coincidir, la página falla con el detalle (`el desglose lista 47 tickets pero el informe reporta 53`) en vez de mostrar un número que no cuadra. Corre en cada render, así que el `GET / → 200` del script ya prueba la invariante con los datos cargados.
 
 El dataset preserva las distribuciones del cierre real, así que **el dashboard tiene que reproducir exactamente las cifras del informe ya entregado al cliente**. Eso es el criterio de correctitud del motor:
 
@@ -62,10 +65,11 @@ El dataset preserva las distribuciones del cierre real, así que **el dashboard 
 | TPA | 0.10 h (6 min) | ✅ |
 | TMR | 29.29 h sobre n=53 | ✅ |
 
-Dos reglas que no son obvias y están en el código:
+Tres reglas que no son obvias. Están en el código y ahora también en pantalla, dentro del desglose del indicador al que afectan:
 
 - **Cerrados = `Closed` + `Resuelto`.** Halo tiene los dos estados y el informe los suma.
-- **El TMR excluye los tickets abiertos.** Los 10 en seguimiento no tienen tiempo de resolución; contarlos como 0 hundiría el promedio.
+- **El TMR excluye los tickets abiertos.** Los 10 en seguimiento no tienen tiempo de resolución; contarlos como 0 hundiría el promedio. Por eso se publica el `n` junto al número.
+- **`Solicitud de Reporte` no entra en Solicitudes.** Se cuenta como su propio tipo, así que Alertas + Solicitudes no da el total: 15 + 43 + 5 = 63.
 
 ## Datos
 

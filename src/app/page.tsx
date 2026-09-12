@@ -3,10 +3,11 @@ import { cierreActivo } from "@/lib/cierre-activo";
 import {
   agruparPorHerramienta,
   calcularMetricas,
-  formatearHoras,
+  indicadoresTrazables,
   ticketsPerdidosEnProcesoManual,
 } from "@/lib/metricas";
 import { Barras, BarrasApiladas, PALETA, Panel, Pastel } from "./graficas";
+import { IndicadoresTrazables } from "./indicadores";
 import { TicketsPerdidos, VistasPorHerramienta } from "./vistas";
 import { BotonDeTema } from "./tema";
 import { ZonaDeCarga } from "./zona-de-carga";
@@ -50,14 +51,13 @@ export default function Dashboard() {
         <ZonaDeCarga origen={cierre.origen} />
       </div>
 
-      <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-        <Indicador etiqueta="Tickets" valor={m.total} destacado />
-        <Indicador etiqueta="Alertas" valor={cuenta(m.porTipo, "Alerta")} />
-        <Indicador etiqueta="Solicitudes" valor={cuenta(m.porTipo, "Solicitud")} />
-        <Indicador etiqueta="Cerrados" valor={m.cerrados} />
-        <Indicador etiqueta="Pendientes" valor={m.pendientes} />
-        <Indicador etiqueta="TPA / TMR" valor={`${formatearHoras(m.tpa.valor)}`} pie={`TMR ${m.tmr.valor.toFixed(2)} h (n=${m.tmr.n})`} />
-      </section>
+      <div className="mt-6">
+        <p className="mb-2 text-xs text-slate-500 dark:text-slate-400">
+          Toca cualquier indicador para ver los tickets que lo componen y con que criterio se
+          calculo.
+        </p>
+        <IndicadoresTrazables indicadores={indicadoresTrazables(tickets)} />
+      </div>
 
       <div className="mt-6">
         <TicketsPerdidos tickets={perdidos} total={m.total} />
@@ -105,32 +105,3 @@ export default function Dashboard() {
   );
 }
 
-function cuenta(pares: [string, number][], clave: string): number {
-  return pares.find(([k]) => k === clave)?.[1] ?? 0;
-}
-
-function Indicador({
-  etiqueta,
-  valor,
-  pie,
-  destacado,
-}: {
-  etiqueta: string;
-  valor: string | number;
-  pie?: string;
-  destacado?: boolean;
-}) {
-  return (
-    <div
-      className={`rounded-xl border p-4 ${
-        destacado ? "border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950" : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
-      }`}
-    >
-      <p className="text-[11px] font-semibold tracking-wide text-slate-500 dark:text-slate-400 uppercase">{etiqueta}</p>
-      <p className={`mt-1 text-2xl font-bold ${destacado ? "text-blue-700 dark:text-blue-300" : "text-slate-900 dark:text-slate-100"}`}>
-        {valor}
-      </p>
-      {pie && <p className="mt-0.5 text-[11px] text-slate-400 dark:text-slate-500">{pie}</p>}
-    </div>
-  );
-}
