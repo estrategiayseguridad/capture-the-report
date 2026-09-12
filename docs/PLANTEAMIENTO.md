@@ -1,59 +1,89 @@
-# 📐 Planteamiento — Equipo XX
-
-> ⛔ **Completar este documento ANTES de escribir código.** Es obligatorio, se evalúa (35% del puntaje), y es lo que hace que el agente de IA trabaje bien: un planteamiento claro = un prototipo que avanza solo.
->
-> Tiempo sugerido: 30–40 minutos entre todo el equipo. Sean concretos — frases cortas valen más que párrafos.
+# 📐 Planteamiento — Equipo 11
 
 ## 1. Equipo
 
-- **Número de equipo:**
-- **Integrantes:**
-- **Nombre del prototipo:** (pónganle nombre, es más divertido)
+- **Número de equipo:** 11
+- **Integrantes:** _(⚠️ completar con los nombres del equipo)_
+- **Nombre del prototipo:** **Cámara Check** — panel de cumplimiento para
+  participantes de las Cámaras de Compensación
 
 ## 2. El problema
 
-_¿Qué reporte o proceso duele hoy? Sean específicos._
-
-- **¿Qué reporte/proceso es?** (ej. "el reporte semanal de escaneos que se arma a mano en Word")
-- **¿Quién lo sufre y con qué frecuencia?** (ej. "los consultores de VAPT, cada lunes")
-- **¿Cuánto tiempo toma hoy y por qué?** (ej. "2 horas: copiar datos del escáner, dar formato, revisar")
-- **¿Qué es lo peor del proceso actual?**
+- **¿Qué reporte/proceso es?** La evaluación de cumplimiento de los
+  *Lineamientos de Seguridad para los Participantes en las Cámaras de
+  Compensación Bancaria (CCB) y Automatizada (CCA)* — Marco de Referencia v2023
+  de ICG. Hoy se lleva en una hoja de Excel con 23 controles y luego se
+  transcribe a un informe en Word.
+- **¿Quién lo sufre y con qué frecuencia?** Los consultores de auditoría /
+  GRC en cada revisión a un participante (banco, cooperativa, entidad
+  financiera). Al menos una vez al año por participante, más los seguimientos.
+- **¿Cuánto tiempo toma hoy y por qué?** Entre 3 y 4 horas por informe: llenar
+  el Excel, calcular a mano los porcentajes de cumplimiento por objetivo y por
+  principio, promediar las notas de madurez, y copiar observaciones y
+  comentarios control por control al documento final.
+- **¿Qué es lo peor del proceso actual?** Los **cálculos a mano**. Un cambio en
+  un solo control obliga a recalcular el objetivo, el principio y el total; las
+  fórmulas del Excel se rompen y los porcentajes del informe terminan sin
+  cuadrar con el detalle. Además la nota de madurez (0–5) se escribe a mano y se
+  desalinea del nivel de madurez seleccionado.
 
 ## 3. La solución
 
-_En 2–3 frases: ¿qué va a hacer el prototipo?_
-
-- **¿Qué hace?**
-- **¿Qué deja de hacer el humano gracias a esto?**
-- **¿Dónde encajaría en la futura plataforma unificada de reportería?** (¿es un generador? ¿un conector? ¿un validador? ¿un panel?)
+- **¿Qué hace?** Una web donde el auditor captura los 23 controles del
+  lineamiento (nivel de clasificación, nivel de madurez, observaciones y
+  comentarios) y el sistema calcula en vivo el cumplimiento y la madurez por
+  control → objetivo → principio → global, para luego generar el informe listo
+  para imprimir o guardar como PDF.
+- **¿Qué deja de hacer el humano gracias a esto?** Calcular porcentajes,
+  promediar notas de madurez, mantener fórmulas de Excel y transcribir el
+  detalle al documento final.
+- **¿Dónde encajaría en la futura plataforma unificada de reportería?** Es un
+  **recolector + generador** con un marco normativo específico: captura
+  estructurada según un estándar y produce el documento de salida. El JSON
+  exportado puede alimentar después un panel consolidado de varios
+  participantes.
 
 ## 4. El flujo
 
-_El camino de punta a punta. Complétenlo como una lista de pasos:_
-
-1. **Entrada:** ¿qué recibe el prototipo? (ej. "un CSV exportado del escáner" — usen los datos de `data/`)
-2. **Proceso:** ¿qué hace con eso? (ej. "agrupa por severidad, redacta resumen con IA")
-3. **Salida:** ¿qué produce? (ej. "un reporte HTML con branding listo para imprimir")
-4. **¿Quién valida antes de que se use/envíe?**
+1. **Entrada:** el auditor llena el panel control por control (23 controles
+   agrupados en 7 objetivos y 4 principios), más los datos de la evaluación
+   (participante, auditor, fecha, alcance). También puede **importar un JSON**
+   de una evaluación previa para dar seguimiento.
+2. **Proceso:** la nota de madurez (0–5) se deriva automáticamente del nivel
+   seleccionado; se calcula el % de cumplimiento y la madurez promedio de cada
+   objetivo, cada principio y el global.
+3. **Salida:** informe imprimible en `/reporte` (resumen ejecutivo, tabla por
+   principio, cumplimiento por objetivo, listado de brechas con sus
+   observaciones, y matriz detallada de los 23 controles) + export JSON.
+4. **¿Quién valida antes de que se use/envíe?** El auditor líder revisa el
+   informe generado antes de entregarlo al participante o a ICG. El pie del
+   documento lo indica explícitamente.
 
 ```
-[Entrada] ──▶ [Paso 1] ──▶ [Paso 2] ──▶ [Salida]
+[Captura de 23 controles] ──▶ [Nota de madurez derivada] ──▶ [Rollup control→objetivo→principio→global] ──▶ [Informe imprimible + JSON]
 ```
-_(Opcional: dibujen el flujo con más detalle)_
 
 ## 5. Alcance del prototipo de HOY
 
-_Con ~3 horas de desarrollo, sean brutalmente realistas:_
-
-- **Hoy SÍ se demuestra:** (máximo 3 cosas — el camino feliz)
-  1.
-  2.
-  3.
-- **Hoy NO (queda para después):**
-  -
-- **Datos de entrada para la demo:** (¿cuál archivo de `data/` o qué dato sintético?)
+- **Hoy SÍ se demuestra:**
+  1. Capturar los controles en el panel con los 5 campos definidos y ver el
+     cumplimiento y la madurez recalcularse en vivo en los tres niveles.
+  2. Generar el informe imprimible con resumen ejecutivo, brechas y matriz de
+     detalle (Imprimir → Guardar como PDF).
+  3. Guardado automático en el navegador + exportar/importar la evaluación en
+     JSON.
+- **Hoy NO (queda para después):** login y multiusuario, base de datos,
+  adjuntar evidencias, plan de acción con responsable y fecha compromiso,
+  exportación a Excel, comparación entre evaluaciones, ponderación por
+  criticidad del control, mapa de calor de riesgo.
+- **Datos de entrada para la demo:** el botón **"Cargar ejemplo"** llena la
+  evaluación completa de un participante ficticio (*Banco Demo, S.A.*,
+  65% de cumplimiento, madurez 2.43, 8 brechas). Datos sintéticos, ningún dato
+  real de cliente.
 
 ## 6. Reparto rápido
+
+_(⚠️ completar con los nombres del equipo)_
 
 - ¿Quién maneja el agente / código?
 - ¿Quién prepara datos y prueba el flujo?
@@ -61,14 +91,17 @@ _Con ~3 horas de desarrollo, sean brutalmente realistas:_
 
 ---
 
-### Ejemplo express
+## Anexo — El marco normativo
 
-_Así se ve un planteamiento bien llenado (no lo copien, es solo la referencia del nivel de detalle):_
+Estructura de tres niveles tomada de [DOC.md](DOC.md), numeral 11:
 
-- **Problema:** el resumen semanal de escaneos se arma a mano en Word — 2 horas cada lunes, copiando y pegando del escáner.
-- **Quién lo sufre:** los consultores de VAPT, todas las semanas.
-- **Solución:** una web donde subes el CSV del escáner y te devuelve el resumen ya redactado, listo para revisar.
-- **Flujo:** subir CSV → parsear filas → agrupar por severidad → redactar el resumen con IA → mostrar un HTML imprimible.
-- **Alcance de HOY:** (1) subir el CSV de `data/`, (2) ver el reporte generado en pantalla.
-- **Hoy NO:** login, guardar histórico, exportar a PDF.
-- **Dato de demo:** `data/escaneo-ejemplo.csv`.
+| Principio | Objetivos | Controles |
+|---|---|---|
+| Conocer y asegurar su entorno | 11.1, 11.2, 11.3, 11.4 | 14 |
+| Conocer y gestionar accesos | 11.5 | 4 |
+| Conocer y gestionar Terceros | 11.6 | 1 |
+| Gestión de Ciber resiliencia | 11.7 | 4 |
+| **Total** | **7** | **23** |
+
+Niveles de madurez y su nota: No controlable (0), Inicio (1), Repetible (2),
+Definido (3), Administrado (4), Optimizado (5).
