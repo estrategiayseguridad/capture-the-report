@@ -1,0 +1,153 @@
+{
+  "clientes": [
+    { "id": "cli-acme", "nombre": "ACME Corp" },
+    { "id": "cli-norte", "nombre": "NorteLogística" },
+    { "id": "cli-andes", "nombre": "Clínica Andes" }
+  ],
+  "proyectos": [
+    { "id": "pro-firewall", "nombre": "Endurecimiento perimetral Q3" },
+    { "id": "pro-soc", "nombre": "SOC gestionado 2026" },
+    { "id": "pro-vapt", "nombre": "VAPT aplicativo web" },
+    { "id": "pro-cierre", "nombre": "Cierre contable interno" }
+  ],
+  "departamentos": [
+    { "id": "dep-ops", "nombre": "Operaciones" },
+    { "id": "dep-cons", "nombre": "Consultoría" },
+    { "id": "dep-adm", "nombre": "Administración" },
+    { "id": "dep-ti", "nombre": "TI interna" }
+  ],
+  "facturas": [
+    {
+      "id": "fac-001",
+      "numero": "F-2026-1042",
+      "fecha": "2026-08-28",
+      "proveedor": "CloudHost Demo",
+      "monto": 4850,
+      "motivo": "Hosting del SOC gestionado — agosto",
+      "clienteId": "cli-norte",
+      "proyectoId": "pro-soc",
+      "departamentoId": "dep-ops"
+    },
+    {
+      "id": "fac-002",
+      "numero": "F-2026-1108",
+      "fecha": "2026-09-01",
+      "proveedor": "Licencias Seguras S.A.",
+      "monto": 12600,
+      "motivo": "Renovación de licencias de análisis",
+      "clienteId": "cli-acme",
+      "proyectoId": "pro-vapt",
+      "departamentoId": "dep-cons"
+    },
+    {
+      "id": "fac-003",
+      "numero": "F-2026-1115",
+      "fecha": "2026-09-02",
+      "proveedor": "Viajes Andinos",
+      "monto": 3200,
+      "motivo": "Viáticos de visita on-site",
+      "clienteId": "cli-andes",
+      "proyectoId": "pro-firewall",
+      "departamentoId": "dep-cons"
+    },
+    {
+      "id": "fac-004",
+      "numero": "F-2026-1120",
+      "fecha": "2026-09-02",
+      "proveedor": "Papelería Central",
+      "monto": 640,
+      "motivo": "Insumos de oficina para cierre",
+      "clienteId": "cli-acme",
+      "proyectoId": "pro-cierre",
+      "departamentoId": "dep-adm"
+    },
+    {
+      "id": "fac-005",
+      "numero": "F-2026-1133",
+      "fecha": "2026-09-03",
+      "proveedor": "NetLabs Example",
+      "monto": 8900,
+      "motivo": "Appliances de laboratorio para hardening",
+      "clienteId": "cli-andes",
+      "proyectoId": "pro-firewall",
+      "departamentoId": "dep-ops"
+    },
+    {
+      "id": "fac-006",
+      "numero": "F-2026-1140",
+      "fecha": "2026-09-03",
+      "proveedor": "Café del Equipo",
+      "monto": 280,
+      "motivo": "Catering reunión de kickoff",
+      "clienteId": "cli-norte",
+      "proyectoId": "pro-soc",
+      "departamentoId": "dep-ops"
+    },
+    {
+      "id": "fac-007",
+      "numero": "F-2026-1148",
+      "fecha": "2026-09-04",
+      "proveedor": "Trainers LatAm",
+      "monto": 5400,
+      "motivo": "Capacitación interna de respuesta a incidentes",
+      "clienteId": "cli-acme",
+      "proyectoId": "pro-soc",
+      "departamentoId": "dep-ti"
+    },
+    {
+      "id": "fac-008",
+      "numero": "F-2026-1155",
+      "fecha": "2026-09-04",
+      "proveedor": "Print Demo",
+      "monto": 1150,
+      "motivo": "Impresión de reportes ejecutivos",
+      "clienteId": "cli-andes",
+      "proyectoId": "pro-vapt",
+      "departamentoId": "dep-cons"
+    },
+    {
+      "id": "fac-009",
+      "numero": "F-2026-1162",
+      "fecha": "2026-09-05",
+      "proveedor": "Taxi Seguro",
+      "monto": 420,
+      "motivo": "Traslados a datacenter del cliente",
+      "clienteId": "cli-norte",
+      "proyectoId": "pro-firewall",
+      "departamentoId": "dep-ops"
+    },
+    {
+      "id": "fac-010",
+      "numero": "F-2026-1170",
+      "fecha": "2026-09-05",
+      "proveedor": "Software Contable Demo",
+      "monto": 2100,
+      "motivo": "Módulo extra para conciliación de facturas",
+      "clienteId": "cli-acme",
+      "proyectoId": "pro-cierre",
+      "departamentoId": "dep-adm"
+    },
+    {
+      "id": "fac-011",
+      "numero": "F-2026-1178",
+      "fecha": "2026-09-05",
+      "proveedor": "CloudHost Demo",
+      "monto": 4850,
+      "motivo": "Hosting del SOC gestionado — septiembre",
+      "clienteId": "cli-norte",
+      "proyectoId": "pro-soc",
+      "departamentoId": "dep-ops"
+    },
+    {
+      "id": "fac-012",
+      "numero": "F-2026-1184",
+      "fecha": "2026-09-05",
+      "proveedor": "Laboratorio Forense Example",
+      "monto": 7600,
+      "motivo": "Horas de análisis forense en VAPT",
+      "clienteId": "cli-acme",
+      "proyectoId": "pro-vapt",
+      "departamentoId": "dep-cons"
+    }
+  ]
+}
