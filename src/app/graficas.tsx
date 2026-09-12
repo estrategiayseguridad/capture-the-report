@@ -19,10 +19,10 @@ export function Barras({
     <div className="flex flex-col gap-2">
       {datos.map(([etiqueta, n]) => (
         <div key={etiqueta} className="flex items-center gap-3 text-sm">
-          <span className="w-40 shrink-0 truncate text-right text-slate-600" title={etiqueta}>
+          <span className="w-40 shrink-0 truncate text-right text-slate-600 dark:text-slate-400" title={etiqueta}>
             {etiqueta}
           </span>
-          <div className="h-6 flex-1 rounded bg-slate-100">
+          <div className="h-6 flex-1 rounded bg-slate-100 dark:bg-slate-800">
             <div
               className="flex h-6 items-center justify-end rounded px-2 text-xs font-semibold text-white transition-all"
               style={{ width: `${Math.max((n / max) * 100, 6)}%`, background: color }}
@@ -47,7 +47,7 @@ export function BarrasApiladas({
   const max = Math.max(...filas.map((f) => f.total), 1);
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap gap-3 text-xs text-slate-600">
+      <div className="flex flex-wrap gap-3 text-xs text-slate-600 dark:text-slate-400">
         {estados.map((estado, i) => (
           <span key={estado} className="flex items-center gap-1.5">
             <span
@@ -60,7 +60,7 @@ export function BarrasApiladas({
       </div>
       {filas.map((fila) => (
         <div key={fila.herramienta} className="flex items-center gap-3 text-sm">
-          <span className="w-40 shrink-0 truncate text-right text-slate-600">
+          <span className="w-40 shrink-0 truncate text-right text-slate-600 dark:text-slate-400">
             {fila.herramienta}
           </span>
           <div className="flex-1">
@@ -85,7 +85,7 @@ export function BarrasApiladas({
               )}
             </div>
           </div>
-          <span className="w-8 shrink-0 text-xs font-semibold text-slate-500">{fila.total}</span>
+          <span className="w-8 shrink-0 text-xs font-semibold text-slate-500 dark:text-slate-400">{fila.total}</span>
         </div>
       ))}
     </div>
@@ -121,9 +121,9 @@ export function Pastel({ datos }: { datos: [string, number][] }) {
         {tramos.map((t) => (
           <li key={t.etiqueta} className="flex items-center gap-2">
             <span className="inline-block h-3 w-3 rounded-sm" style={{ background: t.color }} />
-            <span className="text-slate-700">{t.etiqueta}</span>
-            <span className="font-semibold text-slate-900">{t.n}</span>
-            <span className="text-xs text-slate-500">
+            <span className="text-slate-700 dark:text-slate-300">{t.etiqueta}</span>
+            <span className="font-semibold text-slate-900 dark:text-slate-100">{t.n}</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">
               ({((t.n / total) * 100).toFixed(0)}%)
             </span>
           </li>
@@ -143,9 +143,9 @@ export function Panel({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h3 className="text-sm font-bold tracking-wide text-slate-900 uppercase">{titulo}</h3>
-      {subtitulo && <p className="mt-0.5 mb-4 text-xs text-slate-500">{subtitulo}</p>}
+    <section className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 shadow-sm">
+      <h3 className="text-sm font-bold tracking-wide text-slate-900 dark:text-slate-100 uppercase">{titulo}</h3>
+      {subtitulo && <p className="mt-0.5 mb-4 text-xs text-slate-500 dark:text-slate-400">{subtitulo}</p>}
       {!subtitulo && <div className="mb-4" />}
       {children}
     </section>

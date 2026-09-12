@@ -8,6 +8,7 @@ import {
 } from "@/lib/metricas";
 import { Barras, BarrasApiladas, PALETA, Panel, Pastel } from "./graficas";
 import { TicketsPerdidos, VistasPorHerramienta } from "./vistas";
+import { BotonDeTema } from "./tema";
 import { ZonaDeCarga } from "./zona-de-carga";
 
 // El cierre vive en memoria del servidor: la pagina no puede quedar cacheada.
@@ -23,23 +24,26 @@ export default function Dashboard() {
 
   return (
     <main className="mx-auto w-full max-w-6xl px-6 py-8">
-      <header className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200 pb-5">
+      <header className="flex flex-wrap items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-700 pb-5">
         <div>
-          <p className="text-xs font-bold tracking-widest text-blue-600 uppercase">Reportero CSC</p>
-          <h1 className="mt-1 text-2xl font-bold text-slate-900">
+          <p className="text-xs font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase">Reportero CSC</p>
+          <h1 className="mt-1 text-2xl font-bold text-slate-900 dark:text-slate-100">
             Cierre mensual de tickets — {cierre.periodo}
           </h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             {cierre.cliente} · {m.total} tickets del {m.desde} al {m.hasta} · fuente: pestana{" "}
-            <code className="text-slate-700">DATOS</code> del export de Halo
+            <code className="text-slate-700 dark:text-slate-300">DATOS</code> del export de Halo
           </p>
         </div>
-        <Link
-          href="/informe"
-          className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
-        >
-          Generar informe →
-        </Link>
+        <div className="flex items-center gap-2">
+          <BotonDeTema />
+          <Link
+            href="/informe"
+            className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
+          >
+            Generar informe →
+          </Link>
+        </div>
       </header>
 
       <div className="mt-5">
@@ -92,7 +96,7 @@ export default function Dashboard() {
         </Panel>
       </div>
 
-      <footer className="mt-8 border-t border-slate-200 pt-4 text-xs text-slate-400">
+      <footer className="mt-8 border-t border-slate-200 dark:border-slate-700 pt-4 text-xs text-slate-400 dark:text-slate-500">
         Equipo 08 · Datos sanitizados: cliente ficticio, agentes y usuarios anonimizados. Las
         distribuciones son las del cierre real, asi que estas cifras deben cuadrar con el informe
         publicado.
@@ -119,14 +123,14 @@ function Indicador({
   return (
     <div
       className={`rounded-xl border p-4 ${
-        destacado ? "border-blue-200 bg-blue-50" : "border-slate-200 bg-white"
+        destacado ? "border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950" : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
       }`}
     >
-      <p className="text-[11px] font-semibold tracking-wide text-slate-500 uppercase">{etiqueta}</p>
-      <p className={`mt-1 text-2xl font-bold ${destacado ? "text-blue-700" : "text-slate-900"}`}>
+      <p className="text-[11px] font-semibold tracking-wide text-slate-500 dark:text-slate-400 uppercase">{etiqueta}</p>
+      <p className={`mt-1 text-2xl font-bold ${destacado ? "text-blue-700 dark:text-blue-300" : "text-slate-900 dark:text-slate-100"}`}>
         {valor}
       </p>
-      {pie && <p className="mt-0.5 text-[11px] text-slate-400">{pie}</p>}
+      {pie && <p className="mt-0.5 text-[11px] text-slate-400 dark:text-slate-500">{pie}</p>}
     </div>
   );
 }

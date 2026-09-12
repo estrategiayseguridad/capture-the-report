@@ -1,10 +1,19 @@
 @import "tailwindcss";
 
-/* Tema claro fijo: la demo va a proyector y el modo oscuro automatico
-   arruina el contraste de las graficas. */
+/* Modo oscuro por clase, no por `prefers-color-scheme`: lo decide el boton del
+   dashboard y arranca SIEMPRE en claro. La demo va a proyector, y que el tema
+   dependa de la configuracion del sistema de quien presenta es una sorpresa que
+   no queremos a mitad de la demo. */
+@custom-variant dark (&:where(.oscuro, .oscuro *));
+
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
+}
+
+.oscuro {
+  --background: #0b1220;
+  --foreground: #e8edf5;
 }
 
 @theme inline {
@@ -20,13 +29,20 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
-/* El informe se imprime a PDF con Ctrl+P: fuera lo que no es documento. */
+/* El informe se imprime a PDF con Ctrl+P: fuera lo que no es documento.
+   Se fuerza claro incluso con el modo oscuro activo — un documento que se
+   entrega al cliente no se imprime en negro. */
 @media print {
   .no-imprimir {
     display: none !important;
   }
-  body {
-    background: #fff;
+  body,
+  .oscuro body {
+    background: #fff !important;
+    color: #0f172a !important;
+  }
+  .hoja {
+    background: #fff !important;
   }
   .hoja {
     box-shadow: none !important;
