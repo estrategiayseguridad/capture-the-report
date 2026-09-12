@@ -162,10 +162,7 @@ test("edits, applies, resets and retains charts without rereading or changing so
   );
   await expect(
     page.getByRole("button", { name: "Continuar", exact: true }),
-  ).toBeDisabled();
-  await expect(
-    page.getByText("Historial anual se implementará en la siguiente fase."),
-  ).toBeVisible();
+  ).toBeEnabled();
   for (const canvas of await page.locator("canvas").all()) {
     const box = await canvas.boundingBox();
     expect(box?.width).toBeGreaterThan(250);

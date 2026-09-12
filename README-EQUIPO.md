@@ -1,6 +1,6 @@
 # CSC Report Automation
 
-Aplicación web para automatizar reportes mensuales del Cyber Shield Center. Incluye la arquitectura base, la importación XLSX y la **fase 3: gráficas editables de estados y tickets del período**, sin persistencia de tickets ni generación de documentos. Consulta [la guía de importación](docs/IMPORTACION-XLSX.md) y [la guía de gráficas](docs/GRAFICAS.md) para probar cada flujo y revisar sus archivos.
+Aplicación web para automatizar reportes mensuales del Cyber Shield Center. Incluye importación XLSX, gráficas editables y la **fase 4: historial anual persistente por cliente y año**. Guarda conteos mensuales, sin persistir tickets ni generar documentos. Consulta las guías de [importación](docs/IMPORTACION-XLSX.md), [gráficas](docs/GRAFICAS.md) e [historial anual](docs/HISTORIAL.md).
 
 ## Requisitos e inicio
 
@@ -10,11 +10,12 @@ Node.js 22.12 o superior (recomendado: rama 22 LTS), npm y una terminal en la ra
 npm ci
 Copy-Item .env.example .env
 npm run db:generate
+if (-not (Test-Path prisma/dev.db)) { New-Item -ItemType File prisma/dev.db | Out-Null }
 npm run db:deploy
 npm run dev
 ```
 
-La copia de `.env` es únicamente para la primera instalación: conserva un archivo existente. En macOS/Linux usa `cp .env.example .env`.
+La copia de `.env` es únicamente para la primera instalación: conserva un archivo existente. La inicialización del archivo SQLite vacío evita un fallo del motor de Prisma en Windows cuando el archivo aún no existe. En macOS/Linux usa `cp .env.example .env` y `touch prisma/dev.db`.
 
 Abrir **http://localhost:3000**; redirige a **/dashboard**.
 
@@ -30,8 +31,8 @@ Abrir **http://localhost:3000**; redirige a **/dashboard**.
 | `npm run lint` | ESLint |
 | `npm run typecheck` | Generar tipos de rutas y comprobar TypeScript |
 | `npm run format` | Formatear código propio y componentes UI |
-| `npm run test:e2e` | Verificar navegación, importación y edición de gráficas en escritorio y móvil sobre una compilación existente |
-| `npm run test:unit` | Probar importación, agrupación de gráficas, validación y conservación de datos fuente |
+| `npm run test:e2e` | Verificar navegación, importación, gráficas y persistencia del historial en escritorio y móvil |
+| `npm run test:unit` | Probar importación, agrupaciones, meses vacíos, validación y conservación de datos fuente |
 | `npm run db:validate` | Validar esquema Prisma |
 | `npm run db:generate` | Generar Prisma Client tras instalar o modificar el esquema |
 | `npm run db:deploy` | Aplicar migraciones existentes, incluida la inicial |
@@ -43,14 +44,14 @@ Abrir **http://localhost:3000**; redirige a **/dashboard**.
 | Ruta | Estado |
 | --- | --- |
 | `/dashboard` | Cuatro indicadores iniciales y acceso a nuevo reporte |
-| `/reportes/nuevo` | Importación temporal, resúmenes, tabla paginada y paso de gráficas editables |
+| `/reportes/nuevo` | Importación temporal, resúmenes, gráficas editables e historial con el mes importado |
 | `/reportes` | Tabla vacía con siete columnas |
-| `/historial` | Espacio reservado al historial anual |
+| `/historial` | Consulta y edición del historial guardado, filtrado por cliente/año |
 | `/configuracion` | Secciones visuales para clientes, SLA y plantillas |
 
-Los ceros del dashboard y los estados vacíos de historial siguen siendo marcadores iniciales de UI, no consultas a la base. El menú tiene estado activo, navegación de escritorio y panel móvil con cierre por Escape y manejo de foco. `POST /api/reportes/importar` recibe FormData y procesa el archivo en memoria; no hay operaciones CRUD ni cambios de Prisma en esta fase.
+Los ceros del dashboard y la tabla vacía de reportes siguen siendo marcadores iniciales de UI. El menú tiene estado activo, navegación de escritorio y panel móvil. `POST /api/reportes/importar` procesa el archivo en memoria. `/api/clientes` vincula los clientes del reporte y `/api/historial` consulta y guarda exclusivamente conteos mensuales.
 
-Para las pruebas de navegador, ejecutar una vez `npx playwright install chromium`, luego `npm run build` y `npm run test:e2e`. Las pruebas levantan y cierran su propio servidor en el puerto 3100, que debe estar libre. No insertan registros en SQLite.
+Para las pruebas de navegador, ejecutar una vez `npx playwright install chromium`, luego `npm run build` y `npm run test:e2e`. Levantan y cierran su servidor en el puerto 3100. La preparación aplica migraciones a `.next/e2e-history.db`, una base aislada e ignorada por Git; las pruebas no insertan registros en `prisma/dev.db`.
 
 ## Arquitectura
 
@@ -62,10 +63,14 @@ tests/
   navigation.spec.ts
   import.spec.ts
   charts.spec.ts
+  history.spec.ts
+  setup.ts
   fixtures/excel.ts
   fixtures/charts.ts
+  fixtures/history-database.ts
   unit/excel.spec.ts
   unit/charts.spec.ts
+  unit/history.spec.ts
 src/
   app/
     dashboard/
@@ -73,6 +78,8 @@ src/
     historial/
     configuracion/
     api/reportes/importar/ # Route Handler Node.js
+    api/clientes/          # vinculación mínima del cliente
+    api/historial/         # lectura y guardado de meses
   components/
     layout/               # shell, sidebar y encabezados
     dashboard/            # tarjetas
@@ -80,11 +87,13 @@ src/
     forms/                # formulario funcional de importación
     ui/                   # componentes shadcn/ui
     charts/               # formularios, validación visual y barras Chart.js
+    history/              # filtros, carga y edición del historial
     sla/                  # reservado
   services/
     excel/                # lectura, detección de hoja, normalización y mapeo
     sla/
     charts/               # agrupación pura de Ticket[] y adaptación de etiquetas
+    history/              # combinación de datos, API cliente y servicio servidor
     word/
   config/                 # navegación y constantes SLA
   types/                  # tipos de dominio independientes de Prisma
@@ -114,7 +123,7 @@ Los tipos de dominio y componentes no necesitan cambiar por el proveedor. No se 
 
 ## Pendiente
 
-Persistencia desde UI, historial real, gráfica histórica, cálculos SLA, información complementaria, Word, PDF, autenticación, IA y entrega automática. TMAD no se utiliza. Las dos gráficas actuales usan Chart.js en el navegador; no hay generación de PNG en servidor ni dependencias de documentos.
+Persistencia de tickets y reportes completos, cálculos SLA, información complementaria, Word, PDF, autenticación, IA y entrega automática. TMAD no se utiliza. Las tres gráficas actuales usan Chart.js en el navegador; no hay generación de PNG en servidor ni dependencias de documentos.
 
 Las constantes SLA contienen CRITICA (10 min/4 h/95%), ALTA (10 min/8 h/95%), MEDIA (15 min/24 h/90%) y BAJA (15 min/48 h/90%).
 

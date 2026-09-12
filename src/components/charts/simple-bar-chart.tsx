@@ -48,7 +48,13 @@ function wrapLabel(label: string): string[] {
   return lines;
 }
 
-export function SimpleBarChart({ data }: { data: ReportChartData }) {
+export function SimpleBarChart({
+  data,
+  minCategoryWidth = 145,
+}: {
+  data: ReportChartData;
+  minCategoryWidth?: number;
+}) {
   const labels = data.items.map((item) => wrapLabel(item.label));
   const options: ChartOptions<"bar"> = {
     responsive: true,
@@ -82,7 +88,7 @@ export function SimpleBarChart({ data }: { data: ReportChartData }) {
         <div
           className="relative w-full"
           style={{
-            minWidth: Math.max(320, data.items.length * 145),
+            minWidth: Math.max(320, data.items.length * minCategoryWidth),
             height:
               310 + Math.max(...labels.map((label) => label.length), 1) * 15,
           }}

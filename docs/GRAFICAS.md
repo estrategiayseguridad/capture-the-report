@@ -1,5 +1,7 @@
 # Gráficas del reporte CSC — fase 3
 
+La fase 4 agregó el tercer paso **Historial** y habilitó el botón Continuar hacia él. Consulta [la guía de historial anual](HISTORIAL.md) para su persistencia; esta guía describe las dos gráficas del período.
+
 La ruta `/reportes/nuevo` incorpora dos pasos: **Importación** y **Gráficas**. Se reutiliza el resultado de la importación existente; cambiar de paso no lee otra vez el XLSX ni consulta Prisma.
 
 ## Arquitectura y datos temporales
@@ -16,7 +18,7 @@ La ruta `/reportes/nuevo` incorpora dos pasos: **Importación** y **Gráficas**.
 - Volver entre pasos conserva el archivo, los tickets, los borradores y las vistas previas. Cambiar los campos de importación o iniciar otra importación descarta el resultado anterior y sus gráficas. Recargar o salir de esta página pierde el estado temporal.
 - Cada vista previa ofrece una tabla accesible con los valores aplicados. Las etiquetas largas se dividen en líneas y las categorías numerosas usan desplazamiento horizontal dentro de la gráfica.
 
-No se persisten tickets ni configuraciones. No se implementaron historial, SLA, Word, PDF ni imágenes PNG en servidor. **Continuar** permanece deshabilitado y explica que el historial anual corresponde a la siguiente fase.
+No se persisten tickets ni configuraciones de estas dos gráficas. **Continuar** lleva ahora al historial anual, que guarda sus conteos mensuales en un modelo independiente. SLA, Word, PDF e imágenes PNG en servidor siguen pendientes.
 
 ## Archivos creados y estructura relevante
 

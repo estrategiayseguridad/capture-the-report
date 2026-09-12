@@ -16,9 +16,16 @@ interface Props {
   config: ReportChartsConfig;
   onChange: (config: ReportChartsConfig) => void;
   active: boolean;
+  onContinue: () => void;
 }
 
-export function ReportCharts({ tickets, config, onChange, active }: Props) {
+export function ReportCharts({
+  tickets,
+  config,
+  onChange,
+  active,
+  onContinue,
+}: Props) {
   const detected = useMemo(
     () => ({
       status: getTicketStatusChartData(tickets),
@@ -56,15 +63,7 @@ export function ReportCharts({ tickets, config, onChange, active }: Props) {
       />
       {config.statusChart && config.periodChart && (
         <div className="flex flex-wrap items-center gap-3">
-          <Button disabled aria-describedby="next-phase-description">
-            Continuar
-          </Button>
-          <p
-            id="next-phase-description"
-            className="text-sm text-muted-foreground"
-          >
-            Historial anual se implementará en la siguiente fase.
-          </p>
+          <Button onClick={onContinue}>Continuar</Button>
         </div>
       )}
     </section>

@@ -8,11 +8,32 @@ datasource db {
 }
 
 model Client {
-  id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  reports   Report[]
+  id             String                 @id @default(cuid())
+  name           String
+  nameKey        String?                @unique
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  reports        Report[]
+  monthlyHistory MonthlyTicketHistory[]
+}
+
+enum HistorySource {
+  MANUAL
+  IMPORT
+}
+
+model MonthlyTicketHistory {
+  id           String        @id @default(cuid())
+  clientId     String
+  year         Int
+  month        Int
+  totalTickets Int
+  source       HistorySource
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  client       Client        @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  @@unique([clientId, year, month])
 }
 
 enum ReportStatus {
