@@ -5,6 +5,7 @@ import type { ExcelImportResult } from "@/types/excel";
 import type { ReportChartsConfig } from "@/types/chart";
 import { ReportCharts } from "@/components/reports/report-charts";
 import { Button } from "@/components/ui/button";
+import { HistoryWorkspace } from "@/components/history/history-workspace";
 import { NewReportForm } from "@/components/forms/new-report-form";
 import { ImportSummary } from "@/components/reports/import-summary";
 import { ImportWarnings } from "@/components/reports/import-warnings";
@@ -19,16 +20,19 @@ import {
 
 export function ReportImport() {
   const [result, setResult] = useState<ExcelImportResult | null>(null);
-  const [step, setStep] = useState<"import" | "charts">("import");
+  const [step, setStep] = useState<"import" | "charts" | "history">("import");
+  const [historyVisited, setHistoryVisited] = useState(false);
   const [charts, setCharts] = useState<ReportChartsConfig>({
     statusChart: null,
     periodChart: null,
   });
   const resetResult = () => {
     setResult(null);
+    setHistoryVisited(false);
     setCharts({ statusChart: null, periodChart: null });
   };
-  const goToStep = (nextStep: "import" | "charts") => {
+  const goToStep = (nextStep: "import" | "charts" | "history") => {
+    if (nextStep === "history") setHistoryVisited(true);
     setStep(nextStep);
     window.scrollTo({ top: 0, behavior: "instant" });
   };
@@ -49,6 +53,18 @@ export function ReportImport() {
         >
           2. Gráficas
         </Button>
+        <Button
+          variant={step === "history" ? "default" : "outline"}
+          aria-current={step === "history" ? "step" : undefined}
+          onClick={() => goToStep("history")}
+        >
+          3. Historial
+        </Button>
+        {["4. SLA", "5. Información", "6. Vista previa"].map((label) => (
+          <Button key={label} variant="outline" disabled title="Próximamente">
+            {label}
+          </Button>
+        ))}
       </nav>
       <div hidden={step !== "import"} className="min-w-0 space-y-6">
         <Card className="max-w-3xl shadow-none">
@@ -122,15 +138,35 @@ export function ReportImport() {
             config={charts}
             onChange={setCharts}
             active={step === "charts"}
+            onContinue={() => goToStep("history")}
           />
-        ) : (
+        ) : step === "charts" ? (
           <section className="space-y-4 rounded-xl border bg-white p-6">
             <p>Primero debe importar y analizar un archivo XLSX.</p>
             <Button variant="outline" onClick={() => goToStep("import")}>
               Regresar a Importación
             </Button>
           </section>
-        )}
+        ) : null}
+      </div>
+      <div hidden={step !== "history"} className="min-w-0 space-y-6">
+        <h2 className="text-xl font-semibold">Historial anual de tickets</h2>
+        {result?.success && result.context && historyVisited ? (
+          <HistoryWorkspace
+            imported={{
+              ...result.context,
+              totalTickets: result.tickets.length,
+            }}
+            active={step === "history"}
+          />
+        ) : step === "history" ? (
+          <section className="space-y-4 rounded-xl border bg-white p-6">
+            <p>Primero debe importar y analizar un archivo XLSX.</p>
+            <Button variant="outline" onClick={() => goToStep("import")}>
+              Regresar a Importación
+            </Button>
+          </section>
+        ) : null}
       </div>
     </>
   );

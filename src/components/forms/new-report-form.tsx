@@ -10,21 +10,8 @@ import { emptyImportResult, type ExcelImportResult } from "@/types/excel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { MONTH_NAMES } from "@/lib/months";
 
-const MONTHS = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre",
-];
 const selectClassName =
   "h-10 w-full rounded-md border border-input bg-white px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30 disabled:opacity-50";
 
@@ -129,7 +116,7 @@ export function NewReportForm({ onResetResult, onResult }: NewReportFormProps) {
               {...register("month")}
             >
               <option value="">Selecciona un mes</option>
-              {MONTHS.map((month, index) => (
+              {MONTH_NAMES.map((month, index) => (
                 <option key={month} value={index + 1}>
                   {month}
                 </option>

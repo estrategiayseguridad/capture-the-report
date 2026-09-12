@@ -73,7 +73,7 @@ test("navigation marks the current page and works on mobile", async ({
   expect(noOverflow).toBe(true);
 });
 
-test("history and configuration expose only their placeholders", async ({
+test("history is available and configuration retains its placeholders", async ({
   page,
 }) => {
   await page.goto("/historial");
