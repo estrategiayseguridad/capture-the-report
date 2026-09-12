@@ -1,73 +1,271 @@
-const pasos = [
-  {
-    n: "1",
-    titulo: "Crea la rama de tu equipo",
-    detalle: "git checkout -b equipo-XX — nunca trabajes en main.",
-  },
-  {
-    n: "2",
-    titulo: "Planteamiento primero",
-    detalle:
-      "Completa docs/PLANTEAMIENTO.md antes de la primera línea de código. Se evalúa (30%).",
-  },
-  {
-    n: "3",
-    titulo: "Construye el camino feliz",
-    detalle:
-      "Entra el dato de ejemplo (data/), sale el resultado en pantalla. Después se pule.",
-  },
-  {
-    n: "4",
-    titulo: "Prepara la demo",
-    detalle:
-      "Code freeze 6:00 PM. README-EQUIPO.md, ensayo con cronómetro y último push.",
-  },
-];
+import Link from "next/link";
 
-export default function Home() {
+import {
+  Avatar,
+  Aviso,
+  BarraDato,
+  Etiqueta,
+  NotaDemo,
+  Panel,
+  Tile,
+  TituloSeccion,
+} from "@/components/ui";
+import {
+  certificacionesEnRiesgo,
+  coberturaPorSkill,
+  DIAS_POR_VENCER,
+  resumenPorArea,
+} from "@/lib/analitica";
+import { leerInventario } from "@/lib/datos";
+import { CATEGORIAS } from "@/lib/skills";
+
+/**
+ * Dashboard principal (menú 7 del pitch): el motor de búsqueda arriba, cuánta
+ * gente y cuántos proyectos hay por área, el comparativo de las 10 habilidades
+ * con más gente, y los dos avisos que disparan acción — oportunidades abiertas
+ * y certificaciones por vencer.
+ */
+export default async function Dashboard() {
+  const inventario = await leerInventario();
+  const resumen = resumenPorArea(inventario);
+  const top10 = coberturaPorSkill(inventario).slice(0, 10);
+  const avisos = certificacionesEnRiesgo(inventario);
+  const oportunidades = inventario.proyectos.filter(
+    (p) => p.estado === "oportunidad",
+  );
+
+  const enEjecucion = inventario.proyectos.filter(
+    (p) => p.estado === "en-ejecucion",
+  ).length;
+  const enBanca = inventario.personas.filter((p) => p.carga === 0).length;
+  const maxTop = top10[0]?.personas ?? 1;
+
   return (
-    <main className="min-h-screen bg-[#0a1030] text-white font-mono">
-      <div className="mx-auto max-w-3xl px-6 py-16">
-        <p className="text-cyan-400 text-sm tracking-[0.3em] uppercase">
-          ES Consulting · Hackathon interna
-        </p>
-        <h1 className="mt-4 text-5xl font-bold tracking-tight">
-          <span className="bg-white text-[#0a1030] px-2">CAPTURE</span>{" "}
-          <span className="bg-white text-[#0a1030] px-2">THE</span>{" "}
-          <span className="bg-white text-[#0a1030] px-2">REPORT</span>
-        </h1>
-        <p className="mt-6 text-lg text-slate-300">
-          ✅ El boilerplate está corriendo. Este es el punto de partida de tu
-          prototipo: bórralo y construye encima.
-        </p>
+    <main className="mx-auto w-full max-w-6xl px-6 py-10">
+      <p className="text-xs uppercase tracking-[0.3em] text-acento">
+        ES Consulting · Equipo 05
+      </p>
+      <h1 className="mt-2 text-3xl font-bold tracking-tight">
+        Gestión de habilidades y cargabilidad
+      </h1>
+      <p className="mt-2 max-w-3xl text-tinta-2">
+        Una sola base de talento para las tres áreas: Comercial encuentra a quién
+        proponer, PM ve la carga antes de asignar y RRHH ve dónde están las
+        brechas.
+      </p>
 
-        <ol className="mt-10 space-y-4">
-          {pasos.map((p) => (
-            <li
-              key={p.n}
-              className="flex gap-4 rounded-lg border border-slate-700 bg-[#111a42] p-4"
-            >
-              <span className="text-2xl text-cyan-400 font-bold">
-                {p.n}
-              </span>
-              <div>
-                <h2 className="font-bold">{p.titulo}</h2>
-                <p className="text-sm text-slate-400">{p.detalle}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+      <form action="/buscar" className="mt-6 flex flex-col gap-3 sm:flex-row">
+        <input
+          type="search"
+          name="q"
+          placeholder="Busca una solución, un conocimiento o una certificación: Infoblox, VAPT Web + inglés…"
+          aria-label="Buscar habilidades"
+          className="flex-1 rounded-lg border border-linea-fuerte bg-panel px-4 py-3 text-tinta placeholder:text-tinta-4 focus:border-acento focus:outline-none"
+        />
+        <button
+          type="submit"
+          className="rounded-lg bg-acento px-6 py-3 font-bold text-fondo transition hover:bg-acento-claro"
+        >
+          Buscar talento
+        </button>
+      </form>
 
-        <p className="mt-10 text-sm text-slate-500">
-          Stack: Next.js 15 · TypeScript · Tailwind — reglas completas en{" "}
-          <span className="text-slate-300">README.md</span> y{" "}
-          <span className="text-slate-300">CLAUDE.md</span>. 🔒 Cero datos
-          reales de clientes.
-        </p>
-        <p className="mt-4 text-xs tracking-[0.25em] uppercase text-cyan-400">
-          Protection // Security // Privacy
-        </p>
-      </div>
+      <section className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <Tile
+          valor={inventario.personas.length}
+          etiqueta="Colaboradores"
+          nota={`${inventario.skills.length} habilidades en ${CATEGORIAS.length} categorías`}
+          href="/perfiles"
+        />
+        <Tile
+          valor={enEjecucion}
+          etiqueta="Proyectos en ejecución"
+          nota={`${oportunidades.length} oportunidades abiertas`}
+          href="/carga"
+        />
+        <Tile
+          valor={enBanca}
+          etiqueta="En banca"
+          nota="100% disponibles para tomar proyecto"
+          href="/carga"
+        />
+        <Tile
+          valor={avisos.length}
+          etiqueta="Certificaciones en riesgo"
+          nota={`Vencidas o vencen en ≤ ${DIAS_POR_VENCER} días`}
+          href="/reportes"
+        />
+      </section>
+
+      {oportunidades.length > 0 ? (
+        <section className="mt-8">
+          <TituloSeccion nota="Lo que Comercial tiene en la mesa ahora mismo">
+            Oportunidades abiertas
+          </TituloSeccion>
+          <ul className="mt-3 grid gap-3 sm:grid-cols-2">
+            {oportunidades.map((proyecto) => (
+              <li key={proyecto.id}>
+                <Link
+                  href={`/proyecto/${proyecto.id}`}
+                  className="block rounded-xl border border-acento/30 bg-panel p-4 transition hover:border-acento"
+                >
+                  <div className="flex items-baseline justify-between gap-3">
+                    <p className="font-bold">{proyecto.nombre}</p>
+                    <Etiqueta tono="info">{proyecto.area}</Etiqueta>
+                  </div>
+                  <p className="mt-1 text-sm text-tinta-3">
+                    {proyecto.cliente} · arranca {proyecto.inicio}
+                  </p>
+                  <p className="mt-2 text-sm text-acento-claro">
+                    Buscar quién califica →
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      <section className="mt-8 grid gap-4 lg:grid-cols-3">
+        {resumen.map((area) => (
+          <Panel key={area.area}>
+            <div className="flex items-baseline justify-between gap-3">
+              <h2 className="font-bold">{area.area}</h2>
+              <Link
+                href={`/perfiles?area=${encodeURIComponent(area.area)}`}
+                className="text-xs text-acento hover:text-acento-claro"
+              >
+                ver perfiles →
+              </Link>
+            </div>
+
+            <dl className="mt-3 grid grid-cols-2 gap-y-2 text-sm">
+              <dt className="text-tinta-3">Colaboradores</dt>
+              <dd className="text-right font-bold tabular-nums">
+                {area.personas}
+              </dd>
+              <dt className="text-tinta-3">Proyectos en ejecución</dt>
+              <dd className="text-right font-bold tabular-nums">
+                {area.proyectosEnEjecucion}
+              </dd>
+              <dt className="text-tinta-3">Oportunidades</dt>
+              <dd className="text-right font-bold tabular-nums">
+                {area.oportunidades}
+              </dd>
+              <dt className="text-tinta-3">Carga promedio</dt>
+              <dd className="text-right font-bold tabular-nums">
+                {area.cargaPromedio}%
+              </dd>
+              <dt className="text-tinta-3">En banca</dt>
+              <dd className="text-right font-bold tabular-nums">
+                {area.enBanca}
+              </dd>
+            </dl>
+
+            <p className="mt-3 border-t border-linea pt-3 text-xs text-tinta-4">
+              Punteo —{" "}
+              {CATEGORIAS.map(
+                (c) => `${c.nombre.toLowerCase()} ${area.punteos[c.id]}`,
+              ).join(" · ")}
+            </p>
+          </Panel>
+        ))}
+      </section>
+
+      <section className="mt-8 grid gap-4 lg:grid-cols-2">
+        <Panel>
+          <TituloSeccion nota="Cuántas personas tienen cada habilidad (nivel ≥ 1)">
+            Top 10 de habilidades
+          </TituloSeccion>
+          <ul className="mt-4 space-y-1">
+            {top10.map((c) => (
+              <BarraDato
+                key={c.skill.id}
+                etiqueta={c.skill.nombre}
+                valor={c.personas}
+                maximo={maxTop}
+                href={`/buscar?q=${encodeURIComponent(c.skill.nombre)}`}
+                detalle={
+                  <>
+                    {c.avanzados} avanzados · {c.certificados} certificados
+                  </>
+                }
+              />
+            ))}
+          </ul>
+          <p className="mt-3 text-xs text-tinta-4">
+            Clic en una habilidad para ver quién la tiene y con qué nivel.
+          </p>
+        </Panel>
+
+        <Panel>
+          <TituloSeccion
+            nota={`Vencidas o por vencer en los próximos ${DIAS_POR_VENCER} días`}
+            accion={
+              <Link
+                href="/reportes"
+                className="text-xs text-acento hover:text-acento-claro"
+              >
+                reporte completo →
+              </Link>
+            }
+          >
+            Certificaciones · aviso a RRHH
+          </TituloSeccion>
+
+          {avisos.length === 0 ? (
+            <p className="mt-4 text-sm text-tinta-3">
+              Ninguna certificación vence en la ventana de planificación.
+            </p>
+          ) : (
+            <ul className="mt-4 divide-y divide-linea-suave">
+              {avisos.slice(0, 8).map((aviso) => (
+                <li
+                  key={`${aviso.persona.id}-${aviso.certificacion.nombre}`}
+                  className="flex items-center gap-3 py-2.5"
+                >
+                  <Avatar
+                    nombre={aviso.persona.nombre}
+                    foto={aviso.persona.foto}
+                    tamano="sm"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <Link
+                      href={`/persona/${aviso.persona.id}`}
+                      className="text-sm font-semibold hover:text-acento-claro hover:underline"
+                    >
+                      {aviso.persona.nombre}
+                    </Link>
+                    <p className="truncate text-xs text-tinta-3">
+                      {aviso.certificacion.nombre}
+                    </p>
+                  </div>
+                  <Etiqueta
+                    tono={aviso.estado === "vencida" ? "alerta" : "aviso"}
+                    titulo={`Vence ${aviso.certificacion.vence}`}
+                  >
+                    {aviso.estado === "vencida"
+                      ? `vencida hace ${Math.abs(aviso.dias)} días`
+                      : `vence en ${aviso.dias} días`}
+                  </Etiqueta>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {avisos.length > 0 ? (
+            <div className="mt-4">
+              <Aviso tono="aviso">
+                RRHH tiene que contemplar estas renovaciones en la planificación
+                del trimestre: una certificación vencida es un requisito de
+                licitación que ya no se puede acreditar.
+              </Aviso>
+            </div>
+          ) : null}
+        </Panel>
+      </section>
+
+      <NotaDemo generado={inventario.generado} />
     </main>
   );
 }

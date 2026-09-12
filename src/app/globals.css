@@ -1,26 +1,122 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/**
+ * Paleta de ProdigiES — consolidada sobre la marca de ES Consulting.
+ *
+ * Los cuatro anclajes salen del sitio (es.consulting), donde el design system
+ * los publica con su referencia Pantone:
+ *
+ *   Pantone 298 C   #38bbdd   cyan de marca      → acento
+ *   Pantone 4146 C  #18203b   navy de marca      → superficie de las tarjetas
+ *   Classic Blue    #124d85   azul intermedio    → acento sobre papel
+ *   Ultimate Gray   #a2a3a4   gris neutro        → luminosidad de la tinta secundaria
+ *
+ * Los demás pasos no se eligieron a ojo: se derivaron en OKLCH manteniendo el
+ * tono del anclaje (270° el navy, 219° el cyan) y moviendo solo la luminosidad,
+ * y se validaron por cómputo — contraste WCAG contra cada superficie, y
+ * separación bajo protanopía/deuteranopía para el trío de estado, que es donde
+ * el par rojo↔verde se cae si se elige por gusto.
+ *
+ * Reglas que sostiene esta paleta:
+ *   · Un solo tono para todo lo que es magnitud (barras, niveles): el largo o la
+ *     cantidad llevan el dato, el color no codifica nada.
+ *   · Los tres colores de estado están reservados a estado y siempre van con su
+ *     etiqueta en texto: nunca solo color.
+ *   · La impresión tiene sus propios pasos contra papel blanco, no es un
+ *     invertido automático del tema oscuro.
+ */
+@theme {
+  /* — Superficies · rampa del navy de marca (tono 270°) — */
+  --color-fondo: #0b122a; /* la página */
+  --color-hueco: #101731; /* campos de formulario y notas hundidas */
+  --color-panel: #18203b; /* Pantone 4146 C, tal cual */
+  --color-panel-alto: #28314f; /* fondo de barra, chips sobre tarjeta */
+  --color-linea-suave: #212941; /* divisores */
+  --color-linea: #343c55; /* borde de tarjeta */
+  --color-linea-fuerte: #464f69; /* borde de control */
+
+  /* — Tinta sobre oscuro · mismo tono, casi neutro como el Ultimate Gray — */
+  --color-tinta: #f1f3fa; /* titulares y cifras */
+  --color-tinta-2: #cccfd9; /* texto corrido */
+  --color-tinta-3: #a0a4af; /* etiquetas (la L del Ultimate Gray) */
+  --color-tinta-4: #888c98; /* notas al pie */
+
+  /* — Acento · rampa del cyan de marca (tono 219°) — */
+  --color-acento-claro: #73dbf9; /* enlaces y cifras destacadas */
+  --color-acento: #38bbdd; /* Pantone 298 C, tal cual */
+  --color-acento-medio: #0688a4; /* barras sobre superficie clara */
+  --color-acento-fuerte: #006278; /* barras y énfasis impresos */
+  --color-azul: #124d85; /* Classic Blue: titulares del documento */
+
+  /* — Estado · reservado a estado, siempre con etiqueta — */
+  --color-bien: #7ef3b4;
+  --color-aviso: #eeb318;
+  --color-alerta: #e76763;
+
+  /* — Papel · la ficha y el CV, que son hoja blanca ya en el monitor — */
+  --color-papel: #ffffff;
+  --color-tinta-papel: #18203b; /* el navy de marca hace de tinta */
+  --color-tinta-papel-2: #5b5d65; /* texto corrido del documento */
+  --color-tinta-papel-3: #71747e; /* rótulos: 4.7:1 contra blanco, el piso */
+  --color-linea-papel: #e6e6e6; /* gainsboro de marca */
+  --color-bien-fuerte: #04623f;
+  --color-aviso-fuerte: #a06605;
+  --color-alerta-fuerte: #6c0910;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background: var(--color-fondo);
+  color: var(--color-tinta);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* La ficha de capacidades, el CV y el reporte del área se imprimen o se guardan
+   como PDF desde el navegador: hoja en blanco, márgenes de documento y sin
+   controles.
+ *
+ * El reporte del área se ve en el tema oscuro y se imprime desde ahí, así que
+ * los tokens del tema se redefinen contra el papel en un solo lugar: cada paso
+ * es el suyo, validado contra blanco — no un invertido automático del oscuro.
+ * Antes cada pantalla tenía que acordarse de poner su `print:`, y la mayoría no
+ * lo hacía: los rótulos y las etiquetas de estado salían casi invisibles.
+ *
+ * Los valores van literales y no como `var()` de los tokens de papel: Tailwind
+ * poda del `:root` las variables del tema que ninguna clase usa, y estas solo
+ * viven aquí. Al lado de cada una va el paso de la rampa que le corresponde. */
+@media print {
+  :root {
+    --color-fondo: #ffffff;
+    --color-hueco: #f7f7f7; /* white-smoke de marca */
+    --color-panel: #ffffff;
+    --color-panel-alto: #e6e6e6; /* gainsboro: fondo de barra */
+    --color-linea-suave: #e6e6e6;
+    --color-linea: #e6e6e6;
+    --color-linea-fuerte: #c5c7cd;
+
+    --color-tinta: #18203b; /* = tinta-papel */
+    --color-tinta-2: #454750;
+    --color-tinta-3: #60636c;
+    --color-tinta-4: #71747e; /* = tinta-papel-3, el piso: ni un paso más */
+
+    --color-acento-claro: #006278; /* = acento-fuerte; enlaces y cifras */
+    --color-acento: #0688a4; /* = acento-medio; relleno de barra */
+
+    --color-bien: #04623f; /* = bien-fuerte */
+    --color-aviso: #a06605; /* = aviso-fuerte */
+    --color-alerta: #6c0910; /* = alerta-fuerte */
+  }
+
+  body {
+    background: var(--color-papel);
+    color: var(--color-tinta-papel);
+  }
+
+  @page {
+    margin: 16mm;
+  }
 }
