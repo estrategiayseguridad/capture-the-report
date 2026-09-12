@@ -37,17 +37,17 @@ const COLORES = ["#2563eb", "#16a34a", "#f59e0b", "#dc2626", "#7c3aed", "#0891b2
 
 function StatCard({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-      <p className="text-sm text-slate-500">{label}</p>
-      <p className="mt-1 text-2xl font-semibold text-slate-900">{value}</p>
+    <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 shadow-sm">
+      <p className="text-sm text-slate-500 dark:text-slate-400">{label}</p>
+      <p className="mt-1 text-2xl font-semibold text-slate-900 dark:text-slate-100">{value}</p>
     </div>
   );
 }
 
 function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-      <h3 className="mb-3 text-sm font-semibold text-slate-700">{title}</h3>
+    <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 shadow-sm">
+      <h3 className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">{title}</h3>
       <div className="h-64 w-full">{children}</div>
     </div>
   );
@@ -65,14 +65,14 @@ function CampoUmbral({
   onChange: (v: number) => void;
 }) {
   return (
-    <label className="flex items-center justify-between gap-2 text-xs text-slate-600">
+    <label className="flex items-center justify-between gap-2 text-xs text-slate-600 dark:text-slate-400">
       <span>{label}</span>
       <input
         type="number"
         min={1}
         value={valor}
         onChange={(e) => onChange(Number(e.target.value) || 1)}
-        className="w-16 rounded border border-slate-300 px-2 py-1 text-right text-sm text-slate-900"
+        className="w-16 rounded border border-slate-300 dark:border-slate-600 px-2 py-1 text-right text-sm text-slate-900 dark:text-slate-100"
       />
     </label>
   );
@@ -106,25 +106,25 @@ function ConfiguracionSla({
   }
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+    <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 shadow-sm">
       <button
         onClick={() => setAbierto((v) => !v)}
-        className="flex w-full items-center justify-between text-left text-sm font-semibold text-slate-700"
+        className="flex w-full items-center justify-between text-left text-sm font-semibold text-slate-700 dark:text-slate-300"
       >
         <span>Umbrales de SLA (horas) para {cliente}</span>
-        <span className="text-slate-400">{abierto ? "▲" : "▼"}</span>
+        <span className="text-slate-400 dark:text-slate-500">{abierto ? "▲" : "▼"}</span>
       </button>
 
       {abierto && (
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase text-slate-500">Incidentes</p>
+            <p className="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Incidentes</p>
             <CampoUmbral label="Alta" valor={thresholds.incidente.alta} onChange={(v) => actualizar("incidente", "alta", v)} />
             <CampoUmbral label="Media" valor={thresholds.incidente.media} onChange={(v) => actualizar("incidente", "media", v)} />
             <CampoUmbral label="Baja" valor={thresholds.incidente.baja} onChange={(v) => actualizar("incidente", "baja", v)} />
           </div>
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase text-slate-500">Requerimientos</p>
+            <p className="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Requerimientos</p>
             <CampoUmbral
               label="Alta"
               valor={thresholds.requerimiento.alta}
@@ -144,14 +144,14 @@ function ConfiguracionSla({
           <div className="flex items-center gap-3 sm:col-span-2">
             <button
               onClick={handleGuardar}
-              className="rounded-md bg-slate-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-700"
+              className="rounded-md bg-slate-900 dark:bg-slate-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-700 dark:hover:bg-slate-600"
             >
               Guardar para este cliente
             </button>
-            <button onClick={handleRestaurar} className="text-xs text-slate-500 underline hover:text-slate-700">
+            <button onClick={handleRestaurar} className="text-xs text-slate-500 dark:text-slate-400 underline hover:text-slate-700 dark:hover:text-slate-300">
               Restaurar valores por defecto
             </button>
-            {guardado && <span className="text-xs text-green-600">Guardado ✓</span>}
+            {guardado && <span className="text-xs text-green-600 dark:text-green-400">Guardado ✓</span>}
           </div>
         </div>
       )}
@@ -163,8 +163,8 @@ function BulletList({ items }: { items: Bullet[] }) {
   return (
     <ul className="list-disc space-y-1.5 pl-5">
       {items.map((b, i) => (
-        <li key={i} className="text-sm leading-relaxed text-slate-700">
-          <span className="font-semibold text-slate-900">{b.titulo}:</span> {b.detalle}
+        <li key={i} className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+          <span className="font-semibold text-slate-900 dark:text-slate-100">{b.titulo}:</span> {b.detalle}
         </li>
       ))}
     </ul>
@@ -349,39 +349,39 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8 sm:px-8">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 px-4 py-8 sm:px-8">
       <div className="mx-auto max-w-6xl">
         <header className="mb-8">
-          <h1 className="text-2xl font-bold text-slate-900">Reporte Mensual SOC</h1>
-          <p className="mt-1 text-sm text-slate-600">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Reporte Mensual SOC</h1>
+          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
             Sube el CSV exportado de Halo ITSM, elige un cliente y genera el reporte con gráficos, análisis y el Word
             final listo para revisión.
           </p>
         </header>
 
-        <section className="mb-8 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+        <section className="mb-8 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 shadow-sm">
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
+              className="rounded-md bg-slate-900 dark:bg-slate-700 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:hover:bg-slate-600"
             >
               Subir CSV de Halo ITSM
             </button>
             <input ref={fileInputRef} type="file" accept=".csv" className="hidden" onChange={handleFileChange} />
             <button
               onClick={handleUsarEjemplo}
-              className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
+              className="rounded-md border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
             >
               Usar dato de ejemplo
             </button>
 
             {clientes.length > 0 && (
               <div className="ml-auto flex items-center gap-2">
-                <label className="text-sm text-slate-600">Cliente:</label>
+                <label className="text-sm text-slate-600 dark:text-slate-400">Cliente:</label>
                 <select
                   value={clienteSeleccionado}
                   onChange={(e) => handleClienteChange(e.target.value)}
-                  className="rounded-md border border-slate-300 px-3 py-2 text-sm"
+                  className="rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm"
                 >
                   {clientes.map((c) => (
                     <option key={c} value={c}>
@@ -395,36 +395,36 @@ export default function Home() {
 
           {rangoDisponible && rangoSeleccionado && (
             <div className="mt-3 flex flex-wrap items-center gap-2">
-              <label className="text-sm text-slate-600">Periodo a analizar:</label>
+              <label className="text-sm text-slate-600 dark:text-slate-400">Periodo a analizar:</label>
               <input
                 type="date"
                 value={rangoSeleccionado.desde}
                 min={rangoDisponible.desde}
                 max={rangoSeleccionado.hasta}
                 onChange={(e) => handleRangoChange("desde", e.target.value)}
-                className="rounded-md border border-slate-300 px-3 py-2 text-sm"
+                className="rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm"
               />
-              <span className="text-sm text-slate-500">a</span>
+              <span className="text-sm text-slate-500 dark:text-slate-400">a</span>
               <input
                 type="date"
                 value={rangoSeleccionado.hasta}
                 min={rangoSeleccionado.desde}
                 max={rangoDisponible.hasta}
                 onChange={(e) => handleRangoChange("hasta", e.target.value)}
-                className="rounded-md border border-slate-300 px-3 py-2 text-sm"
+                className="rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm"
               />
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-slate-400 dark:text-slate-500">
                 (datos disponibles del {rangoDisponible.desde} al {rangoDisponible.hasta})
               </span>
             </div>
           )}
 
-          {fuenteArchivo && <p className="mt-3 text-xs text-slate-500">Archivo cargado: {fuenteArchivo}</p>}
-          {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+          {fuenteArchivo && <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">Archivo cargado: {fuenteArchivo}</p>}
+          {error && <p className="mt-3 text-sm text-red-600 dark:text-red-400">{error}</p>}
         </section>
 
         {!report && (
-          <div className="rounded-lg border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
+          <div className="rounded-lg border border-dashed border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 p-10 text-center text-slate-500 dark:text-slate-400">
             Sube un CSV o usa el dato de ejemplo para generar el reporte.
           </div>
         )}
@@ -433,8 +433,8 @@ export default function Home() {
           <div className="space-y-8">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h2 className="text-xl font-semibold text-slate-900">{reportFinal.cliente}</h2>
-                <p className="text-sm text-slate-500">
+                <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">{reportFinal.cliente}</h2>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
                   Periodo: {reportFinal.periodo.desde} a {reportFinal.periodo.hasta} · {reportFinal.totalTickets} tickets
                 </p>
               </div>
@@ -442,7 +442,7 @@ export default function Home() {
                 <button
                   onClick={handleAnalizarClick}
                   disabled={analizando}
-                  className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 disabled:opacity-60"
+                  className="rounded-md border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-60"
                 >
                   {analizando ? "Analizando con IA..." : narrativaCacheada ? "Volver a analizar con IA" : "Analizar con IA"}
                 </button>
@@ -457,21 +457,21 @@ export default function Home() {
             </div>
 
             {estadoIA === "idle" && (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 Mostrando texto por reglas (sin IA). Ajusta el cliente, el periodo y los umbrales de SLA que quieras y
                 pulsa <strong>&quot;Analizar con IA&quot;</strong> cuando estés listo — cada click hace una llamada real a
                 Anthropic.
               </p>
             )}
             {estadoIA === "cargando" && (
-              <p className="flex items-center gap-2 text-sm text-blue-600">
+              <p className="flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-blue-600" />
                 Analizando con IA...
               </p>
             )}
-            {estadoIA === "listo" && <p className="text-sm text-green-600">Análisis finalizado ✓</p>}
+            {estadoIA === "listo" && <p className="text-sm text-green-600 dark:text-green-400">Análisis finalizado ✓</p>}
             {estadoIA === "error" && (
-              <p className="text-sm text-red-600">{errorIA} (se muestra el texto por reglas mientras tanto)</p>
+              <p className="text-sm text-red-600 dark:text-red-400">{errorIA} (se muestra el texto por reglas mientras tanto)</p>
             )}
 
             <ConfiguracionSla cliente={reportFinal.cliente} thresholds={thresholds} onChange={setThresholds} />
@@ -490,9 +490,9 @@ export default function Home() {
               />
             </div>
 
-            <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="mb-2 text-sm font-semibold text-slate-700">Introducción</h3>
-              <p className="text-sm leading-relaxed text-slate-700">{reportFinal.narrativa.introduccion}</p>
+            <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 shadow-sm">
+              <h3 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Introducción</h3>
+              <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{reportFinal.narrativa.introduccion}</p>
             </div>
 
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -500,8 +500,8 @@ export default function Home() {
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={reportFinal.historial}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="label" fontSize={12} />
-                    <YAxis allowDecimals={false} fontSize={12} />
+                    <XAxis dataKey="label" fontSize={12} tick={{ fill: "#94a3b8" }} />
+                    <YAxis allowDecimals={false} fontSize={12} tick={{ fill: "#94a3b8" }} />
                     <Tooltip />
                     <Line type="monotone" dataKey="total" stroke="#2563eb" strokeWidth={2} />
                   </LineChart>
@@ -512,8 +512,8 @@ export default function Home() {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={reportFinal.porTipo} layout="vertical" margin={{ left: 40 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis type="number" allowDecimals={false} fontSize={12} />
-                    <YAxis type="category" dataKey="label" width={140} fontSize={11} />
+                    <XAxis type="number" allowDecimals={false} fontSize={12} tick={{ fill: "#94a3b8" }} />
+                    <YAxis type="category" dataKey="label" width={140} fontSize={11} tick={{ fill: "#94a3b8" }} />
                     <Tooltip />
                     <Bar dataKey="total" fill="#2563eb" />
                   </BarChart>
@@ -524,8 +524,8 @@ export default function Home() {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={reportFinal.porProducto} layout="vertical" margin={{ left: 40 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis type="number" allowDecimals={false} fontSize={12} />
-                    <YAxis type="category" dataKey="label" width={140} fontSize={11} />
+                    <XAxis type="number" allowDecimals={false} fontSize={12} tick={{ fill: "#94a3b8" }} />
+                    <YAxis type="category" dataKey="label" width={140} fontSize={11} tick={{ fill: "#94a3b8" }} />
                     <Tooltip />
                     <Bar dataKey="total" fill="#16a34a" />
                   </BarChart>
@@ -559,12 +559,12 @@ export default function Home() {
             </div>
 
             {reportFinal.narrativa.tiposDetalle.length > 0 && (
-              <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                <h3 className="mb-3 text-sm font-semibold text-slate-700">Tipos de tickets — detalle por herramienta</h3>
+              <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 shadow-sm">
+                <h3 className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">Tipos de tickets — detalle por herramienta</h3>
                 <div className="space-y-4">
                   {reportFinal.narrativa.tiposDetalle.map((g) => (
                     <div key={g.grupo}>
-                      <p className="text-sm font-semibold text-slate-800">{g.grupo}</p>
+                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">{g.grupo}</p>
                       <BulletList items={g.puntos} />
                     </div>
                   ))}
@@ -573,14 +573,14 @@ export default function Home() {
             )}
 
             {reportFinal.pendientes.length > 0 && (
-              <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                <h3 className="mb-3 text-sm font-semibold text-slate-700">
+              <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 shadow-sm">
+                <h3 className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
                   Tickets pendientes de cierre ({reportFinal.pendientes.length})
                 </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-sm">
                     <thead>
-                      <tr className="text-slate-500">
+                      <tr className="text-slate-500 dark:text-slate-400">
                         <th className="pb-2 pr-4 font-medium">ID</th>
                         <th className="pb-2 pr-4 font-medium">Estado</th>
                         <th className="pb-2 font-medium">Asunto</th>
@@ -588,10 +588,10 @@ export default function Home() {
                     </thead>
                     <tbody>
                       {reportFinal.pendientes.map((p) => (
-                        <tr key={p.ticketId} className="border-t border-slate-100">
-                          <td className="py-1.5 pr-4 text-slate-700">{p.ticketId}</td>
-                          <td className="py-1.5 pr-4 text-slate-700">{p.estado}</td>
-                          <td className="py-1.5 text-slate-700">{p.asunto}</td>
+                        <tr key={p.ticketId} className="border-t border-slate-100 dark:border-slate-800">
+                          <td className="py-1.5 pr-4 text-slate-700 dark:text-slate-300">{p.ticketId}</td>
+                          <td className="py-1.5 pr-4 text-slate-700 dark:text-slate-300">{p.estado}</td>
+                          <td className="py-1.5 text-slate-700 dark:text-slate-300">{p.asunto}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -600,13 +600,13 @@ export default function Home() {
               </div>
             )}
 
-            <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="mb-2 text-sm font-semibold text-slate-700">Análisis de resultados</h3>
+            <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 shadow-sm">
+              <h3 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Análisis de resultados</h3>
               <BulletList items={reportFinal.narrativa.analisis} />
             </div>
 
-            <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="mb-2 text-sm font-semibold text-slate-700">Recomendaciones</h3>
+            <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 shadow-sm">
+              <h3 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300">Recomendaciones</h3>
               <BulletList items={reportFinal.narrativa.recomendacion} />
             </div>
           </div>
